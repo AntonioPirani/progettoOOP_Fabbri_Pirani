@@ -4,8 +4,12 @@ package it.univpm.weather.service;
 import it.univpm.weather.model.City; 
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.time.DateTimeException;
+import java.util.Date;
+import java.util.zip.DataFormatException;
 
 /**
  * 
@@ -15,10 +19,14 @@ import java.io.IOException;
 
 public interface Service {
 	
-	public City getCityCoords(String cityName) throws IOException;
+	public JSONObject getTemperature(String cityName) throws IOException; //current
 	
-	public JSONObject getTemperature(City city) throws IOException, CityNotFoundException;
+	public JSONObject getCityCoords(String cityName) throws IOException; //oneCall
 	
 	public void saveEveryHour(String cityName) throws IOException;
+	
+	public void compareTemp(String cityName, Date startDate, String mode) throws IOException, DateTimeException, ParseException, DataFormatException; //oneCall
+	
+	
 	
 }
