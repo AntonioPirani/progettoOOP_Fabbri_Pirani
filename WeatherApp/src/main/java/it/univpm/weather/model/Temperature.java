@@ -1,5 +1,5 @@
 package it.univpm.weather.model;
 
-public class TempData {
+public class Temperature {
 
 }
