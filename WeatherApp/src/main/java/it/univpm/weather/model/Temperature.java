@@ -22,7 +22,8 @@ public class Temperature
 		super();
 	}
 	
-	/** 
+	/** Costruttore con tutti i parametri.
+	 * 
 	 * @param dateTime
 	 * @param feelsLike
 	 * @param currentTemp
@@ -39,7 +40,8 @@ public class Temperature
 		this.minTemp = minTemp;
 	}
 	
-	/**
+	/** Metodo get che restituisce il momento (in formato UNIX) preso in considerazione per l'analisi della temperatura della città.
+	 * 
 	 * @return dateTime
 	 */
 	public long getDateTime() 
@@ -47,7 +49,8 @@ public class Temperature
 		return dateTime;
 	}
 	
-	/**
+	/** Metodo set che imposta il momento (in formato UNIX) preso in considerazione per l'analisi della temperatura della città.
+	 * 
 	 * @param dateTime
 	 */
 	public void setDateTime(long dateTime) 
@@ -55,7 +58,8 @@ public class Temperature
 		this.dateTime = dateTime;
 	}
 
-	/**
+	/** Metodo get che restituisce la temperatura percepita.
+	 * 
 	 * @return feelsLike
 	 */
 	public double getFeelsLike() 
@@ -63,7 +67,8 @@ public class Temperature
 		return feelsLike;
 	}
 
-	/**
+	/** Metodo set che imposta la temperatura percepita.
+	 * 
 	 * @param feelsLike
 	 */
 	public void setFeelsLike(double feelsLike) 
@@ -71,7 +76,8 @@ public class Temperature
 		this.feelsLike = feelsLike;
 	}
 
-	/**
+	/** Metodo get che restituisce la temperatura attuale.
+	 * 
 	 * @return correntTemp
 	 */
 	public double getCurrentTemp() 
@@ -79,7 +85,8 @@ public class Temperature
 		return currentTemp;
 	}
 
-	/**
+	/** Metodo set che imposta la temperatura attuale.
+	 * 
 	 * @param currentTemp
 	 */
 	public void setCurrentTemp(double currentTemp) 
@@ -87,7 +94,8 @@ public class Temperature
 		this.currentTemp = currentTemp;
 	}
 
-	/**
+	/** Metodo get che restituisce la temperatura massima. 
+	 * 
 	 * @return maxTemp
 	 */
 	public double getMaxTemp() 
@@ -95,7 +103,8 @@ public class Temperature
 		return maxTemp;
 	}
 
-	/**
+	/** Metodo set che imposta la temperatura massima. 
+	 * 
 	 * @param maxTemp
 	 */
 	public void setMaxTemp(double maxTemp) 
@@ -103,7 +112,8 @@ public class Temperature
 		this.maxTemp = maxTemp;
 	}
 
-	/**
+	/** Metodo get che restituisce la temperatura minima. 
+	 * 
 	 * @return minTemp
 	 */
 	public double getMinTemp()
@@ -111,7 +121,8 @@ public class Temperature
 		return minTemp;
 	}
 
-	/**
+	/** Metodo set che imposta la temperatura minima. 
+	 * 
 	 * @param minTemp
 	 */
 	public void setMinTemp(double minTemp) 
@@ -119,6 +130,10 @@ public class Temperature
 		this.minTemp = minTemp;
 	}
 
+	/** Override del metodo toString.
+	 * 
+	 *@return Stringa di ritorno.
+	 */
 	@Override
 	public String toString() {
 		return "Temperature [dateTime=" + dateTime + ", feelsLike=" + feelsLike + ", currentTemp=" + currentTemp
