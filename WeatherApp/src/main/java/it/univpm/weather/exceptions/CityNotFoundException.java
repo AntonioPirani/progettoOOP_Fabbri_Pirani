@@ -6,7 +6,7 @@ package it.univpm.weather.exceptions;
  *
  */
 
-public class CityNotFoundException 
+public class CityNotFoundException extends Exception
 {
 	String output;
 
