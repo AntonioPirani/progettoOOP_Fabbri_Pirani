@@ -31,10 +31,42 @@ public class ServiceImplem implements it.univpm.weather.service.Service { //rich
 	public JSONObject getTemperature(String cityName) throws IOException {
 
 		JSONParser parser = new JSONParser();
-		//TODO con la one call (corrente) le temp max e min non vengono riportate
-		String url = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=" + apiKey;
+		Coordinates coords = new Coordinates();
 		
-		return null;
+		try {
+			
+			coords = getCityCoords(cityName);
+			
+		} catch (IOException | CityNotFoundException e) {
+			
+			e.printStackTrace();
+		}
+		//TODO con la one call (corrente) le temp max e min non vengono riportate
+		String url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coords.getLat() + "&lon=" + coords.getLon() + "&exclude=hourly,daily,minutely,alerts&appid=" + apiKey +"&units=metric";
+		
+		InputStream input = new URL(url).openStream();
+		
+		BufferedReader re = new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8")));  
+	    
+	    String text = Read(re);  
+	    
+	    JSONObject obj = null;
+	    
+	    try {
+	    	
+	    	obj = (JSONObject) parser.parse(text);
+			
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+	    	
+			input.close();
+		      
+		}
+	    
+		return obj;
 	}
 	
 	/** Metodo che permette di ottenere le coordinate per una specifica città, necessarie per la One Call API
