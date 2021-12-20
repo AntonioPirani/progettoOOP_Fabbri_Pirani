@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.lang.annotation.Annotation;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.time.DateTimeException;
@@ -20,21 +19,34 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
+import it.univpm.weather.exceptions.CityNotFoundException;
 import it.univpm.weather.model.*;
 
 @Service
-public class ServiceImplem implements Service {
+public class ServiceImplem implements it.univpm.weather.service.Service { //richiamando solo Service lo scambia per una interfaccia predefinita di Spring
+	//rendendo necessaria l'implementazione di 2 metodi, stampando comunque un warning
 	
 	private final String apiKey = "e75a0a03e0d0542a15e263930e56f99a";
 
 	public JSONObject getTemperature(String cityName) throws IOException {
-		// TODO Auto-generated method stub
+
+		JSONParser parser = new JSONParser();
+		//TODO con la one call (corrente) le temp max e min non vengono riportate
+		String url = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=" + apiKey;
+		
 		return null;
 	}
-
-	public Coordinates getCityCoords(String cityName) throws IOException, JsonParseException {
+	
+	/** Metodo che permette di ottenere le coordinate per una specifica città, necessarie per la One Call API
+	 * 
+	 * @param cityName stringa contenente il nome della città da cercare
+	 * @return classe coordinate: latitudine e longitudine relative alla città
+	 * @throws IOException
+	 * @throws JsonParseException
+	 * @throws CityNotFoundException eccezione per quando non si trova la città desiderata
+	 */
+	public Coordinates getCityCoords(String cityName) throws IOException, JsonParseException, CityNotFoundException {
 		
-		Coordinates coord;
 		JSONParser parser = new JSONParser();
 		
 		String url = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=" + apiKey;
@@ -50,7 +62,9 @@ public class ServiceImplem implements Service {
 		      double lat = (double) obj.get("lat");
 		      double lon = (double) obj.get("lon");
 		      
-		      coord = new Coordinates(lat, lon);
+		      Coordinates coord = new Coordinates(lat, lon);
+
+		      return coord;
 		      
 		    } catch (Exception e) {
 		    	
@@ -62,9 +76,6 @@ public class ServiceImplem implements Service {
 		      input.close();
 		      
 		    }
-		
-		
-		return coord;
 	}
 	
 	public String Read(Reader re) throws IOException {   
@@ -98,18 +109,6 @@ public class ServiceImplem implements Service {
 			throws IOException, DateTimeException, ParseException, DataFormatException {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public Class<? extends Annotation> annotationType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String value() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
