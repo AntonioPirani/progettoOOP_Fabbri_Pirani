@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonParseException;
 
 import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
-import it.univpm.weather.WeatherApp.model.Coordinates;
 import it.univpm.weather.WeatherApp.model.*;
 
 @Service
