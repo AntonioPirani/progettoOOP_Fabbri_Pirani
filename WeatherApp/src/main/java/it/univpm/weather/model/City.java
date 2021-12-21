@@ -1,8 +1,7 @@
 package it.univpm.weather.model;
 
-import java.util.Objects;
-
 /** La classe City descrive le proprietà di ogni città.
+ * 
  * @author Matteo Fabbri
  */
 	public class City {
@@ -10,6 +9,7 @@ import java.util.Objects;
 	private String cityName;
 	private long cityId;
 	private Coordinates coords;
+	private Temperature temp;
 	
 	/** Costruttore dell'oggetto.
 	 * 
@@ -23,18 +23,16 @@ import java.util.Objects;
 	 * 
 	 * @param cityName
 	 * @param cityId
-	 * @param dateTime
-	 * @param feelsLike
-	 * @param currentTemp
 	 * @param coords
+	 * @param temp
 	 */
-	public City(String cityName, long cityId, long dateTime, double feelsLike, double currentTemp,
-			Coordinates coords) 
+	public City(String cityName, long cityId, Coordinates coords, Temperature temp) 
 	{
 		super();
 		this.cityName = cityName;
 		this.cityId = cityId;
 		this.coords = coords;
+		this.temp = temp;
 	}
 	
 	/** Costruttore con unicamente il parametro cityName.
@@ -99,6 +97,22 @@ import java.util.Objects;
 	{
 		this.coords = coords;
 	}
+	
+	/** Metodo get che restituisce i parametri riguardanti la temperatura della città.
+	 * 
+	 * @param coords
+	 */
+	public Temperature getTemp() {
+		return temp;
+	}
+	
+	/** Metodo set che imposta i parametri riguardanti la temperatura della città.
+	 * 
+	 * @param coords
+	 */
+	public void setTemp(Temperature temp) {
+		this.temp = temp;
+	}
 
 	/** Override del metodo toString.
 	 * 
@@ -106,7 +120,7 @@ import java.util.Objects;
 	 */
 	@Override
 	public String toString() {
-		return "City [cityName=" + cityName + ", cityId=" + cityId + ", coords=" + coords + "]";
+		return "City [cityName=" + cityName + ", cityId=" + cityId + ", coords=" + coords + ", temp=" + temp + "]";
 	}
 	
 }
