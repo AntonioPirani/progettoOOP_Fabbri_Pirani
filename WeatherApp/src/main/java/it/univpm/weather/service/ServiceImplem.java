@@ -88,7 +88,12 @@ public class ServiceImplem implements it.univpm.weather.service.Service { //rich
 		try {                                
 		      BufferedReader re = new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8")));  
 		    
-		      String text = Read(re);         
+		      String text = Read(re);  
+		      
+		      if(text.equals("[]")) {
+		    	  throw new CityNotFoundException("La città " + cityName + " non è stata trovata");
+		      }
+		      
 		      JSONObject obj = (JSONObject) parser.parse(text);
 		      
 		      double lat = (double) obj.get("lat");
