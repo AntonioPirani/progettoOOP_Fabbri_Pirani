@@ -1,10 +1,8 @@
 package it.univpm.weather.model;
 
-import java.util.Objects;
-
-
 /** La classe Coordinates descrive tutte le informazioni riguardanti le coordinate della citàà inserita.
- * @author Matteo
+ * 
+ * @author Matteo Fabbri
  */
 
 public class Coordinates 

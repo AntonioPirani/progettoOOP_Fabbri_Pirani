@@ -1,9 +1,8 @@
 package it.univpm.weather.model;
 
-import java.util.Objects;
-
 /** La classe Temperature descrive tutte le informazioni riguardanti temperatura percepita e correnti.
- * @author Matteo
+ * 
+ * @author Matteo Fabbri
  */
 public class Temperature 
 {
