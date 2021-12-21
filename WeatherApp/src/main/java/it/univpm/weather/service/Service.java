@@ -1,10 +1,12 @@
 package it.univpm.weather.service;
 
-//import it.univpm.weather.exceptions.CityNotFound; TODO
-import it.univpm.weather.model.City; 
+import it.univpm.weather.exceptions.CityNotFoundException; 
+import it.univpm.weather.model.*; 
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
+
+import com.fasterxml.jackson.core.JsonParseException;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -21,7 +23,9 @@ public interface Service {
 	
 	public JSONObject getTemperature(String cityName) throws IOException; //current
 	
-	public JSONObject getCityCoords(String cityName) throws IOException; //oneCall
+	public Coordinates getCityCoords(String cityName) throws IOException, JsonParseException, CityNotFoundException; //oneCall
+	
+	public void saveCurrentTemp(String cityName) throws IOException;
 	
 	public void saveEveryHour(String cityName) throws IOException;
 	
