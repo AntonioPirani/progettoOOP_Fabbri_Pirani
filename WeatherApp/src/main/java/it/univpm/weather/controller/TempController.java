@@ -25,18 +25,25 @@ public class TempController {
 	Service service;
 	
 	@GetMapping(value="/current")
-    public ResponseEntity<Object> getVisibility(@RequestParam(value = "city", defaultValue = "Ancona") String cityName) {
+    public ResponseEntity<Object> getVisibility(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) {
+		
 		try {
 			
-			return new ResponseEntity<Object> (service.getTemperature(cityName), HttpStatus.OK);
+			return new ResponseEntity<Object> (service.getTemperature(cityName).toString(), HttpStatus.OK);
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
 			
-			return new ResponseEntity<Object> (HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object> (HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
-		
     }
+	
+	@GetMapping("/hello")
+	ResponseEntity<String> hello() {
+	    return new ResponseEntity<>("Hello World!", HttpStatus.OK);
+	}
+	
+	
 	
 	
 
