@@ -1,4 +1,4 @@
-package it.univpm.weather.service;
+package it.univpm.weather.WeatherApp.service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,11 +19,12 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
-import it.univpm.weather.exceptions.CityNotFoundException;
-import it.univpm.weather.model.*;
+import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
+import it.univpm.weather.WeatherApp.model.Coordinates;
+import it.univpm.weather.WeatherApp.model.*;
 
 @Service
-public class ServiceImplem implements it.univpm.weather.service.Service { //richiamando solo Service lo scambia per una interfaccia predefinita di Spring
+public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Service { //richiamando solo Service lo scambia per una interfaccia predefinita di Spring
 	//rendendo necessaria l'implementazione di 2 metodi, stampando comunque un warning
 	
 	private final String apiKey = "e75a0a03e0d0542a15e263930e56f99a";

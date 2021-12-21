@@ -1,4 +1,4 @@
-package it.univpm.weather.exceptions;
+package it.univpm.weather.WeatherApp.exceptions;
 
 /**
  * 

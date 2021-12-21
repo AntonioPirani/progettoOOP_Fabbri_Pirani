@@ -1,7 +1,8 @@
-package it.univpm.weather.service;
+package it.univpm.weather.WeatherApp.service;
 
-import it.univpm.weather.exceptions.CityNotFoundException; 
-import it.univpm.weather.model.*; 
+import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
+import it.univpm.weather.WeatherApp.model.Coordinates;
+import it.univpm.weather.WeatherApp.model.*; 
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -30,7 +31,5 @@ public interface Service {
 	public void saveEveryHour(String cityName) throws IOException;
 	
 	public void compareTemp(String cityName, Date startDate, String mode) throws IOException, DateTimeException, ParseException, DataFormatException; //oneCall
-	
-	
 	
 }

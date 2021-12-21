@@ -1,4 +1,4 @@
-package it.univpm.weather.model;
+package it.univpm.weather.WeatherApp.model;
 
 /** La classe Temperature descrive tutte le informazioni riguardanti temperatura percepita e correnti.
  * 

@@ -1,4 +1,4 @@
-package it.univpm.weather.controller;
+package it.univpm.weather.WeatherApp.controller;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -8,10 +8,11 @@ import java.io.IOException;
 
 import org.json.simple.JSONArray;
 
-import it.univpm.weather.exceptions.CityNotFoundException;
-import it.univpm.weather.model.*;
-import it.univpm.weather.service.Service;
+import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
+import it.univpm.weather.WeatherApp.service.Service;
+import it.univpm.weather.WeatherApp.model.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,18 +30,18 @@ public class TempController {
 		
 		try {
 			
-			return new ResponseEntity<Object> (service.getTemperature(cityName).toString(), HttpStatus.OK);
+			return new ResponseEntity<> (service.getTemperature(cityName), HttpStatus.OK);
 			
 		} catch (Exception e) {
 			
-			return new ResponseEntity<Object> (HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
     }
 	
-	@GetMapping("/hello")
+	@GetMapping("/")
 	ResponseEntity<String> hello() {
-	    return new ResponseEntity<>("Hello World!", HttpStatus.OK);
+	    return new ResponseEntity<>("WeatherApp - Temperatura - by Matteo Fabbri e Antonio Pirani", HttpStatus.OK);
 	}
 	
 	

@@ -1,4 +1,4 @@
-package it.univpm.weather.model;
+package it.univpm.weather.WeatherApp.model;
 
 /** La classe Coordinates descrive tutte le informazioni riguardanti le coordinate della citàà inserita.
  * 
