@@ -30,7 +30,7 @@ public class TempController {
 			
 			return new ResponseEntity<> (service.getTemperature(cityName), HttpStatus.OK);
 			
-		} catch (Exception e) {
+		} catch (IOException e) {
 			
 			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
 			
@@ -48,12 +48,24 @@ public class TempController {
 		
 		try {
 			
-			return new ResponseEntity<> (service.getCityCoords(cityName), HttpStatus.OK);
+			Coordinates coords = service.getCityCoords(cityName);
+			JSONObject obj = new JSONObject();
+			JSONParser parser = new JSONParser();
 			
-		} catch (Exception e) {
+			obj.put("lat", coords.getLat());
+			obj.put("lon", coords.getLon());
+			
+			return new ResponseEntity<> (obj.toString(), HttpStatus.OK);
+			
+		} catch (IOException e) {
 			
 			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
 			
+		} catch (CityNotFoundException e) {
+			
+			e.printStackTrace();
+			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
+
 		}
     }
 	

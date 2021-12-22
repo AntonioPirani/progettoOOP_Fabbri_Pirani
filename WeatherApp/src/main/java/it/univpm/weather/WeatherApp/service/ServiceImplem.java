@@ -83,7 +83,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 		String url = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=" + apiKey;
 		
-		InputStream input = new URL(url).openStream();
+		InputStream input = new URL(url).openConnection().getInputStream();
 		
 		try {                                
 		      BufferedReader re = new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8")));  
