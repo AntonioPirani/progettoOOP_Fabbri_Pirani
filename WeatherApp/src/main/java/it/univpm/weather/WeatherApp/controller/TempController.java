@@ -20,6 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 
+/**Classe che gestisce le chiamate utente tramite rotte GET e POST
+ * 
+ * @author Antonio Pirani
+ *
+ */
 @RestController
 public class TempController {
 	
@@ -27,6 +32,11 @@ public class TempController {
 	Service service;
 	//https://stackoverflow.com/questions/21282919/spring-3-request-processing-failed-nested-exception-is-java-lang-nullpointerexc/21329173
 	
+	/**Rotta di tipo GET per ottenere la temperatura corrente di una città
+	 * 
+	 * @param cityName città da cercare
+	 * @return obj JSONObject con le informazioni richieste: nome, coordinate, data, temperatura attuale e percepita
+	 */
 	@GetMapping(value="/current")
     public ResponseEntity<Object> getTemperature(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) {
 		
@@ -60,10 +70,10 @@ public class TempController {
 	
 	@GetMapping("/")
 	ResponseEntity<String> hello() {
-	    return new ResponseEntity<>("WeatherApp - Temperatura - by Matteo Fabbri e Antonio Pirani", HttpStatus.OK);
+	    return new ResponseEntity<>("WeatherApp per la Temperatura - by Matteo Fabbri e Antonio Pirani", HttpStatus.OK);
 	}
 	
-	
+	//non necessaio - solo per prova
 	@GetMapping(value="/coords")
     public ResponseEntity<Object> getCoordinates(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) {
 		
@@ -74,6 +84,9 @@ public class TempController {
 			HashMap<String,Object> map = new HashMap<String,Object>();
 			
 			map.put("name", cityName);
+			
+			System.out.println("Prova latitudine: ");
+			
 			map.put("lat", coords.getLat());
 			map.put("lon", coords.getLon());
 
@@ -81,14 +94,10 @@ public class TempController {
 			
 			return new ResponseEntity<> (obj.toString(), HttpStatus.OK);
 			
-		} catch (IOException e) {
-			
-			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
-			
-		} catch (CityNotFoundException e) {
+		} catch (CityNotFoundException | IOException e) {
 			
 			e.printStackTrace();
-			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<> ("E' occorso un errore (città non trovata?)", HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
     }

@@ -21,12 +21,27 @@ import com.fasterxml.jackson.core.JsonParseException;
 import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
 import it.univpm.weather.WeatherApp.model.*;
 
+/** Classe che implementa l'interfaccia Service mettendo a disposizione i metodi richiamati dal controller
+ * 
+ * @author Antonio Pirani
+ *
+ */
 @Service
 public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Service { //richiamando solo Service lo scambia per una interfaccia predefinita di Spring
 	//rendendo necessaria l'implementazione di 2 metodi, stampando comunque un warning
 	
+	/**
+	 * @param apiKey chiave privata per l'accesso alle API
+	 */
 	private final String apiKey = "e75a0a03e0d0542a15e263930e56f99a";
 
+	/**
+	 * @param cityName stringa contenente il nome della città da cercare
+	 * @return obj oggetto JSON con tutte le informazioni ottenute con la One Call API corrente
+	 * @throws CityNotFoundException eccezione per quando la città inserita non viene trovata
+	 * @throws IOException eccezione di input/output
+	 * @throws ParseException se ci sono errori nel formato JSON
+	 */
 	public JSONObject getTemperature(String cityName) throws IOException {
 
 		JSONParser parser = new JSONParser();
@@ -73,8 +88,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 * 
 	 * @param cityName stringa contenente il nome della città da cercare
 	 * @return classe coordinate: latitudine e longitudine relative alla città
-	 * @throws IOException
-	 * @throws JsonParseException
+	 * @throws IOException per errori di input/output
+	 * @throws JsonParseException in caso di errori nel JSON
 	 * @throws CityNotFoundException eccezione per quando non si trova la città desiderata
 	 */
 	public Coordinates getCityCoords(String cityName) throws IOException, JsonParseException, CityNotFoundException {
@@ -119,7 +134,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	      
 	    }
 	}
-	
+	//TODO da spostare
 	public String Read(Reader re) throws IOException {   
 		
 	    StringBuilder str = new StringBuilder();     
