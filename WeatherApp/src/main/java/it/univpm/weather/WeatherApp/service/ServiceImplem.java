@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.time.DateTimeException;
 import java.util.Date;
 import java.util.zip.DataFormatException;
@@ -44,17 +43,18 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		//TODO con la one call (corrente) le temp max e min non vengono riportate
 		String url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coords.getLat() + "&lon=" + coords.getLon() + "&exclude=hourly,daily,minutely,alerts&appid=" + apiKey +"&units=metric";
 		
-		InputStream input = new URL(url).openStream();
+		InputStream input = new URL(url).openConnection().getInputStream();
 		
-		BufferedReader re = new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8")));  
+		BufferedReader re = new BufferedReader(new InputStreamReader(input));  
 	    
 	    String text = Read(re);  
+	    String testo = (text.substring(0, text.length() - 1));
 	    
 	    JSONObject obj = null;
 	    
 	    try {
 	    	
-	    	obj = (JSONObject) parser.parse(text);
+	    	obj = (JSONObject) parser.parse(testo);
 			
 		} catch (ParseException e) {
 			
@@ -85,34 +85,39 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 		InputStream input = new URL(url).openConnection().getInputStream();
 		
-		try {                                
-		      BufferedReader re = new BufferedReader(new InputStreamReader(input, Charset.forName("UTF-8")));  
-		    
-		      String text = Read(re);  
-		      
-		      if(text.equals("[]")) {
-		    	  throw new CityNotFoundException("La città " + cityName + " non è stata trovata");
-		      }
-		      
-		      JSONObject obj = (JSONObject) parser.parse(text);
-		      
-		      double lat = (double) obj.get("lat");
-		      double lon = (double) obj.get("lon");
-		      
-		      Coordinates coord = new Coordinates(lat, lon);
+		try {                
+			
+	      BufferedReader re = new BufferedReader(new InputStreamReader(input));  
+	    
+	      String text = Read(re);  
+	      String testo = (text.substring(0, text.length() - 1));
+	      
+	      if(testo.equals("[]")) {
+	    	  throw new CityNotFoundException("La città " + cityName + " non è stata trovata");
+	      }
+	      
+	      testo = (testo.substring(1, testo.length() - 1));
+	      
+	      JSONObject obj = (JSONObject) parser.parse(testo);
+	      
+	      double lat = (double) obj.get("lat");
+	      double lon = (double) obj.get("lon");
+	      
+	      Coordinates coord = new Coordinates(lat, lon);
 
-		      return coord;
-		      
-		    } catch (Exception e) {
-		    	
-		      System.out.println(e);
-		      return null;
-		      
-		    } finally {
-		    	
-		      input.close();
-		      
-		    }
+	      return coord;
+	      
+	    } catch (CityNotFoundException | ParseException e) {
+	    
+	      System.out.println("ERRORE");
+	      System.out.println(e);
+	      return null;
+	      
+	    } finally {
+	    	
+	      input.close();
+	      
+	    }
 	}
 	
 	public String Read(Reader re) throws IOException {   
