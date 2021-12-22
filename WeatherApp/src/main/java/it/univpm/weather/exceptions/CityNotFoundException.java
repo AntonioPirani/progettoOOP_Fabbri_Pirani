@@ -2,7 +2,7 @@ package it.univpm.weather.exceptions;
 
 /**
  * 
- * @author Matteo
+ * @author Matteo Fabbri
  *
  */
 
