@@ -1,4 +1,4 @@
-package it.univpm.weather.model;
+package it.univpm.weather.WeatherApp.model;
 
 /** La classe City descrive le proprietà di ogni città.
  * 
