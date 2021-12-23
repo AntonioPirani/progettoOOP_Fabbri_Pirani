@@ -1,13 +1,19 @@
 package it.univpm.weather.WeatherApp.service;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.Writer;
 import java.net.URL;
 import java.time.DateTimeException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.zip.DataFormatException;
 
 import org.json.simple.JSONObject;
@@ -81,6 +87,20 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		      
 		}
 	    
+	    HashMap<String,Object> map = new HashMap<String,Object>();
+	    
+	    map.put("name", cityName);
+		map.put("lat", obj.get("lat"));
+		map.put("lon", obj.get("lon"));
+		
+		obj = (JSONObject) obj.get("current");
+		
+		map.put("temp", obj.get("temp"));
+		map.put("feels_like", obj.get("feels_like"));
+		map.put("dt", obj.get("dt"));
+		
+		obj = new JSONObject(map);
+	    
 		return obj;
 	}
 	
@@ -153,8 +173,34 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 
 	}
 
-	public void saveCurrentTemp(String cityName) throws IOException {
-		// TODO Auto-generated method stub
+	public void saveCurrentTemp(JSONObject obj) throws IOException {
+		
+		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + obj.get("name") + ".txt";
+		//System.out.println("percorso: " + filePath);
+		//https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
+		File file = new File(filePath);
+		
+//		if(!file.exists()) {
+//			file.createNewFile(); 
+//		}
+		
+		Writer writer = null;
+		
+		try  {
+			
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"));
+			writer.write(obj.toString());
+			
+		} catch (IOException e) {
+			
+			System.out.println("ERRORE nel file");
+			System.out.println(e);
+		    
+		} finally {
+			
+		   writer.close();
+		   
+		}
 		
 	}
 

@@ -42,8 +42,6 @@ public class TempController {
 		
 		try {
 			
-			HashMap<String,Object> map = new HashMap<String,Object>();
-			
 			JSONObject obj = service.getTemperature(cityName);
 			
 			if(obj.get("lat").toString().equals("0") && obj.get("lon").toString().equals("0")) {
@@ -51,25 +49,14 @@ public class TempController {
 			}
 			
 			//TODO fare una classe apposita per generare il JSON
-			map.put("name", cityName);
-			map.put("lat", obj.get("lat"));
-			map.put("lon", obj.get("lon"));
-			
-			obj = (JSONObject) obj.get("current");
-			
-			map.put("temp", obj.get("temp"));
-			map.put("feels_like", obj.get("feels_like"));
-			map.put("dt", obj.get("dt"));
-			
-			obj = new JSONObject(map);
-			
-			//TODO salva in un file (con lo stesso nome della città)
+			//System.out.println("Nome citta: "+obj.get("name"));
+			service.saveCurrentTemp(obj);
 			
 			return new ResponseEntity<> (obj.toString(), HttpStatus.OK);
 			
 		} catch (IOException e) {
 			
-			return new ResponseEntity<> (HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<> ("Qualcosa è andato storto", HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
     }

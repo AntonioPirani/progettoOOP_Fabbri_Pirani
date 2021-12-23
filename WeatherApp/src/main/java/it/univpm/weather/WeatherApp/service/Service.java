@@ -1,7 +1,6 @@
 package it.univpm.weather.WeatherApp.service;
 
 import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
-import it.univpm.weather.WeatherApp.model.Coordinates;
 import it.univpm.weather.WeatherApp.model.*; 
 
 import org.json.simple.JSONObject;
@@ -26,7 +25,7 @@ public interface Service {
 	
 	public Coordinates getCityCoords(String cityName) throws IOException, JsonParseException, CityNotFoundException; //oneCall
 	
-	public void saveCurrentTemp(String cityName) throws IOException;
+	public void saveCurrentTemp(JSONObject obj) throws IOException;
 	
 	public void saveEveryHour(String cityName) throws IOException;
 	
