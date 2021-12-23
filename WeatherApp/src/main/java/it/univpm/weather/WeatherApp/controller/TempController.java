@@ -46,6 +46,10 @@ public class TempController {
 			
 			JSONObject obj = service.getTemperature(cityName);
 			
+			if(obj.get("lat").toString().equals("0") && obj.get("lon").toString().equals("0")) {
+				return new ResponseEntity<> ("Città non trovata", HttpStatus.NOT_FOUND);
+			}
+			
 			//TODO fare una classe apposita per generare il JSON
 			map.put("name", cityName);
 			map.put("lat", obj.get("lat"));
@@ -58,6 +62,8 @@ public class TempController {
 			map.put("dt", obj.get("dt"));
 			
 			obj = new JSONObject(map);
+			
+			//TODO salva in un file (con lo stesso nome della città)
 			
 			return new ResponseEntity<> (obj.toString(), HttpStatus.OK);
 			
@@ -81,11 +87,13 @@ public class TempController {
 			
 			Coordinates coords = service.getCityCoords(cityName);
 			
+			if(coords.getLat() == 0.0 && coords.getLon() == 0.0) {
+				return new ResponseEntity<> ("Città non trovata", HttpStatus.NOT_FOUND);
+			}
+			
 			HashMap<String,Object> map = new HashMap<String,Object>();
 			
-			map.put("name", cityName);
-			
-			System.out.println("Prova latitudine: ");
+			map.put("name", cityName);		
 			
 			map.put("lat", coords.getLat());
 			map.put("lon", coords.getLon());
@@ -94,15 +102,12 @@ public class TempController {
 			
 			return new ResponseEntity<> (obj.toString(), HttpStatus.OK);
 			
-		} catch (CityNotFoundException | IOException e) {
+		} catch (IOException | CityNotFoundException e) {
 			
 			e.printStackTrace();
-			return new ResponseEntity<> ("E' occorso un errore (città non trovata?)", HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<> ("E' occorso un errore", HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
     }
 	
-	
-	
-
 }

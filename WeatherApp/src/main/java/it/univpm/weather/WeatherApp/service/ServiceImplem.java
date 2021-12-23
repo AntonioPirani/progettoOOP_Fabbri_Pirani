@@ -31,7 +31,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	//rendendo necessaria l'implementazione di 2 metodi, stampando comunque un warning
 	
 	/**
-	 * @param apiKey chiave privata per l'accesso alle API
+	 * {@value} apiKey chiave privata per l'accesso alle API
 	 */
 	private final String apiKey = "e75a0a03e0d0542a15e263930e56f99a";
 
@@ -95,6 +95,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	public Coordinates getCityCoords(String cityName) throws IOException, JsonParseException, CityNotFoundException {
 		
 		JSONParser parser = new JSONParser();
+		Coordinates coord;
 		
 		String url = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=" + apiKey;
 		
@@ -118,7 +119,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	      double lat = (double) obj.get("lat");
 	      double lon = (double) obj.get("lon");
 	      
-	      Coordinates coord = new Coordinates(lat, lon);
+	      coord = new Coordinates(lat, lon);
 
 	      return coord;
 	      
@@ -126,7 +127,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	    
 	      System.out.println("ERRORE");
 	      System.out.println(e);
-	      return null;
+	      return coord = new Coordinates(0, 0);
 	      
 	    } finally {
 	    	
