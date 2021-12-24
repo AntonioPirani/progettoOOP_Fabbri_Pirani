@@ -48,7 +48,6 @@ public class TempController {
 				return new ResponseEntity<> ("Città non trovata", HttpStatus.NOT_FOUND);
 			}
 			
-			//TODO fare una classe apposita per generare il JSON
 			//System.out.println("Nome citta: "+obj.get("name"));
 			service.saveCurrentTemp(obj);
 			

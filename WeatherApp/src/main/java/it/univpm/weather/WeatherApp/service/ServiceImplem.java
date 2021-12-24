@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -176,20 +177,19 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	public void saveCurrentTemp(JSONObject obj) throws IOException {
 		
 		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + obj.get("name") + ".txt";
-		//System.out.println("percorso: " + filePath);
-		//https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html
+		//System.out.println("percorso: " + filePath); //C:\Users\anton\git\progettoOOP_Fabbri_Pirani\WeatherApp\files\
+		//https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html user.home no
+		
 		File file = new File(filePath);
-		
-//		if(!file.exists()) {
-//			file.createNewFile(); 
-//		}
-		
-		Writer writer = null;
+		//Writer writer = null; non funziona l'append con Writer
+		BufferedWriter bufferedWriter = null;
 		
 		try  {
 			
-			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"));
-			writer.write(obj.toString());
+			bufferedWriter = new BufferedWriter(new FileWriter(file, true));
+			//writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"));
+			//writer.write(obj.toString());
+			bufferedWriter.write(obj.toString() + "\n");
 			
 		} catch (IOException e) {
 			
@@ -198,8 +198,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		    
 		} finally {
 			
-		   writer.close();
-		   
+		   //writer.close();
+		   bufferedWriter.close();
 		}
 		
 	}
