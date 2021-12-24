@@ -173,7 +173,12 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	    return str.toString();
 
 	}
-
+	
+	/** Metodo che permette di salvare su file la temperatura corrente. Il nuovo file viene salvato nella cartella "files" con lo stesso nome della città ricercata
+	 * 
+	 *  @param obj JSONObject che contiene tutte le informazioni principali da salvare su file
+	 *  @throws IOException in caso di problemi sul file
+	 */
 	public void saveCurrentTemp(JSONObject obj) throws IOException {
 		
 		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + obj.get("name") + ".txt";
@@ -187,10 +192,13 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		try  {
 			
 			bufferedWriter = new BufferedWriter(new FileWriter(file, true));
-			//writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"));
-			//writer.write(obj.toString());
 			bufferedWriter.write(obj.toString() + "\n");
 			
+			System.out.println("Dati salvati in: " + filePath);
+			
+			//writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"));
+			//writer.write(obj.toString());
+		
 		} catch (IOException e) {
 			
 			System.out.println("ERRORE nel file");
