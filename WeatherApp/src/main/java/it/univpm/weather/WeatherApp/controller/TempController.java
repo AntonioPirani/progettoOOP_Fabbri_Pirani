@@ -48,7 +48,7 @@ public class TempController {
 				return new ResponseEntity<> ("Città non trovata", HttpStatus.NOT_FOUND);
 			}
 			
-			//System.out.println("Nome citta: "+obj.get("name"));
+			//TODO every hour
 			service.saveCurrentTemp(obj);
 			
 			return new ResponseEntity<> (obj.toString(), HttpStatus.OK);

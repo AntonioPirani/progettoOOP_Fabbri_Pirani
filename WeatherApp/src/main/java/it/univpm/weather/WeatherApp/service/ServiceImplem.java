@@ -13,8 +13,13 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
 import java.time.DateTimeException;
+import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.DataFormatException;
 
 import org.json.simple.JSONObject;
@@ -31,6 +36,7 @@ import it.univpm.weather.WeatherApp.model.*;
 /** Classe che implementa l'interfaccia Service mettendo a disposizione i metodi richiamati dal controller
  * 
  * @author Antonio Pirani
+ * @author Matteo Fabbri
  *
  */
 @Service
@@ -69,7 +75,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 		BufferedReader re = new BufferedReader(new InputStreamReader(input));  
 	    
-	    String text = Read(re);  
+	    String text = read(re);  
 	    String testo = (text.substring(0, text.length() - 1));
 	    
 	    JSONObject obj = null;
@@ -126,14 +132,14 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			
 	      BufferedReader re = new BufferedReader(new InputStreamReader(input));  
 	    
-	      String text = Read(re);  
-	      String testo = (text.substring(0, text.length() - 1));
+	      String text = read(re);  
+	      String testo = (text.substring(0, text.length() - 1)); //per togliere ?
 	      
 	      if(testo.equals("[]")) {
 	    	  throw new CityNotFoundException("La città " + cityName + " non è stata trovata");
 	      }
 	      
-	      testo = (testo.substring(1, testo.length() - 1));
+	      testo = (testo.substring(1, testo.length() - 1)); //per togliere { e }
 	      
 	      JSONObject obj = (JSONObject) parser.parse(testo);
 	      
@@ -156,8 +162,93 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	      
 	    }
 	}
-	//TODO da spostare
-	public String Read(Reader re) throws IOException {   
+
+	/** Metodo che permette di salvare su file la temperatura corrente. Il nuovo file viene salvato nella cartella "files" con lo stesso nome della città ricercata
+	 * 
+	 *  @param obj JSONObject che contiene tutte le informazioni principali da salvare su file
+	 *  @throws IOException in caso di problemi sul file
+	 */
+	public boolean saveCurrentTemp(JSONObject obj) throws IOException {
+		
+		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + obj.get("name") + ".txt";
+		//System.out.println("percorso: " + filePath); //C:\Users\anton\git\progettoOOP_Fabbri_Pirani\WeatherApp\files\
+		//https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html user.home no
+		
+		File file = new File(filePath);
+		//Writer writer = null; non funziona l'append con Writer
+		
+		if(checkLastLineDate(file, (long) obj.get("dt"))) {
+			
+		}
+		
+		//else throw new HourException("la differenza tra la data dell'oggetto e l'ultima salvata è inferiore a un ora - impossibile salvare");
+		
+		BufferedWriter bufferedWriter = null;
+		
+		try  {
+			
+			bufferedWriter = new BufferedWriter(new FileWriter(file, true));
+			bufferedWriter.write(obj.toString() + System.lineSeparator());
+			
+			System.out.println("Dati salvati in: " + filePath);
+			
+			//writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"));
+			//writer.write(obj.toString());
+			
+			return true;
+		
+		} catch (IOException e) {
+			
+			System.out.println("ERRORE nel file");
+			System.out.println(e);
+			return false;
+		    
+		} finally {
+			
+		   //writer.close();
+		   bufferedWriter.close();
+		}
+		
+	}
+
+	public void saveEveryHour(String cityName) throws IOException {
+	
+		ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+		ses.scheduleAtFixedRate(new Runnable() {
+			
+		    @Override
+		    public void run() {
+		        
+		    	try {
+		    		
+		    		JSONObject obj = getTemperature(cityName);
+		    		
+					if(saveCurrentTemp(obj)) System.out.println("Salvataggio riuscito");
+					
+					else System.out.println("Salvataggio non riuscito - riprovare più tardi");
+					
+				} catch (IOException e) {
+
+					e.printStackTrace();
+					
+				}
+		    }
+		}, 0, 1, TimeUnit.HOURS); //https://stackoverflow.com/questions/32228345/run-java-function-every-hour
+	
+		
+	}
+
+	public void compareTemp(String cityName, Date startDate, String mode)
+			throws IOException, DateTimeException, ParseException, DataFormatException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	//metodi aggiuntivi
+	
+	public String read(Reader re) throws IOException {   
 		
 	    StringBuilder str = new StringBuilder();     
 	    int temp;
@@ -174,53 +265,38 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 
 	}
 	
-	/** Metodo che permette di salvare su file la temperatura corrente. Il nuovo file viene salvato nella cartella "files" con lo stesso nome della città ricercata
-	 * 
-	 *  @param obj JSONObject che contiene tutte le informazioni principali da salvare su file
-	 *  @throws IOException in caso di problemi sul file
-	 */
-	public void saveCurrentTemp(JSONObject obj) throws IOException {
+	public long previousHour(int d) {
 		
-		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + obj.get("name") + ".txt";
-		//System.out.println("percorso: " + filePath); //C:\Users\anton\git\progettoOOP_Fabbri_Pirani\WeatherApp\files\
-		//https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html user.home no
+        long now = Instant.now().getEpochSecond();
+        return now - d*3600;
+        
+    }
+	
+	public boolean checkLastLineDate(File file, long urlDT) {
 		
-		File file = new File(filePath);
-		//Writer writer = null; non funziona l'append con Writer
-		BufferedWriter bufferedWriter = null;
+		JSONParser parser = new JSONParser();
 		
-		try  {
-			
-			bufferedWriter = new BufferedWriter(new FileWriter(file, true));
-			bufferedWriter.write(obj.toString() + "\n");
-			
-			System.out.println("Dati salvati in: " + filePath);
-			
-			//writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "utf-8"));
-			//writer.write(obj.toString());
-		
-		} catch (IOException e) {
-			
-			System.out.println("ERRORE nel file");
-			System.out.println(e);
+		String read = "";
+		 
+		try ( Scanner x = new Scanner (file); ) {
+			  
+		  while (x.hasNextLine()) {
+			  read = x.nextLine() + System.lineSeparator(); 
+		  } 
+		   
+		  JSONObject obj = (JSONObject) parser.parse(read);
+		   
+		  long fileDT = (long) obj.get("dt");
+		   
+		  if( urlDT - fileDT > 3600) {
+			  return true;
+		  }
 		    
-		} finally {
-			
-		   //writer.close();
-		   bufferedWriter.close();
+		} catch (Exception e) {
+			System.out.println("cant open file");
 		}
 		
-	}
-
-	public void saveEveryHour(String cityName) throws IOException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void compareTemp(String cityName, Date startDate, String mode)
-			throws IOException, DateTimeException, ParseException, DataFormatException {
-		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 }
