@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
+import it.univpm.weather.WeatherApp.exceptions.HourException;
 import it.univpm.weather.WeatherApp.service.Service;
 import it.univpm.weather.WeatherApp.model.*;
 
@@ -36,9 +37,10 @@ public class TempController {
 	 * 
 	 * @param cityName città da cercare
 	 * @return obj JSONObject con le informazioni richieste: nome, coordinate, data, temperatura attuale e percepita
+	 * @throws HourException 
 	 */
 	@GetMapping(value="/current")
-    public ResponseEntity<Object> getTemperature(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) {
+    public ResponseEntity<Object> getTemperature(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) throws HourException {
 		
 		try {
 			

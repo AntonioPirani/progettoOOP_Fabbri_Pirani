@@ -41,7 +41,8 @@ import it.univpm.weather.WeatherApp.model.*;
  *
  */
 @Service
-public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Service { //richiamando solo Service lo scambia per una interfaccia predefinita di Spring
+public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Service { 
+	//richiamando solo Service lo scambia per una interfaccia predefinita di Spring
 	//rendendo necessaria l'implementazione di 2 metodi, stampando comunque un warning
 	
 	/**
@@ -69,7 +70,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			
 			e.printStackTrace();
 		}
-		//TODO con la one call (corrente) le temp max e min non vengono riportate
+
 		String url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coords.getLat() + "&lon=" + coords.getLon() + "&exclude=hourly,daily,minutely,alerts&appid=" + apiKey +"&units=metric";
 		
 		InputStream input = new URL(url).openConnection().getInputStream();
@@ -179,13 +180,24 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		File file = new File(filePath);
 		//Writer writer = null; non funziona l'append con Writer
 		
-		if(checkLastLineDate(file, (long) obj.get("dt"))) {
+		try {
 			
-			throw new HourException("Il tempo trascorso dall'ultimo salvataggio è inferiore a 1 ora. I dati non sono stati salvati");
+			if(checkLastLineDate(file, (long) obj.get("dt"))) {
+			
+				throw new HourException("Differenza di orario inferiore ad 1 ora");
+				
+				//System.out.println("File non salvato");
+				//return false;
+				
+			}
+			
+		} catch (HourException e){
+			
+			System.out.println("ERRORE saveCurrentTemp");
+			System.out.println(e);
+			return false;
 			
 		}
-		
-		//else throw new HourException("la differenza tra la data dell'oggetto e l'ultima salvata è inferiore a un ora - impossibile salvare");
 		
 		BufferedWriter bufferedWriter = null;
 		
@@ -212,7 +224,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		   //writer.close();
 		   bufferedWriter.close();
 		}
-		
+			
 	}
 
 	public void saveEveryHour(String cityName) throws IOException {
@@ -245,8 +257,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 					
 				}
 		    }
+		    
 		}, 0, 1, TimeUnit.HOURS); //https://stackoverflow.com/questions/32228345/run-java-function-every-hour
-	
 		
 	}
 
@@ -260,6 +272,12 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	
 	//metodi aggiuntivi
 	
+	/** Metodo che legge tutto in contenuto dell'url
+	 * 
+	 * @param re Lettore necessario alla lettura
+	 * @return stringa contenente tutto il contenuto letto
+	 * @throws IOException in caso di errore di input/output
+	 */
 	public String read(Reader re) throws IOException {   
 		
 	    StringBuilder str = new StringBuilder();     
@@ -271,8 +289,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	      str.append((char) temp);
 
 	    } while (temp != -1);        
+	    
 	    //  https://www.delftstack.com/howto/java/java-get-json-from-url/
-
 	    return str.toString();
 
 	}
@@ -284,6 +302,14 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
         
     }
 	
+	/** Metodo che controlla se la differenza tra il valore "dt" dell'ultima riga del file passato e il valore del valore "dt" preso dall'url è superiore a 1 ora
+	 * 
+	 * @param file il file da aprire
+	 * @param urlDT il valore dt preso dall' url
+	 * @param fileDT l'ultimo valore dt preso da file
+	 * @return true se c'è l'errore
+	 * @return false se la differenza è > 1 ora
+	 */
 	public boolean checkLastLineDate(File file, long urlDT) {
 		
 		JSONParser parser = new JSONParser();
@@ -293,22 +319,30 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		try ( Scanner x = new Scanner (file); ) {
 			  
 		  while (x.hasNextLine()) {
+			  
 			  read = x.nextLine() + System.lineSeparator(); 
+			  
 		  } 
 		   
 		  JSONObject obj = (JSONObject) parser.parse(read);
 		   
 		  long fileDT = (long) obj.get("dt");
 		   
-		  if( urlDT - fileDT > 3600) {
-			  return true;
+		  if( urlDT - fileDT < 3600) {
+			  //System.out.println("ERRORE: differenza inferiore ad 1 ora");
+			  return true; //true -> errore
 		  }
 		    
 		} catch (Exception e) {
-			System.out.println("cant open file");
+			
+			System.out.println("Impossibile aprire il file - se non esiste verrà creato");
+			
 		}
 		
-		return false;
+		//System.out.println("OK: differenza superiore ad 1 ora");
+		
+		return false; //false -> corretto
+		
 	}
 
 }
