@@ -168,8 +168,9 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 * 
 	 *  @param obj JSONObject che contiene tutte le informazioni principali da salvare su file
 	 *  @throws IOException in caso di problemi sul file
+	 * @throws HourException 
 	 */
-	public boolean saveCurrentTemp(JSONObject obj) throws IOException {
+	public boolean saveCurrentTemp(JSONObject obj) throws IOException, HourException {
 		
 		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + obj.get("name") + ".txt";
 		//System.out.println("percorso: " + filePath); //C:\Users\anton\git\progettoOOP_Fabbri_Pirani\WeatherApp\files\
@@ -238,7 +239,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 						
 					}
 					
-				} catch (IOException e) {
+				} catch (IOException | HourException e) {
 
 					e.printStackTrace();
 					
