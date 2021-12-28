@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonParseException;
 
 import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
+import it.univpm.weather.WeatherApp.exceptions.HourException;
 import it.univpm.weather.WeatherApp.model.*;
 
 /** Classe che implementa l'interfaccia Service mettendo a disposizione i metodi richiamati dal controller
@@ -179,6 +180,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 		if(checkLastLineDate(file, (long) obj.get("dt"))) {
 			
+			throw new HourException("Il tempo trascorso dall'ultimo salvataggio è inferiore a 1 ora. I dati non sono stati salvati");
+			
 		}
 		
 		//else throw new HourException("la differenza tra la data dell'oggetto e l'ultima salvata è inferiore a un ora - impossibile salvare");
@@ -223,9 +226,17 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		    		
 		    		JSONObject obj = getTemperature(cityName);
 		    		
-					if(saveCurrentTemp(obj)) System.out.println("Salvataggio riuscito");
+					if(saveCurrentTemp(obj)) { 
+						
+						System.out.println("Salvataggio riuscito");
+						
+					}
 					
-					else System.out.println("Salvataggio non riuscito - riprovare più tardi");
+					else { 
+						
+						System.out.println("Salvataggio non riuscito - riprovare più tardi");
+						
+					}
 					
 				} catch (IOException e) {
 
