@@ -1,5 +1,23 @@
 package it.univpm.weather.WeatherApp.exceptions;
 
-public class HourException {
+/**
+ * 
+ * @author Matteo Fabbri
+ *
+ */
 
+public class HourException extends Exception
+{
+	private static final long serialVersionUID = 3L;
+	String output;
+
+	public HourException(String output) 
+	{
+		super();
+		this.output = output;
+	}
+
+	public String getOutput() {
+		return output;
+	}
 }
