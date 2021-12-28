@@ -60,12 +60,12 @@ public class TempController {
 		}
     }
 	
-	@GetMapping("/")
-	ResponseEntity<String> hello() {
-	    return new ResponseEntity<>("WeatherApp per la Temperatura - by Matteo Fabbri e Antonio Pirani", HttpStatus.OK);
-	}
+//	@GetMapping("/")
+//	ResponseEntity<String> hello() {
+//	    return new ResponseEntity<>("WeatherApp per la Temperatura - by Matteo Fabbri e Antonio Pirani", HttpStatus.OK);
+//	}
 	
-	//non necessaio - solo per prova
+	//non necessario - solo per prova
 	@GetMapping(value="/coords")
     public ResponseEntity<Object> getCoordinates(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) {
 		
