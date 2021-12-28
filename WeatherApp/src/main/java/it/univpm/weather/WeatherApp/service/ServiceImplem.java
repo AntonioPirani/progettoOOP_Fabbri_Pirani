@@ -43,7 +43,7 @@ import it.univpm.weather.WeatherApp.model.*;
 @Service
 public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Service { 
 	//richiamando solo Service lo scambia per una interfaccia predefinita di Spring
-	//rendendo necessaria l'implementazione di 2 metodi, stampando comunque un warning
+	//(rendendo necessaria l'implementazione di 2 metodi, stampando comunque un warning)
 	
 	/**
 	 * {@value} apiKey chiave privata per l'accesso alle API
