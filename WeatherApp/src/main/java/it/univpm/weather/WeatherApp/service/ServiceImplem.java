@@ -167,8 +167,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 
 	/** Metodo che permette di salvare su file la temperatura corrente. Il nuovo file viene salvato nella cartella "files" con lo stesso nome della città ricercata
 	 * 
-	 *  @param obj JSONObject che contiene tutte le informazioni principali da salvare su file
-	 *  @throws IOException in caso di problemi sul file
+	 * @param obj JSONObject che contiene tutte le informazioni principali da salvare su file
+	 * @throws IOException in caso di problemi sul file
 	 * @throws HourException 
 	 */
 	public boolean saveCurrentTemp(JSONObject obj) throws IOException, HourException {
@@ -328,7 +328,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		   
 		  long fileDT = (long) obj.get("dt");
 		   
-		  if( urlDT - fileDT < 3600) {
+		  if( urlDT - fileDT < 3599) { // per correttezza do 1 secondo di distacco - 3600 non va bene
 			  //System.out.println("ERRORE: differenza inferiore ad 1 ora");
 			  return true; //true -> errore
 		  }

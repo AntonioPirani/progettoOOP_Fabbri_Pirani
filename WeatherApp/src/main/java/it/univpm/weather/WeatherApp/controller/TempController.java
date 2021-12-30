@@ -50,10 +50,10 @@ public class TempController {
 				return new ResponseEntity<> ("Città non trovata", HttpStatus.NOT_FOUND);
 			}
 			
-			//TODO every hour
-			service.saveCurrentTemp(obj);
+			//service.saveCurrentTemp(obj);
+			service.saveEveryHour(cityName);
 			
-			return new ResponseEntity<> (obj.toString(), HttpStatus.OK);
+			return new ResponseEntity<> (obj.toString() + "\nSalvataggio delle informazioni ogni ora in corso", HttpStatus.OK);
 			
 		} catch (IOException e) {
 			
@@ -61,6 +61,17 @@ public class TempController {
 			
 		}
     }
+	
+	@GetMapping("/compare")
+	ResponseEntity<Object> compare(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName, @RequestParam(value = "previousDay", defaultValue = "1") int prevDay) {
+		
+		if(prevDay < 1 || prevDay > 5) {
+			return new ResponseEntity<> ("Il numero di giorni precedenti da ricercare deve essere tra 1 e 5", HttpStatus.NOT_FOUND);
+		}
+		
+	    return new ResponseEntity<>("confronto temperatura di un città in un dato range temporale", HttpStatus.OK);
+	
+	}
 	
 //	@GetMapping("/")
 //	ResponseEntity<String> hello() {
