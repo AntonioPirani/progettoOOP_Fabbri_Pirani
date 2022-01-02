@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -94,8 +95,10 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			input.close();
 		      
 		}
-
-	    //city.setTemp(new Temperature ((long)obj.get("dt"), (double) obj.get("feels_like"), (double) obj.get("temp"), 0.0, 0.0 ));
+	    
+	    obj = (JSONObject) obj.get("current");
+	    
+	    city.setCurrentTemp(new Temperature ((long)obj.get("dt"), (double) obj.get("feels_like"), (double) obj.get("temp")));
 	    
 		return city;
 	}
@@ -166,9 +169,9 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 * @throws IOException in caso di problemi sul file
 	 * @throws HourException 
 	 */
-	public boolean saveCurrentTemp(JSONObject obj) throws IOException, HourException {
+	public boolean saveCurrentTemp(City city) throws IOException, HourException {
 		
-		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + obj.get("name") + ".txt";
+		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + city.getCityName() + ".txt";
 		//System.out.println("percorso: " + filePath); //C:\Users\anton\git\progettoOOP_Fabbri_Pirani\WeatherApp\files\
 		//https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html user.home no
 		
@@ -177,18 +180,15 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 		try {
 			
-			if(checkLastLineDate(file, (long) obj.get("dt"))) {
+			if(checkLastLineDate(file, city.getCurrentTemp().getDateTime())) {
 			
-				throw new HourException("Differenza di orario inferiore ad 1 ora");
-				
-				//System.out.println("File non salvato");
-				//return false;
+				throw new HourException();
 				
 			}
 			
 		} catch (HourException e){
 			
-			System.out.println("ERRORE saveCurrentTemp");
+			System.out.println("Differenza di orario inferiore ad 1 ora");
 			System.out.println(e);
 			return false;
 			
@@ -199,6 +199,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		try  {
 			
 			bufferedWriter = new BufferedWriter(new FileWriter(file, true));
+			
+			JSONObject obj = cityToJson(city);
 			bufferedWriter.write(obj.toString() + System.lineSeparator());
 			
 			System.out.println("Dati salvati in: " + filePath);
@@ -232,9 +234,9 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		        
 		    	try {
 		    		
-		    		JSONObject obj = getTemperature(cityName);
+		    		City city = getTemperature(cityName);
 		    		
-					if(saveCurrentTemp(obj)) { 
+					if(saveCurrentTemp(city)) { 
 						
 						System.out.println("Salvataggio riuscito");
 						
@@ -259,17 +261,14 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 
 	public String compareTemp(String cityName, int prevDay) throws IOException, ParseException {
 
-		JSONObject current = getTemperature(cityName); //corrente
+		City current = getTemperature(cityName); //corrente
 		
 		long dt = previousDay(prevDay);
 		
 		JSONArray previous = timeMachine(cityName, dt); //prevDay giorni precedenti al corrente
-		
-		System.out.println("JSONArray in caso di errore: " + previous.toString());
-		//System.out.println("Array: " + previous.toString() + "\nsize: " +previous.size());
-		//TODO calcola media temperatura attuale e percepita, confronta con current, stampa stringa
-		
 		Iterator<?> i = previous.iterator();
+		
+		ArrayList<Temperature> array = new ArrayList<Temperature>();
 		
 		double sumTemp = 0, sumFeels = 0;
 		
@@ -277,26 +276,29 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			
 			JSONObject obj = (JSONObject) i.next(); 
 			
-			//System.out.println("temp: " + obj.get("temp"));
-			//System.out.println("feels: " + obj.get("feels_like"));
-			
 			//necessita di doubleValue per correggere l'errore di casting tra long e double
 			double temp = doubleValue(obj.get("temp"));
 			double feels = doubleValue(obj.get("feels_like"));
+			
+			Temperature temperature = new Temperature(0, temp, feels);
+			array.add(temperature);
 			
 			sumTemp += temp;
 			sumFeels += feels;
 			
 		}
 		
+		current.setTemp(array);
+		
 		double avgTemp = sumTemp / previous.size();  
 		double avgFeels = sumFeels / previous.size();
 
-		Double compT = BigDecimal.valueOf(doubleValue(current.get("temp")) - avgTemp)
+		//per settare la precisione ed evitare troppe cifre dopo la virgola
+		Double compT = BigDecimal.valueOf(current.getCurrentTemp().getTemp() - avgTemp)
 			    .setScale(3, RoundingMode.HALF_UP)
 			    .doubleValue();
 		
-		Double compF = BigDecimal.valueOf(doubleValue(current.get("feels_like")) - avgFeels)
+		Double compF = BigDecimal.valueOf(current.getCurrentTemp().getTemp() - avgFeels)
 			    .setScale(3, RoundingMode.HALF_UP)
 			    .doubleValue();
 		
@@ -325,8 +327,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	public JSONArray timeMachine(String cityName, long dt) throws IOException {
 
 		JSONParser parser = new JSONParser();
-		Coordinates coords = new Coordinates();
 		City city = new City();
+		
 		try {
 			
 			city = getCityCoords(cityName);
@@ -337,7 +339,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			e.printStackTrace();
 		}
 
-		String url = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + coords.getLat() + "&lon=" + coords.getLon() + "&dt=" + dt + "&appid=" + apiKey + "&units=metric";
+		String url = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + city.getCoords().getLat() + "&lon=" + city.getCoords().getLon() + "&dt=" + dt + "&appid=" + apiKey + "&units=metric";
 		
 		InputStream input = new URL(url).openConnection().getInputStream();
 		
@@ -443,6 +445,25 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 		return false; //false -> corretto
 		
+	}
+	
+	public JSONObject cityToJson(City city) {
+		
+		JSONObject obj = new JSONObject();
+		HashMap<String,Object> map = new HashMap<String,Object>();
+
+	    map.put("name", city.getCityName());
+		map.put("lat", city.getCoords().getLat());
+		map.put("lon", city.getCoords().getLon());
+
+		map.put("temp", city.getCurrentTemp().getTemp());
+		map.put("feels_like", city.getCurrentTemp().getFeelsLike());
+		map.put("dt", city.getCurrentTemp().getDateTime());
+
+		obj = new JSONObject(map);
+
+		return obj;
+	
 	}
 	
 	private static double doubleValue(Object value) {

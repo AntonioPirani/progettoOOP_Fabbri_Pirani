@@ -24,7 +24,7 @@ public interface Service {
 	
 	public City getCityCoords(String cityName) throws IOException, JsonParseException, CityNotFoundException; //oneCall
 	
-	public boolean saveCurrentTemp(JSONObject obj) throws IOException, HourException;
+	public boolean saveCurrentTemp(City city) throws IOException, HourException;
 	
 	public void saveEveryHour(String cityName) throws IOException;
 	
