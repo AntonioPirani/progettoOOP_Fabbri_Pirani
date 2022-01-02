@@ -447,6 +447,11 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 	}
 	
+	/** Metodo per tradurre le informazioni principali della City in formato JSON
+	 * 
+	 * @param city istanza City da tradurre
+	 * @return obj JSON da salvare
+	 */
 	public JSONObject cityToJson(City city) {
 		
 		JSONObject obj = new JSONObject();
