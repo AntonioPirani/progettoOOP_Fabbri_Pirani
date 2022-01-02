@@ -3,25 +3,24 @@ package it.univpm.weather.WeatherApp.service;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
-import java.io.Writer;
 import java.net.URL;
-import java.time.DateTimeException;
 import java.time.Instant;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.zip.DataFormatException;
+import java.lang.Math;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -262,10 +261,115 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 	}
 
-	public void compareTemp(String cityName, Date startDate, String mode)
-			throws IOException, DateTimeException, ParseException, DataFormatException {
-		// TODO Auto-generated method stub
+	public String compareTemp(String cityName, int prevDay) throws IOException, ParseException {
+
+		JSONObject current = getTemperature(cityName); //corrente
 		
+		long dt = previousDay(prevDay);
+		
+		JSONArray previous = timeMachine(cityName, dt); //prevDay giorni precedenti al corrente
+		
+		System.out.println("JSONArray in caso di errore: " + previous.toString());
+		//System.out.println("Array: " + previous.toString() + "\nsize: " +previous.size());
+		//TODO calcola media temperatura attuale e percepita, confronta con current, stampa stringa
+		
+		Iterator<?> i = previous.iterator();
+		
+		double sumTemp = 0, sumFeels = 0;
+		
+		while(i.hasNext()) {
+			
+			JSONObject obj = (JSONObject) i.next(); 
+			
+			//System.out.println("temp: " + obj.get("temp"));
+			//System.out.println("feels: " + obj.get("feels_like"));
+			
+			//necessita di doubleValue per correggere l'errore di casting tra long e double
+			double temp = doubleValue(obj.get("temp"));
+			double feels = doubleValue(obj.get("feels_like"));
+			
+			sumTemp += temp;
+			sumFeels += feels;
+			
+		}
+		
+		double avgTemp = sumTemp / previous.size();  
+		double avgFeels = sumFeels / previous.size();
+
+		Double compT = BigDecimal.valueOf(doubleValue(current.get("temp")) - avgTemp)
+			    .setScale(3, RoundingMode.HALF_UP)
+			    .doubleValue();
+		
+		Double compF = BigDecimal.valueOf(doubleValue(current.get("feels_like")) - avgFeels)
+			    .setScale(3, RoundingMode.HALF_UP)
+			    .doubleValue();
+		
+		String mex = "<br><h3><center><b>Confronto Temperature - " + cityName + ": </b></center></h3><br>";
+		
+		if(compT > 0.0) {
+			mex = mex.concat("<center>La temperatura corrente rispetto alla media di " + prevDay + " giorno/i fa è aumentata di <b>" + compT + "</b> gradi. <br><br>");
+		}
+		
+		else {
+			mex = mex.concat("<center>La temperatura corrente rispetto alla media di " + prevDay + " giorno/i fa è diminuita di <b>" + Math.abs(compT) + "</b> gradi.<br><br>");
+		}
+		
+		if(compF > 0.0) {
+			mex = mex.concat("La temperatura percepita rispetto alla media di " + prevDay + " giorno/i fa è aumentata di <b>" + compF + "</b> gradi.</center>");
+		}
+		
+		else {
+			mex = mex.concat("La temperatura percepita rispetto alla media di " + prevDay + " giorno/i fa è diminuita di <b>" + Math.abs(compF) + "</b> gradi.</center>");
+		}
+
+		return mex;
+		
+	}
+	
+	public JSONArray timeMachine(String cityName, long dt) throws IOException {
+
+		JSONParser parser = new JSONParser();
+		Coordinates coords = new Coordinates();
+		
+		try {
+			
+			coords = getCityCoords(cityName);
+			
+		} catch (IOException | CityNotFoundException e) {
+			
+			System.out.println("Errore time machine");
+			e.printStackTrace();
+		}
+
+		String url = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=" + coords.getLat() + "&lon=" + coords.getLon() + "&dt=" + dt + "&appid=" + apiKey + "&units=metric";
+		
+		InputStream input = new URL(url).openConnection().getInputStream();
+		
+		BufferedReader re = new BufferedReader(new InputStreamReader(input));  
+	    
+	    String text = read(re);  
+	    String testo = (text.substring(0, text.length() - 1));
+	    
+	    JSONObject obj = null;
+	    
+	    try {
+	    	
+	    	obj = (JSONObject) parser.parse(testo);
+			
+		} catch (ParseException e) {
+			
+			e.printStackTrace();
+			
+		} finally {
+	    	
+			input.close();
+		      
+		}
+	    
+	    //filtraggio
+	    JSONArray array = (JSONArray) obj.get("hourly");
+	    
+		return array;
 	}
 	
 	
@@ -295,10 +399,10 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 
 	}
 	
-	public long previousHour(int d) {
+	public long previousDay(int d) {
 		
         long now = Instant.now().getEpochSecond();
-        return now - d*3600;
+        return now - d*3600*24;
         
     }
 	
@@ -344,5 +448,9 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		return false; //false -> corretto
 		
 	}
+	
+	private static double doubleValue(Object value) {
+	    return (value instanceof Number ? ((Number)value).doubleValue() : -1.0);
+	  }
 
 }

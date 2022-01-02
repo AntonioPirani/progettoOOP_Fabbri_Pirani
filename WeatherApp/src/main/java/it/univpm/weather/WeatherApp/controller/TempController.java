@@ -63,13 +63,15 @@ public class TempController {
     }
 	
 	@GetMapping("/compare")
-	ResponseEntity<Object> compare(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName, @RequestParam(value = "previousDay", defaultValue = "1") int prevDay) {
+	ResponseEntity<Object> compare(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName, @RequestParam(value = "previousDay", defaultValue = "1") int prevDay) throws IOException, ParseException {
 		
 		if(prevDay < 1 || prevDay > 5) {
 			return new ResponseEntity<> ("Il numero di giorni precedenti da ricercare deve essere tra 1 e 5", HttpStatus.NOT_FOUND);
 		}
 		
-	    return new ResponseEntity<>("confronto temperatura di un città in un dato range temporale", HttpStatus.OK);
+		String mex = service.compareTemp(cityName, prevDay);
+		
+	    return new ResponseEntity<>(mex, HttpStatus.OK);
 	
 	}
 	
