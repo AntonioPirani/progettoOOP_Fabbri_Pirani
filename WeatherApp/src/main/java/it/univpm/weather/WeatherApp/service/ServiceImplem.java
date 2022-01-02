@@ -129,7 +129,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	      String testo = (text.substring(0, text.length() - 1)); //per togliere ?
 	      
 	      if(testo.equals("[]")) {
-	    	  throw new CityNotFoundException("La città " + cityName + " non è stata trovata");
+	    	  throw new CityNotFoundException();
 	      }
 	      
 	      testo = (testo.substring(1, testo.length() - 1)); //per togliere { e }
@@ -164,10 +164,13 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	}
 
 	/** Metodo che permette di salvare su file la temperatura corrente. Il nuovo file viene salvato nella cartella "files" con lo stesso nome della città ricercata
+	 *  Il metodo non scrive sul file se non è passata almeno 1 ora (cosa che si verifica se l'utente richiama più volte la rotta /current) 
 	 * 
-	 * @param obj JSONObject che contiene tutte le informazioni principali da salvare su file
+	 * @param City city che contiene tutte le informazioni principali da salvare su file
 	 * @throws IOException in caso di problemi sul file
-	 * @throws HourException 
+	 * @throws HourException se non è passata almeno 1 ora dall'ultimo salvataggio
+	 * @return true se il salvataggio è riuscito correttamente
+	 * @return false se il salvataggio NON è riuscito
 	 */
 	public boolean saveCurrentTemp(City city) throws IOException, HourException {
 		
@@ -224,6 +227,11 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			
 	}
 
+	/** Metodo che prova a salvare ogni ora i dati correnti di una città su un file tramite l'uso di uno scheduler (piuttosto che un Timer)
+	 * 
+	 * @param cityName nome della città da salvare
+	 * 
+	 */
 	public void saveEveryHour(String cityName) throws IOException {
 	
 		ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
@@ -259,6 +267,12 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 	}
 
+	/** Metodo che permette di confrontare le temperature attuali e di X giorni fa, tramite una media, ritornando l'eventuale differenza di temperatura
+	 * 
+	 * @param cityName nome della città di cui si vogliono confrontare le temperature
+	 * @param prevDay periodo di tempo corrispondente al numero di giorni precedenti all'attuale
+	 * @return mex Stringa contenente la differenza di temperatura tra attuale e media
+	 */
 	public String compareTemp(String cityName, int prevDay) throws IOException, ParseException {
 
 		City current = getTemperature(cityName); //corrente
@@ -324,6 +338,13 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 	}
 	
+	/** Metodo che permette di ottenere le informazioni passate relative alla temperatura di una città. La API considera il giorno a partire dalle 00:00 fino alle 23:59 
+	 * dello stesso giorno, piuttosto che dall'orario passato per parametro e il giorno successivo
+	 * 
+	 * @param cityName nome della città
+	 * @param dt data in formato UNIX relativa al giorno passato
+	 * @return array JSONArray contenente tutte le informazioni
+	 */
 	public JSONArray timeMachine(String cityName, long dt) throws IOException {
 
 		JSONParser parser = new JSONParser();
@@ -397,6 +418,11 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 
 	}
 	
+	/** Metodo che calcola il valore in formato UNIX del giorno scelto rispetto alla data attuale
+	 * 
+	 * @param d numero di giorni indietro
+	 * @return now data calcolata
+	 */
 	public long previousDay(int d) {
 		
         long now = Instant.now().getEpochSecond();
@@ -471,6 +497,12 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	
 	}
 	
+	/** Metodo che ritorna un double. Utilizzato poichè a seconda del valore in un formato JSON, il dato viene interpretato in modo differente
+	 * Per esempio Long e Double: 0 lo considera Long anche se il programma necessita di un Double
+	 * 
+	 * @param value
+	 * @return double
+	 */
 	private static double doubleValue(Object value) {
 	    return (value instanceof Number ? ((Number)value).doubleValue() : -1.0);
 	  }
