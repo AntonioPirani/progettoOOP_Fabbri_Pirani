@@ -14,6 +14,11 @@ public class CityNotFoundException extends Exception
 	private static final long serialVersionUID = 1L;
 	String output;
 
+	public CityNotFoundException() 
+	{
+		super();
+	}
+
 	/** Costruttore con parametri.
 	 * 
 	 * @param output (Messaggio di errore)
