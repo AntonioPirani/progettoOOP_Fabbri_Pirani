@@ -20,7 +20,20 @@ public class Temperature
 	{
 		super();
 	}
-	
+	/** Costruttore con parametri parziali.
+	 * 
+	 * @param dateTime
+	 * @param currentTemp
+	 * @param feelsLike
+	 * 
+	 */
+	public Temperature(long dateTime, double currentTemp, double feelsLike) {
+		super();
+		this.dateTime = dateTime;
+		this.currentTemp = currentTemp;
+		this.feelsLike = feelsLike;
+	}
+
 	/** Costruttore con tutti i parametri.
 	 * 
 	 * @param dateTime
@@ -29,12 +42,12 @@ public class Temperature
 	 * @param maxTemp
 	 * @param minTemp
 	 */
-	public Temperature(long dateTime, double feelsLike, double currentTemp, double maxTemp, double minTemp) 
+	public Temperature(long dateTime, double currentTemp, double feelsLike, double maxTemp, double minTemp) 
 	{
 		super();
 		this.dateTime = dateTime;
-		this.feelsLike = feelsLike;
 		this.currentTemp = currentTemp;
+		this.feelsLike = feelsLike;
 		this.maxTemp = maxTemp;
 		this.minTemp = minTemp;
 	}
@@ -138,5 +151,6 @@ public class Temperature
 		return "Temperature [dateTime=" + dateTime + ", feelsLike=" + feelsLike + ", currentTemp=" + currentTemp
 				+ ", maxTemp=" + maxTemp + ", minTemp=" + minTemp + "]";
 	}
+
 	
 }
