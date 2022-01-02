@@ -44,16 +44,16 @@ public class TempController {
 		
 		try {
 			
-			JSONObject obj = service.getTemperature(cityName);
+			City city = service.getTemperature(cityName);
 			
-			if(obj.get("lat").toString().equals("0") && obj.get("lon").toString().equals("0")) {
+			if(city.getCoords().getLat() == 0 && city.getCoords().getLon() == 0) {
 				return new ResponseEntity<> ("Città non trovata", HttpStatus.NOT_FOUND);
 			}
 			
 			//service.saveCurrentTemp(obj);
 			service.saveEveryHour(cityName);
 			
-			return new ResponseEntity<> (obj.toString() + "\nSalvataggio delle informazioni ogni ora in corso", HttpStatus.OK);
+			return new ResponseEntity<> (city.toString() + "<br>Salvataggio delle informazioni ogni ora in corso", HttpStatus.OK);
 			
 		} catch (IOException e) {
 			
@@ -81,34 +81,34 @@ public class TempController {
 //	}
 	
 	//non necessario - solo per prova
-	@GetMapping(value="/coords")
-    public ResponseEntity<Object> getCoordinates(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) {
-		
-		try {
-			
-			Coordinates coords = service.getCityCoords(cityName);
-			
-			if(coords.getLat() == 0.0 && coords.getLon() == 0.0) {
-				return new ResponseEntity<> ("Città non trovata", HttpStatus.NOT_FOUND);
-			}
-			
-			HashMap<String,Object> map = new HashMap<String,Object>();
-			
-			map.put("name", cityName);		
-			
-			map.put("lat", coords.getLat());
-			map.put("lon", coords.getLon());
-
-			JSONObject obj = new JSONObject(map);
-			
-			return new ResponseEntity<> (obj.toString(), HttpStatus.OK);
-			
-		} catch (IOException | CityNotFoundException e) {
-			
-			e.printStackTrace();
-			return new ResponseEntity<> ("E' occorso un errore", HttpStatus.INTERNAL_SERVER_ERROR);
-
-		}
-    }
+//	@GetMapping(value="/coords")
+//    public ResponseEntity<Object> getCoordinates(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) {
+//		
+//		try {
+//			
+//			Coordinates coords = service.getCityCoords(cityName);
+//			
+//			if(coords.getLat() == 0.0 && coords.getLon() == 0.0) {
+//				return new ResponseEntity<> ("Città non trovata", HttpStatus.NOT_FOUND);
+//			}
+//			
+//			HashMap<String,Object> map = new HashMap<String,Object>();
+//			
+//			map.put("name", cityName);		
+//			
+//			map.put("lat", coords.getLat());
+//			map.put("lon", coords.getLon());
+//
+//			JSONObject obj = new JSONObject(map);
+//			
+//			return new ResponseEntity<> (obj.toString(), HttpStatus.OK);
+//			
+//		} catch (IOException | CityNotFoundException e) {
+//			
+//			e.printStackTrace();
+//			return new ResponseEntity<> ("E' occorso un errore", HttpStatus.INTERNAL_SERVER_ERROR);
+//
+//		}
+//    }
 	
 }

@@ -9,3 +9,4 @@
 {"dt":1640884519,"temp":6.83,"name":"Ancona","lon":13.5171,"feels_like":5.99,"lat":43.617}
 {"dt":1640884678,"temp":7.03,"name":"Ancona","lon":13.5171,"feels_like":6.21,"lat":43.617}
 {"dt":1640884739,"temp":7.03,"name":"Ancona","lon":13.5171,"feels_like":6.21,"lat":43.617}
+{"dt":1641142151,"temp":6.99,"name":"Ancona","lon":13.5171,"feels_like":6.99,"lat":43.617}

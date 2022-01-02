@@ -56,21 +56,21 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 * @throws IOException eccezione di input/output
 	 * @throws ParseException se ci sono errori nel formato JSON
 	 */
-	public JSONObject getTemperature(String cityName) throws IOException {
+	public City getTemperature(String cityName) throws IOException {
 
 		JSONParser parser = new JSONParser();
-		Coordinates coords = new Coordinates();
+		City city = new City();
 		
 		try {
 			
-			coords = getCityCoords(cityName);
+			city = getCityCoords(cityName);
 			
 		} catch (IOException | CityNotFoundException e) {
-			
+
 			e.printStackTrace();
 		}
 
-		String url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + coords.getLat() + "&lon=" + coords.getLon() + "&exclude=hourly,daily,minutely,alerts&appid=" + apiKey +"&units=metric";
+		String url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + city.getCoords().getLat() + "&lon=" + city.getCoords().getLon() + "&exclude=hourly,daily,minutely,alerts&appid=" + apiKey +"&units=metric";
 		
 		InputStream input = new URL(url).openConnection().getInputStream();
 		
@@ -94,22 +94,10 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			input.close();
 		      
 		}
+
+	    //city.setTemp(new Temperature ((long)obj.get("dt"), (double) obj.get("feels_like"), (double) obj.get("temp"), 0.0, 0.0 ));
 	    
-	    HashMap<String,Object> map = new HashMap<String,Object>();
-	    
-	    map.put("name", cityName);
-		map.put("lat", obj.get("lat"));
-		map.put("lon", obj.get("lon"));
-		
-		obj = (JSONObject) obj.get("current");
-		
-		map.put("temp", obj.get("temp"));
-		map.put("feels_like", obj.get("feels_like"));
-		map.put("dt", obj.get("dt"));
-		
-		obj = new JSONObject(map);
-	    
-		return obj;
+		return city;
 	}
 	
 	/** Metodo che permette di ottenere le coordinate per una specifica città, necessarie per la One Call API
@@ -120,10 +108,11 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 * @throws JsonParseException in caso di errori nel JSON
 	 * @throws CityNotFoundException eccezione per quando non si trova la città desiderata
 	 */
-	public Coordinates getCityCoords(String cityName) throws IOException, JsonParseException, CityNotFoundException {
+	public City getCityCoords(String cityName) throws IOException, JsonParseException, CityNotFoundException {
 		
 		JSONParser parser = new JSONParser();
-		Coordinates coord;
+		Coordinates coord = null;
+		City city = new City();
 		
 		String url = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + "&limit=1&appid=" + apiKey;
 		
@@ -148,14 +137,21 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	      double lon = (double) obj.get("lon");
 	      
 	      coord = new Coordinates(lat, lon);
-
-	      return coord;
+	      
+	      city.setCityName(cityName);
+	      city.setCoords(coord);
+	      
+	      return city;
 	      
 	    } catch (CityNotFoundException | ParseException e) {
 	    
 	      System.out.println("ERRORE");
 	      System.out.println(e);
-	      return coord = new Coordinates(0, 0);
+	      
+	     // coord = new Coordinates(null, null);
+	      city.setCoords(coord);
+	      
+	      return city;
 	      
 	    } finally {
 	    	
@@ -330,10 +326,10 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 
 		JSONParser parser = new JSONParser();
 		Coordinates coords = new Coordinates();
-		
+		City city = new City();
 		try {
 			
-			coords = getCityCoords(cityName);
+			city = getCityCoords(cityName);
 			
 		} catch (IOException | CityNotFoundException e) {
 			

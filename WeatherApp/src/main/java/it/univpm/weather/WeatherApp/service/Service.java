@@ -18,11 +18,11 @@ import java.io.IOException;
 
 public interface Service {
 	
-	public JSONObject getTemperature(String cityName) throws IOException; //current
+	public City getTemperature(String cityName) throws IOException; //current
 	
 	public JSONArray timeMachine(String cityName, long dt) throws IOException;
 	
-	public Coordinates getCityCoords(String cityName) throws IOException, JsonParseException, CityNotFoundException; //oneCall
+	public City getCityCoords(String cityName) throws IOException, JsonParseException, CityNotFoundException; //oneCall
 	
 	public boolean saveCurrentTemp(JSONObject obj) throws IOException, HourException;
 	
