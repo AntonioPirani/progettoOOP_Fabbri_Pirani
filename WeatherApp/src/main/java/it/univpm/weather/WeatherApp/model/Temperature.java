@@ -9,7 +9,7 @@ public class Temperature
 	
 	private long dateTime;
 	private double feelsLike;
-	private double currentTemp;
+	private double temp;
 	private double maxTemp;
 	private double minTemp;
 	
@@ -23,14 +23,14 @@ public class Temperature
 	/** Costruttore con parametri parziali.
 	 * 
 	 * @param dateTime
-	 * @param currentTemp
+	 * @param temp
 	 * @param feelsLike
 	 * 
 	 */
-	public Temperature(long dateTime, double currentTemp, double feelsLike) {
+	public Temperature(long dateTime, double temp, double feelsLike) {
 		super();
 		this.dateTime = dateTime;
-		this.currentTemp = currentTemp;
+		this.temp = temp;
 		this.feelsLike = feelsLike;
 	}
 
@@ -38,15 +38,15 @@ public class Temperature
 	 * 
 	 * @param dateTime
 	 * @param feelsLike
-	 * @param currentTemp
+	 * @param temp
 	 * @param maxTemp
 	 * @param minTemp
 	 */
-	public Temperature(long dateTime, double currentTemp, double feelsLike, double maxTemp, double minTemp) 
+	public Temperature(long dateTime, double temp, double feelsLike, double maxTemp, double minTemp) 
 	{
 		super();
 		this.dateTime = dateTime;
-		this.currentTemp = currentTemp;
+		this.temp = temp;
 		this.feelsLike = feelsLike;
 		this.maxTemp = maxTemp;
 		this.minTemp = minTemp;
@@ -92,18 +92,18 @@ public class Temperature
 	 * 
 	 * @return correntTemp
 	 */
-	public double getCurrentTemp() 
+	public double getTemp() 
 	{
-		return currentTemp;
+		return temp;
 	}
 
 	/** Metodo set che imposta la temperatura attuale.
 	 * 
 	 * @param currentTemp
 	 */
-	public void setCurrentTemp(double currentTemp) 
+	public void setTemp(double temp) 
 	{
-		this.currentTemp = currentTemp;
+		this.temp = temp;
 	}
 
 	/** Metodo get che restituisce la temperatura massima. 
@@ -148,7 +148,7 @@ public class Temperature
 	 */
 	@Override
 	public String toString() {
-		return "Temperature [dateTime=" + dateTime + ", feelsLike=" + feelsLike + ", currentTemp=" + currentTemp
+		return "Temperature [dateTime=" + dateTime + ", feelsLike=" + feelsLike + ", currentTemp=" + temp
 				+ ", maxTemp=" + maxTemp + ", minTemp=" + minTemp + "]";
 	}
 
