@@ -7,6 +7,7 @@ import java.io.IOException;
 import it.univpm.weather.WeatherApp.exceptions.*;
 import it.univpm.weather.WeatherApp.service.Service;
 import it.univpm.weather.WeatherApp.model.*;
+import it.univpm.weather.WeatherApp.stats.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class TempController {
 	 * @return obj JSONObject con le informazioni richieste: nome, coordinate, data, temperatura attuale e percepita
 	 * @throws HourException 
 	 */
-	@GetMapping(value="/current")
+	@GetMapping(value = "/current")
     public ResponseEntity<Object> getTemperature(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) throws HourException {
 		
 		try {
@@ -57,7 +58,7 @@ public class TempController {
 		}
     }
 	
-	@GetMapping("/compare")
+	@GetMapping(value = "/compare")
 	ResponseEntity<Object> compare(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName, @RequestParam(value = "previousDay", defaultValue = "1") int prevDay) throws IOException, ParseException {
 		
 		if(prevDay < 1 || prevDay > 5) {
@@ -74,6 +75,19 @@ public class TempController {
 		
 	    return new ResponseEntity<>(mex, HttpStatus.OK);
 	
+	}
+	
+	@PostMapping(value = "/statistics")
+	ResponseEntity<Object> statistics(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) {
+		
+		//tutto lo storico: 
+		StatsImplem stats = new StatsImplem();
+		
+		stats.getStats(cityName);
+		
+	    return new ResponseEntity<>("Calcolo statistiche", HttpStatus.OK);
+	    
+	    
 	}
 	
 //	@GetMapping("/")

@@ -25,8 +25,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -70,6 +68,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		} catch (IOException | CityNotFoundException e) {
 
 			e.printStackTrace();
+			
 		}
 
 		String url = "https://api.openweathermap.org/data/2.5/onecall?lat=" + city.getCoords().getLat() + "&lon=" + city.getCoords().getLon() + "&exclude=hourly,daily,minutely,alerts&appid=" + apiKey +"&units=metric";
@@ -149,7 +148,6 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	      
 	    } catch (CityNotFoundException | ParseException e) {
 	    
-	      System.out.println("ERRORE");
 	      System.out.println(e);
 	      
 	      coord = new Coordinates(0, 0);
@@ -524,6 +522,6 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 */
 	private static double doubleValue(Object value) {
 	    return (value instanceof Number ? ((Number)value).doubleValue() : -1.0);
-	  }
+	}
 
 }
