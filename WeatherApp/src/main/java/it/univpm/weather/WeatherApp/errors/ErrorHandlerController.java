@@ -29,7 +29,7 @@ public class ErrorHandlerController implements ErrorController{
 				+ "	</style>\r\n"
 				+ "	<head>\r\n"
 				+ "		<title>Error Page</title>\r\n"
-				+ "		<link href=\"icon.png\">\r\n"
+				+ "		<link rel=\"icon\" type=\"image/png\" href=\"icon.png\">\r\n"
 				+ "	</head>\r\n"
 				+ "	<body style=\"background: -webkit-gradient(linear, left top, left bottom, from(#d9f9ff ), to(#fff)) fixed;\">\r\n"
 				+ "		<center><div style=\"border:2px solid grey; width:53%;  border-radius: 10px; margin-top:20px;\">\r\n"
