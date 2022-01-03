@@ -25,7 +25,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -151,7 +152,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	      System.out.println("ERRORE");
 	      System.out.println(e);
 	      
-	     // coord = new Coordinates(null, null);
+	      coord = new Coordinates(0, 0);
 	      city.setCoords(coord);
 	      
 	      return city;
@@ -275,9 +276,27 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 */
 	public String compareTemp(String cityName, int prevDay) throws IOException, ParseException {
 
-		City current = getTemperature(cityName); //corrente
+		City current = null;
+		
+		try {
+			
+			current = getTemperature(cityName); //corrente
+		
+			if(current.getCoords().getLat() == 0 && current.getCoords().getLon() == 0) {
+				
+				throw new CityNotFoundException();
+			
+			}
+			
+		} catch (CityNotFoundException  e) {
+			
+			return "0";
+			
+		}
 		
 		long dt = previousDay(prevDay);
+		
+		String giorno = prevDay == 1 ? " giorno" : " giorni";
 		
 		JSONArray previous = timeMachine(cityName, dt); //prevDay giorni precedenti al corrente
 		Iterator<?> i = previous.iterator();
@@ -319,19 +338,19 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		String mex = "<br><h3><center><b>Confronto Temperature - " + cityName + ": </b></center></h3><br>";
 		
 		if(compT > 0.0) {
-			mex = mex.concat("<center>La temperatura corrente rispetto alla media di " + prevDay + " giorno/i fa è aumentata di <b>" + compT + "</b> gradi. <br><br>");
+			mex = mex.concat("<center>La temperatura corrente rispetto alla media di " + prevDay + giorno + " fa è aumentata di <b>" + compT + "</b> gradi. <br><br>");
 		}
 		
 		else {
-			mex = mex.concat("<center>La temperatura corrente rispetto alla media di " + prevDay + " giorno/i fa è diminuita di <b>" + Math.abs(compT) + "</b> gradi.<br><br>");
+			mex = mex.concat("<center>La temperatura corrente rispetto alla media di " + prevDay + giorno + " fa è diminuita di <b>" + Math.abs(compT) + "</b> gradi.<br><br>");
 		}
 		
 		if(compF > 0.0) {
-			mex = mex.concat("La temperatura percepita rispetto alla media di " + prevDay + " giorno/i fa è aumentata di <b>" + compF + "</b> gradi.</center>");
+			mex = mex.concat("La temperatura percepita rispetto alla media di " + prevDay + giorno + " fa è aumentata di <b>" + compF + "</b> gradi.</center>");
 		}
 		
 		else {
-			mex = mex.concat("La temperatura percepita rispetto alla media di " + prevDay + " giorno/i fa è diminuita di <b>" + Math.abs(compF) + "</b> gradi.</center>");
+			mex = mex.concat("La temperatura percepita rispetto alla media di " + prevDay + giorno + " fa è diminuita di <b>" + Math.abs(compF) + "</b> gradi.</center>");
 		}
 
 		return mex;
