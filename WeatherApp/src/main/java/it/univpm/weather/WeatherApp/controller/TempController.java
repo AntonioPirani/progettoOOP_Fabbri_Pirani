@@ -1,15 +1,10 @@
 package it.univpm.weather.WeatherApp.controller;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.json.simple.JSONArray;
 
 import java.io.IOException;
-import java.util.HashMap;
 
-import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
-import it.univpm.weather.WeatherApp.exceptions.HourException;
+import it.univpm.weather.WeatherApp.exceptions.*;
 import it.univpm.weather.WeatherApp.service.Service;
 import it.univpm.weather.WeatherApp.model.*;
 
@@ -47,13 +42,13 @@ public class TempController {
 			City city = service.getTemperature(cityName);
 			
 			if(city.getCoords().getLat() == 0 && city.getCoords().getLon() == 0) {
-				return new ResponseEntity<> ("Città non trovata", HttpStatus.NOT_FOUND);
+				return new ResponseEntity<> ("<br><center><h4>Città <b>\"" + cityName + "\"</b> non trovata</h4></center>", HttpStatus.NOT_FOUND);
 			}
 			
 			//service.saveCurrentTemp(obj);
 			service.saveEveryHour(cityName);
 			
-			return new ResponseEntity<> (city.toString() + "<br>Salvataggio delle informazioni ogni ora in corso", HttpStatus.OK);
+			return new ResponseEntity<> (city.toString() + "<br><br>Creazione dello storico in corso", HttpStatus.OK);
 			
 		} catch (IOException e) {
 			
@@ -66,10 +61,16 @@ public class TempController {
 	ResponseEntity<Object> compare(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName, @RequestParam(value = "previousDay", defaultValue = "1") int prevDay) throws IOException, ParseException {
 		
 		if(prevDay < 1 || prevDay > 5) {
-			return new ResponseEntity<> ("Il numero di giorni precedenti da ricercare deve essere tra 1 e 5", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<> ("<br><center><h4>Il numero di giorni precedenti da ricercare deve essere tra <b>1</b> e <b>5</b></h4></center>", HttpStatus.NOT_FOUND);
 		}
 		
 		String mex = service.compareTemp(cityName, prevDay);
+		
+		if(mex.equals("0")) {
+			
+			return new ResponseEntity<> ("<br><center><h4>Città \"<b>" + cityName + "\"</b> non trovata</h4></center>", HttpStatus.NOT_FOUND);
+			
+		}
 		
 	    return new ResponseEntity<>(mex, HttpStatus.OK);
 	
