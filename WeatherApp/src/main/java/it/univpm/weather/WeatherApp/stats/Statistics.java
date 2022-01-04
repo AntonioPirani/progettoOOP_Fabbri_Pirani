@@ -3,6 +3,9 @@ package it.univpm.weather.WeatherApp.stats;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class Statistics {
@@ -31,18 +34,20 @@ public class Statistics {
 		JSONObject obj = new JSONObject();
 		Iterator<?> i = array.iterator();
 		
+		double t = 0;
 		double sum = 0;
 		
 		while(i.hasNext()) {
 			
 			obj = (JSONObject) i.next(); 
+			
 			double temp = doubleValue(obj.get("temp"));
 			
-			max = (temp > max) ? temp : max;
-			min = (temp < min) ? temp : min;
+			max = (temp > t) ? temp : t;
+			min = (temp < t) ? temp : t;
 			
 			sum += temp;
-			
+			t = temp;
 		}
 		
 		avg = sum / array.size();
@@ -52,6 +57,7 @@ public class Statistics {
 		while(i.hasNext()) {
 			
 			obj = (JSONObject) i.next(); 
+			
 			double temp = doubleValue(obj.get("temp"));
 			
 			var += Math.pow((temp - avg), 2);
@@ -59,6 +65,27 @@ public class Statistics {
 		}
 		
 		var = var / array.size();
+		
+	}
+	
+	public JSONObject toJson() {
+		
+		JSONObject obj = new JSONObject();
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("max", max);
+		map.put("min", min);
+		map.put("avg", BigDecimal.valueOf(avg)
+			    .setScale(3, RoundingMode.HALF_UP)
+			    .doubleValue());
+		map.put("var", BigDecimal.valueOf(var)
+			    .setScale(3, RoundingMode.HALF_UP)
+			    .doubleValue());
+		
+		obj = new JSONObject(map);
+		
+		return obj;
 		
 	}
 	

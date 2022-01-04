@@ -32,12 +32,24 @@ public class StatsImplem implements StatsInterface {
 			System.out.println("Lo storico di " + cityName + " non esiste");
 			e.printStackTrace();
 			
+			return null;
 		}
 		
 		JSONArray array = createArray(file);
 		
 		Statistics stats = new Statistics();
-		stats.statsCalc(array);
+		
+		try {
+			
+			stats.statsCalc(array);
+			
+		} catch (Exception e) {
+			
+			System.out.println("Eccezione calcolo statistiche");
+			e.printStackTrace();
+			return null;
+			
+		}
 		
 		return stats;
 		
@@ -78,6 +90,7 @@ public class StatsImplem implements StatsInterface {
 		} catch (ParseException | IOException e) {
 			
 			e.printStackTrace();
+			return array = null;
 			
 		} finally {
 			

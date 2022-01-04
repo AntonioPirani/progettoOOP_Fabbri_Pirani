@@ -86,8 +86,13 @@ public class TempController {
 		Statistics statistics = new Statistics();
 		statistics = stats.getStats(cityName);
 		
-	    return new ResponseEntity<>(statistics.toString(), HttpStatus.OK);
-	    
+		if(statistics == null) {
+			
+			return new ResponseEntity<> ("<br><center><h4>Non è stato possibile calcolare le statistiche</h4></center>", HttpStatus.NOT_FOUND);
+			
+		}
+		
+	    return new ResponseEntity<>(statistics.toJson().toString(), HttpStatus.OK);
 	    
 	}
 	
