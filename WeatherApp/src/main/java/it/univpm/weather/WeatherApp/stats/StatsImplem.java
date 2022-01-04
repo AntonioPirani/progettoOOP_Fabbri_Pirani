@@ -3,6 +3,7 @@ package it.univpm.weather.WeatherApp.stats;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
@@ -12,7 +13,7 @@ import org.json.simple.parser.ParseException;
 
 public class StatsImplem implements StatsInterface {
 	
-	public void getStats(String cityName) {
+	public Statistics getStats(String cityName) {
 		
 		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + cityName + ".txt";
 		
@@ -21,8 +22,9 @@ public class StatsImplem implements StatsInterface {
 		try {
 			
 			if(!file.exists()) {
-				//TODO HistoryException
+
 				throw new FileNotFoundException();
+				
 			}
 			
 		} catch (FileNotFoundException e) {
@@ -37,14 +39,20 @@ public class StatsImplem implements StatsInterface {
 		Statistics stats = new Statistics();
 		stats.statsCalc(array);
 		
+		return stats;
+		
 	}
 	
+	@SuppressWarnings("unchecked") // per il json simple, si poteva evitare anche la HashMap
 	public JSONArray createArray(File file) {
 		
+		JSONArray array = new JSONArray();
 		JSONParser parser = new JSONParser();
 		
 		String read = "";
 		Scanner x = null;
+		
+		JSONObject obj = null;
 		
 		try {
 			
@@ -52,9 +60,18 @@ public class StatsImplem implements StatsInterface {
 			
 			while (x.hasNextLine()) {
 							  
-				read = x.nextLine();// + System.lineSeparator(); 
+				read = x.nextLine() + System.lineSeparator(); 
 				
-				JSONObject obj = (JSONObject) parser.parse(read);
+				obj = (JSONObject) parser.parse(read);
+
+				HashMap<String,Object> map = new HashMap<String,Object>();
+				
+				map.put("dt", obj.get("dt"));
+				map.put("temp", obj.get("temp"));
+				
+				obj = new JSONObject(map);
+				
+				array.add(obj);
 				
 			} 
 			
@@ -67,9 +84,8 @@ public class StatsImplem implements StatsInterface {
 			x.close();
 			
 		}
-		
-		
-		return null;
+
+		return array;
 		
 	}
 

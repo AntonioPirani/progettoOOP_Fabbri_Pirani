@@ -77,15 +77,16 @@ public class TempController {
 	
 	}
 	
-	@PostMapping(value = "/statistics")
+	@GetMapping(value = "/statistics")
 	ResponseEntity<Object> statistics(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) {
 		
 		//tutto lo storico: 
 		StatsImplem stats = new StatsImplem();
 		
-		stats.getStats(cityName);
+		Statistics statistics = new Statistics();
+		statistics = stats.getStats(cityName);
 		
-	    return new ResponseEntity<>("Calcolo statistiche", HttpStatus.OK);
+	    return new ResponseEntity<>(statistics.toString(), HttpStatus.OK);
 	    
 	    
 	}
