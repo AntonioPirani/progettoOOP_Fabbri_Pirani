@@ -1,6 +1,11 @@
 package it.univpm.weather.WeatherApp.model;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.json.simple.JSONObject;
 
 	/** La classe City descrive le proprietà di ogni città.
 	 * 
@@ -135,6 +140,32 @@ import java.util.ArrayList;
 	public String toString() {
 		return "City [cityName=" + cityName + ", cityId=" + cityId + ", coords=" + coords + ", currentTemp="
 				+ currentTemp + ", temp=" + temp + "]";
+	}
+	
+	public JSONObject toJson() {
+		
+		JSONObject obj = new JSONObject();
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("cityName", cityName);
+		
+		map.put("dateTime", currentTemp.getDateTime());
+
+		map.put("temp", BigDecimal.valueOf(currentTemp.getTemp())
+			    .setScale(3, RoundingMode.HALF_UP)
+			    .doubleValue());
+		map.put("feelsLike", BigDecimal.valueOf(currentTemp.getFeelsLike())
+			    .setScale(3, RoundingMode.HALF_UP)
+			    .doubleValue());
+		
+		map.put("lat", coords.getLat());
+		map.put("lon", coords.getLon());
+
+		obj = new JSONObject(map);
+		
+		return obj;
+		
 	}
 	
 }
