@@ -13,7 +13,7 @@ import org.json.simple.parser.ParseException;
 
 public class StatsImplem implements StatsInterface {
 	
-	public Statistics getStats(String cityName) {
+	public Statistics getStats(String cityName, boolean b) {
 		
 		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + cityName + ".txt";
 		
@@ -34,10 +34,23 @@ public class StatsImplem implements StatsInterface {
 			
 			return null;
 		}
+
+		JSONArray array;
+		Statistics stats;
 		
-		JSONArray array = createArray(file);
+		if (b) {
+			
+			array = createArray(file, true);
+			stats = new Statistics(true);
 		
-		Statistics stats = new Statistics();
+		}
+		
+		else {
+			
+			array = createArray(file, false);
+			stats = new Statistics(false);
+			
+		}
 		
 		try {
 			
@@ -47,6 +60,7 @@ public class StatsImplem implements StatsInterface {
 			
 			System.out.println("Eccezione calcolo statistiche");
 			e.printStackTrace();
+			
 			return null;
 			
 		}
@@ -56,7 +70,7 @@ public class StatsImplem implements StatsInterface {
 	}
 	
 	@SuppressWarnings("unchecked") // per il json simple, si poteva evitare anche la HashMap
-	public JSONArray createArray(File file) {
+	public JSONArray createArray(File file, boolean b) {
 		
 		JSONArray array = new JSONArray();
 		JSONParser parser = new JSONParser();
@@ -79,7 +93,9 @@ public class StatsImplem implements StatsInterface {
 				HashMap<String,Object> map = new HashMap<String,Object>();
 				
 				map.put("dt", obj.get("dt"));
-				map.put("temp", obj.get("temp"));
+				
+				if(b) map.put("temp", obj.get("temp"));
+				else map.put("feels_like", obj.get("feels_like"));
 				
 				obj = new JSONObject(map);
 				

@@ -14,10 +14,18 @@ public class Statistics {
 	private double min = 0;
 	private double avg = 0;
 	private double var = 0;
+	private boolean bool;
 	
 	public Statistics() {
 		super();
 	}
+	
+	public Statistics(boolean b) {
+		this.bool = b;
+	}
+	
+	//TODO possibile creazione di unica classe statistica con 2 sottoclassi che ereditano
+	
 
 	public Statistics(double max, double min, double avg, double var) {
 		
@@ -41,7 +49,10 @@ public class Statistics {
 			
 			obj = (JSONObject) i.next(); 
 			
-			double temp = doubleValue(obj.get("temp"));
+			double temp;
+			
+			if (bool) temp = doubleValue(obj.get("temp")); 
+			else temp = doubleValue(obj.get("feels_like")); 
 			
 			max = (temp > t) ? temp : t;
 			min = (temp < t) ? temp : t;
@@ -58,7 +69,10 @@ public class Statistics {
 			
 			obj = (JSONObject) i.next(); 
 			
-			double temp = doubleValue(obj.get("temp"));
+			double temp;
+			
+			if (bool) temp = doubleValue(obj.get("temp")); 
+			else temp = doubleValue(obj.get("feels_like")); 
 			
 			var += Math.pow((temp - avg), 2);
 			

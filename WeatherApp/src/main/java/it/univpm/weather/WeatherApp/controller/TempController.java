@@ -49,7 +49,8 @@ public class TempController {
 			//service.saveCurrentTemp(obj);
 			service.saveEveryHour(cityName);
 			
-			return new ResponseEntity<> (city.toString() + "<br><br>Creazione dello storico in corso", HttpStatus.OK);
+			//TODO city.toJson()
+			return new ResponseEntity<> (city.toJson().toString() + "<br><br>Creazione dello storico in corso", HttpStatus.OK);
 			
 		} catch (IOException e) {
 			
@@ -82,17 +83,20 @@ public class TempController {
 		
 		//tutto lo storico: 
 		StatsImplem stats = new StatsImplem();
+
+		Statistics statsTemp = new Statistics();
+		Statistics statsFeels = new Statistics();
 		
-		Statistics statistics = new Statistics();
-		statistics = stats.getStats(cityName);
+		statsTemp = stats.getStats(cityName, true);
+		statsFeels = stats.getStats(cityName, false);
 		
-		if(statistics == null) {
+		if(statsTemp == null ) {
 			
 			return new ResponseEntity<> ("<br><center><h4>Non è stato possibile calcolare le statistiche</h4></center>", HttpStatus.NOT_FOUND);
 			
 		}
 		
-	    return new ResponseEntity<>(statistics.toJson().toString(), HttpStatus.OK);
+	    return new ResponseEntity<>("Temperatura reale:<br>" + statsTemp.toJson().toString() + "<br><br>" + "Temperatura percepita:<br>" + statsFeels.toJson().toString(), HttpStatus.OK);
 	    
 	}
 	
