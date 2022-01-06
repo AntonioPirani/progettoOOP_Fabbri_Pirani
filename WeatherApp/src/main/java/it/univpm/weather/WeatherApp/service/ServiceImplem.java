@@ -96,6 +96,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		      
 		}
 	    
+	    city.setCityId((long) obj.get("id"));
+	    
 	    obj = (JSONObject) obj.get("current");
 	    
 	    city.setCurrentTemp(new Temperature ((long)obj.get("dt"), (double) obj.get("feels_like"), (double) obj.get("temp")));
