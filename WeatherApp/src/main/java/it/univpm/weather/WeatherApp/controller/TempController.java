@@ -5,7 +5,7 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 
 import it.univpm.weather.WeatherApp.exceptions.*;
-import it.univpm.weather.WeatherApp.filters.Filter;
+import it.univpm.weather.WeatherApp.filters.*;
 import it.univpm.weather.WeatherApp.service.Service;
 import it.univpm.weather.WeatherApp.model.*;
 import it.univpm.weather.WeatherApp.stats.*;
@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
 
 /**Classe che gestisce le chiamate utente tramite rotte GET e POST
  * 
@@ -109,12 +108,21 @@ public class TempController {
 			switch(filterBy) {
 			
 				case "hour":
+					
+					filter = new FilterByHour();
+					
 					break;
 				
 				case "day":
+					
+					filter = new FilterByDay();
+					
 					break;
 					
 				case "week":
+					
+					filter = new FilterByWeek();
+					
 					break;
 					
 				default:

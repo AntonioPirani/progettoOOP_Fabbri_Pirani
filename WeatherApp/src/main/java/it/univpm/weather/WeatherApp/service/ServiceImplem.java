@@ -95,9 +95,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			input.close();
 		      
 		}
-	    
-	    city.setCityId((long) obj.get("id"));
-	    
+	   
 	    obj = (JSONObject) obj.get("current");
 	    
 	    city.setCurrentTemp(new Temperature ((long)obj.get("dt"), (double) obj.get("feels_like"), (double) obj.get("temp")));
@@ -146,9 +144,44 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	      city.setCityName(cityName);
 	      city.setCoords(coord);
 	      
-	      return city;
+	      //return city;
 	      
 	    } catch (CityNotFoundException | ParseException e) {
+	    
+	      System.out.println(e);
+	      
+	      coord = new Coordinates(0, 0);
+	      city.setCoords(coord);
+	      
+	      return city;
+	      
+	    } finally {
+	    	
+	      input.close();
+	      
+	    }
+		
+		url = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + apiKey + "&units=metric";
+	    input = new URL(url).openConnection().getInputStream();
+		
+		try {                
+			
+	      BufferedReader re = new BufferedReader(new InputStreamReader(input));  
+	    
+	      String text = read(re);  
+	      String testo = (text.substring(0, text.length() - 1)); //per togliere ?
+	      
+	      JSONObject obj = (JSONObject) parser.parse(testo);
+	      
+	      long id = (long) obj.get("id");
+	      int timeZone = intValue(obj.get("timezone"));
+	      
+	      city.setCityId(id);
+	      city.setTimeZone(timeZone);
+	      
+	      return city;
+	      
+	    } catch (ParseException e) {
 	    
 	      System.out.println(e);
 	      
@@ -524,6 +557,10 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 */
 	private static double doubleValue(Object value) {
 	    return (value instanceof Number ? ((Number)value).doubleValue() : -1.0);
+	}
+	
+	private static int intValue(Object value) {
+	    return (int) (value instanceof Number ? ((Number)value).intValue() : -1.0);
 	}
 
 }
