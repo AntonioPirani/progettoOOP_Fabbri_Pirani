@@ -30,7 +30,6 @@ public class StatsImplem implements StatsInterface {
 		} catch (FileNotFoundException e) {
 
 			System.out.println("Lo storico di " + cityName + " non esiste");
-			e.printStackTrace();
 			
 			return null;
 		}

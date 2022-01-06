@@ -24,9 +24,6 @@ public class Statistics {
 		this.bool = b;
 	}
 	
-	//TODO possibile creazione di unica classe statistica con 2 sottoclassi che ereditano
-	
-
 	public Statistics(double max, double min, double avg, double var) {
 		
 		super();

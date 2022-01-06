@@ -5,6 +5,7 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 
 import it.univpm.weather.WeatherApp.exceptions.*;
+import it.univpm.weather.WeatherApp.filters.Filter;
 import it.univpm.weather.WeatherApp.service.Service;
 import it.univpm.weather.WeatherApp.model.*;
 import it.univpm.weather.WeatherApp.stats.*;
@@ -49,7 +50,6 @@ public class TempController {
 			//service.saveCurrentTemp(obj);
 			service.saveEveryHour(cityName);
 			
-			//TODO city.toJson()
 			return new ResponseEntity<> (city.toJson().toString() + "<br><br>Creazione dello storico in corso", HttpStatus.OK);
 			
 		} catch (IOException e) {
@@ -79,25 +79,55 @@ public class TempController {
 	}
 	
 	@GetMapping(value = "/statistics")
-	ResponseEntity<Object> statistics(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) {
-		
-		//tutto lo storico: 
+	ResponseEntity<Object> statistics(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName,
+										@RequestParam(value = "filterBy", required = false) String filterBy ) {
+ 
 		StatsImplem stats = new StatsImplem();
-
-		Statistics statsTemp = new Statistics();
-		Statistics statsFeels = new Statistics();
 		
-		statsTemp = stats.getStats(cityName, true);
-		statsFeels = stats.getStats(cityName, false);
-		
-		if(statsTemp == null ) {
+		if(filterBy == null) { //tutto lo storico
 			
-			return new ResponseEntity<> ("<br><center><h4>Non è stato possibile calcolare le statistiche</h4></center>", HttpStatus.NOT_FOUND);
+			Statistics statsTemp = new Statistics();
+			Statistics statsFeels = new Statistics();
+			
+			statsTemp = stats.getStats(cityName, true);
+			statsFeels = stats.getStats(cityName, false);
+			
+			if(statsTemp == null ) {
+				
+				return new ResponseEntity<> ("<br><center><h4>Non è stato possibile calcolare le statistiche</h4></center>", HttpStatus.NOT_FOUND);
+				
+			}
+			
+		    return new ResponseEntity<>("Statistiche di <b>" + cityName + "</b><br><br>Temperatura reale:<br>" + statsTemp.toJson().toString() + "<br><br>" + "Temperatura percepita:<br>" + statsFeels.toJson().toString(), HttpStatus.OK);
+		    
+		}
+		
+		else {
+			
+			Filter filter;
+			
+			switch(filterBy) {
+			
+				case "hour":
+					break;
+				
+				case "day":
+					break;
+					
+				case "week":
+					break;
+					
+				default:
+					
+					return new ResponseEntity<> ("<br><center><h4>Il filtro inserito non è corretto</h4><br><br>Le opzioni sono hour, day, week</center>", HttpStatus.NOT_FOUND);
+			
+			}
 			
 		}
 		
-	    return new ResponseEntity<>("Temperatura reale:<br>" + statsTemp.toJson().toString() + "<br><br>" + "Temperatura percepita:<br>" + statsFeels.toJson().toString(), HttpStatus.OK);
-	    
+		return new ResponseEntity<> ("No filtro", HttpStatus.NOT_FOUND);
+		
+		
 	}
 	
 //	@GetMapping("/")
