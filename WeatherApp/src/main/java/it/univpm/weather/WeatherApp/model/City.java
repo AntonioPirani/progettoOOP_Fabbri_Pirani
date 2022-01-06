@@ -18,6 +18,7 @@ import org.json.simple.JSONObject;
 	private Coordinates coords;
 	private Temperature currentTemp;
 	private ArrayList<Temperature> temp;
+	private int timeZone;
 	
 	/** Costruttore dell'oggetto.
 	 * 
@@ -35,7 +36,7 @@ import org.json.simple.JSONObject;
 	 * @param currentTemp
 	 * @param temp
 	 */
-	public City(String cityName, long cityId, Coordinates coords, Temperature currentTemp,
+	public City(String cityName, long cityId, int timeZone, Coordinates coords, Temperature currentTemp,
 			ArrayList<Temperature> temp) {
 		super();
 		this.cityName = cityName;
@@ -43,6 +44,7 @@ import org.json.simple.JSONObject;
 		this.coords = coords;
 		this.currentTemp = currentTemp;
 		this.temp = temp;
+		this.timeZone = timeZone;
 	}
 	
 	/** Costruttore con unicamente il parametro cityName.
@@ -88,6 +90,14 @@ import org.json.simple.JSONObject;
 	public void setCityId(long cityId) 
 	{
 		this.cityId = cityId;
+	}
+
+	public int getTimeZone() {
+		return timeZone;
+	}
+
+	public void setTimeZone(int timeZone) {
+		this.timeZone = timeZone;
 	}
 
 	/** Metodo get che restituisce le coordinate della città.
@@ -139,8 +149,9 @@ import org.json.simple.JSONObject;
 	@Override
 	public String toString() {
 		return "City [cityName=" + cityName + ", cityId=" + cityId + ", coords=" + coords + ", currentTemp="
-				+ currentTemp + ", temp=" + temp + "]";
+				+ currentTemp + ", temp=" + temp + ", timeZone=" + timeZone + "]";
 	}
+	
 	
 	public JSONObject toJson() {
 		
@@ -149,6 +160,10 @@ import org.json.simple.JSONObject;
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		
 		map.put("cityName", cityName);
+		
+		map.put("cityId", cityId);
+		
+		map.put("timeZone", timeZone);
 		
 		map.put("dateTime", currentTemp.getDateTime());
 
@@ -167,5 +182,4 @@ import org.json.simple.JSONObject;
 		return obj;
 		
 	}
-	
 }
