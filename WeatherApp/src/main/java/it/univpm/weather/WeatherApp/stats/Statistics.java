@@ -33,6 +33,42 @@ public class Statistics {
 		this.var = var;
 		
 	}
+	
+	public double getMax() {
+		return max;
+	}
+
+	public void setMax(double max) {
+		this.max = max;
+	}
+
+	public double getMin() {
+		return min;
+	}
+
+	public void setMin(double min) {
+		this.min = min;
+	}
+
+	public double getAvg() {
+		return avg;
+	}
+
+	public void setAvg(double avg) {
+		this.avg = avg;
+	}
+
+	public double getVar() {
+		return var;
+	}
+
+	public void setVar(double var) {
+		this.var = var;
+	}
+	
+	public boolean getBool() {
+		return bool;
+	}
 
 	public void statsCalc(JSONArray array) {
 		

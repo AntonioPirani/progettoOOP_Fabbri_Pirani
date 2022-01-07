@@ -21,12 +21,8 @@ public class StatsImplem implements StatsInterface {
 			
 		try {
 			
-			if(!file.exists()) {
-
-				throw new FileNotFoundException();
+			if(!file.exists()) throw new FileNotFoundException();
 				
-			}
-			
 		} catch (FileNotFoundException e) {
 
 			System.out.println("Lo storico di " + cityName + " non esiste");
