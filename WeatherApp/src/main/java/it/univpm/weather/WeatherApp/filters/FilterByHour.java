@@ -23,15 +23,23 @@ public class FilterByHour extends Filter {
 		this.time = time;
 	}
 	
-	public String calculate(boolean b) {
+	public String calculate() {
 		
-		stats = new Statistics(b);
+		stats = new Statistics(true);
 		JSONArray filter = filter();
 		
 		if (filter == null || filter.size() == 0) return "Storico vuoto"; //TODO controllare
 		else stats.statsCalc(filter);
 		
-		return toJson().toString();
+		String response = "Temperatura reale: " + toJson().toString();
+		
+		stats = new Statistics(false);
+		filter = filter();
+		stats.statsCalc(filter);
+		
+		response = response + "<br>Temperatura percepita: " + toJson().toString();
+		
+		return response;
 		//TODO due istanze per reale e percepita
 	}
 
@@ -69,23 +77,19 @@ public class FilterByHour extends Filter {
 				
 				obj = (JSONObject) parser.parse(read);
 				
-				if((long) obj.get("dt") < previousTime(time)) {		//TODO
-					System.out.println("Stop");
-					return array;
+				if(((long) obj.get("dt") >= previousTime(time)) && ((long) obj.get("dt") <= Instant.now().getEpochSecond())) {		//TODO
+					
+					HashMap<String,Object> map = new HashMap<String,Object>();
+				
+					map.put("dt", obj.get("dt"));
+					
+					if(stats.getBool()) map.put("temp", obj.get("temp"));
+					else map.put("feels_like", obj.get("feels_like"));
+					
+					obj = new JSONObject(map);
+					
+					array.add(obj);
 				}
-				
-				System.out.println("data file: " + obj.get("dt") + "\n data calcolata: " + (previousTime(time)));
-				
-				HashMap<String,Object> map = new HashMap<String,Object>();
-				
-				map.put("dt", obj.get("dt"));
-				
-				if(stats.getBool()) map.put("temp", obj.get("temp"));
-				else map.put("feels_like", obj.get("feels_like"));
-				
-				obj = new JSONObject(map);
-				
-				array.add(obj);
 				
 			} 
 			

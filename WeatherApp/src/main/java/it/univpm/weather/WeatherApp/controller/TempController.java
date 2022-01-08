@@ -115,7 +115,7 @@ public class TempController {
 				case "hour": //fino a 24 ore indietro
 					
 					filter = new FilterByHour(cityName, time);
-					return new ResponseEntity<> (( (FilterByHour) filter).calculate(true), HttpStatus.OK);
+					return new ResponseEntity<> (( (FilterByHour) filter).calculate(), HttpStatus.OK);
 				
 				case "day": //fino a 7 giorni indietro
 					
