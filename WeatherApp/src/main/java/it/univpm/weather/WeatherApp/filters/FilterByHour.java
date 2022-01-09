@@ -12,6 +12,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import it.univpm.weather.WeatherApp.exceptions.*;
+
 import it.univpm.weather.WeatherApp.stats.*;
 
 public class FilterByHour extends Filter {
@@ -26,10 +28,28 @@ public class FilterByHour extends Filter {
 	public String calculate() {
 		
 		stats = new Statistics(true);
-		JSONArray filter = filter();
+		JSONArray filter = null;
 		
-		if (filter == null || filter.size() == 0) return "Storico vuoto"; //TODO controllare, nuova eccezione
-		else stats.statsCalc(filter);
+		try {
+			
+			if (time == 0) throw new InvalidPeriodException("<br><center><h4>Non è stato inserito un periodo di tempo valido</h4></center>");
+			
+			filter = filter();
+			if (filter == null || filter.size() == 0) throw new HistoryException("<center>Storico di <b>" + cityName + "</b> vuoto</center>");
+		
+		} catch (HistoryException e) {
+			
+			e.printStackTrace();
+			return e.getTxt();
+			
+		} catch (InvalidPeriodException e) {
+			
+			e.printStackTrace();
+			return e.getOutput();
+			
+		}
+		
+		stats.statsCalc(filter);
 		
 		String response = "Temperatura reale: " + toJson().toString();
 		
@@ -54,7 +74,7 @@ public class FilterByHour extends Filter {
 				
 		} catch (FileNotFoundException e) {
 
-			System.out.println("Lo storico di " + cityName + " non esiste"); //TODO eccezione storico
+			System.out.println("Lo storico di " + cityName + " non esiste"); 
 			return null;
 		}
 		
@@ -76,7 +96,7 @@ public class FilterByHour extends Filter {
 				
 				obj = (JSONObject) parser.parse(read);
 				
-				if(((long) obj.get("dt") >= previousTime(time)) && ((long) obj.get("dt") <= Instant.now().getEpochSecond())) {		//TODO
+				if(((long) obj.get("dt") >= previousTime(time)) && ((long) obj.get("dt") <= Instant.now().getEpochSecond())) {
 					
 					HashMap<String,Object> map = new HashMap<String,Object>();
 				
@@ -105,7 +125,5 @@ public class FilterByHour extends Filter {
 		
 		return array;
 	}
-	
-	
 
 }

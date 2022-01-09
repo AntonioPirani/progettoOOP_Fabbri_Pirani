@@ -80,7 +80,7 @@ public class TempController {
 	@GetMapping(value = "/statistics")
 	public ResponseEntity<Object> statistics(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName,
 										@RequestParam(value = "filterBy", required = false) String filterBy,
-										@RequestParam(value = "time", required = false) int time) {
+										@RequestParam(value = "time", required = false) Integer time) {
  
 		StatsImplem stats = new StatsImplem();
 		
@@ -112,32 +112,29 @@ public class TempController {
 			
 			switch(filterBy) {
 			
-				case "hour": //fino a 24 ore indietro
+				case "hour": 
 					
 					filter = new FilterByHour(cityName, time);
 					return new ResponseEntity<> (( (FilterByHour) filter).calculate(), HttpStatus.OK);
 				
-				case "day": //fino a 7 giorni indietro
+				case "day": 
 					
 					filter = new FilterByDay(cityName, time);
+					return new ResponseEntity<> (( (FilterByDay) filter).calculate(), HttpStatus.OK);
 					
-					break;
-					
-				case "week": // fino a 4 settimane indietro
+				case "week": 
 					
 					filter = new FilterByWeek(cityName, time);
+					return new ResponseEntity<> (( (FilterByWeek) filter).calculate(), HttpStatus.OK);
+
 					
-					break;
+				default: 
 					
-				default: // il tutto a seconda della disponibilità dello storico
-					
-					return new ResponseEntity<> ("<br><center><h4>Il filtro inserito non è corretto</h4><br>Le opzioni sono hour, day, week</center>", HttpStatus.NOT_FOUND);
+					return new ResponseEntity<> ("<br><center><h4>Il filtro inserito non è corretto</h4><br>Le opzioni sono hour, day, week</center>", HttpStatus.BAD_REQUEST);
 			
 			}
 			
 		}
-		
-		return new ResponseEntity<> ("No filtro", HttpStatus.NOT_FOUND);
 		
 	}
 	
