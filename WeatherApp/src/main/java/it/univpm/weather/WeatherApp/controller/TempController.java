@@ -59,7 +59,7 @@ public class TempController {
     }
 	
 	@GetMapping(value = "/compare")
-	ResponseEntity<Object> compare(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName, @RequestParam(value = "previousDay", defaultValue = "1") int prevDay) throws IOException, ParseException {
+	public ResponseEntity<Object> compare(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName, @RequestParam(value = "previousDay", defaultValue = "1") int prevDay) throws IOException, ParseException {
 		
 		if(prevDay < 1 || prevDay > 5) {
 			return new ResponseEntity<> ("<br><center><h4>Il numero di giorni precedenti da ricercare deve essere tra <b>1</b> e <b>5</b></h4></center>", HttpStatus.NOT_FOUND);
@@ -78,7 +78,7 @@ public class TempController {
 	}
 	
 	@GetMapping(value = "/statistics")
-	ResponseEntity<Object> statistics(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName,
+	public ResponseEntity<Object> statistics(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName,
 										@RequestParam(value = "filterBy", required = false) String filterBy,
 										@RequestParam(value = "time", required = false) int time) {
  
