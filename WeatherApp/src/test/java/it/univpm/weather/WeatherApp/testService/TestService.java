@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonParseException;
 
@@ -17,6 +18,7 @@ import it.univpm.weather.WeatherApp.model.Coordinates;
 import it.univpm.weather.WeatherApp.model.Temperature;
 import it.univpm.weather.WeatherApp.service.Service;
 
+@SpringBootTest
 public class TestService 
 {
 	private Service service;
