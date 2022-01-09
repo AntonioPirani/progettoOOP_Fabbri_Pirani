@@ -28,7 +28,7 @@ public class FilterByHour extends Filter {
 		stats = new Statistics(true);
 		JSONArray filter = filter();
 		
-		if (filter == null || filter.size() == 0) return "Storico vuoto"; //TODO controllare
+		if (filter == null || filter.size() == 0) return "Storico vuoto"; //TODO controllare, nuova eccezione
 		else stats.statsCalc(filter);
 		
 		String response = "Temperatura reale: " + toJson().toString();
@@ -40,7 +40,6 @@ public class FilterByHour extends Filter {
 		response = response + "<br>Temperatura percepita: " + toJson().toString();
 		
 		return response;
-		//TODO due istanze per reale e percepita
 	}
 
 	@SuppressWarnings("unchecked")
@@ -55,7 +54,7 @@ public class FilterByHour extends Filter {
 				
 		} catch (FileNotFoundException e) {
 
-			System.out.println("Lo storico di " + cityName + " non esiste");
+			System.out.println("Lo storico di " + cityName + " non esiste"); //TODO eccezione storico
 			return null;
 		}
 		
