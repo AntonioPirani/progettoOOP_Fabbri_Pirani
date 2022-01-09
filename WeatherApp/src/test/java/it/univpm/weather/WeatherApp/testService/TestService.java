@@ -7,21 +7,20 @@ import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import com.fasterxml.jackson.core.JsonParseException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JsonParseException;
 
 import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
 import it.univpm.weather.WeatherApp.exceptions.HourException;
 import it.univpm.weather.WeatherApp.model.City;
 import it.univpm.weather.WeatherApp.model.Coordinates;
 import it.univpm.weather.WeatherApp.model.Temperature;
-import it.univpm.weather.WeatherApp.service.Service;
+import it.univpm.weather.WeatherApp.service.*;
 
-@SpringBootTest
 public class TestService 
 {
-	private Service service;
+	//@Autowired
+	private ServiceImplem service = new ServiceImplem();
 	private Temperature temp ;
 	private City city;
 	private Coordinates coord;

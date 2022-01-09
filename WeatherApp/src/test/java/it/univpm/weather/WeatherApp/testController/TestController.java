@@ -6,15 +6,13 @@ import java.io.IOException;
 
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import it.univpm.weather.WeatherApp.controller.TempController;
 import it.univpm.weather.WeatherApp.exceptions.HourException;
 
-@SpringBootTest
 public class TestController 
 {
-	private TempController contro;
+	private TempController contro = new TempController();
 	
 	@Test
 	public void testgetTemperature() throws HourException
