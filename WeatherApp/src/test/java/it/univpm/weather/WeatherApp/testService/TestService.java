@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.json.simple.parser.ParseException;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.AfterEach;
 import org.springframework.boot.json.JsonParseException;
 
 import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
@@ -61,6 +61,10 @@ public class TestService
 	public void testcompareTemp() throws IOException, ParseException
 	{
 		assertNotNull(service.compareTemp("Ancona",1));		
+	}
+	
+	@AfterEach
+	void tearDown() throws Exception {
 	}
 	
 }

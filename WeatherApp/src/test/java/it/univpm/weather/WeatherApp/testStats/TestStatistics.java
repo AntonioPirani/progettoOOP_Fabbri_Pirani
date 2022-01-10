@@ -1,6 +1,7 @@
 package it.univpm.weather.WeatherApp.testStats;
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import it.univpm.weather.WeatherApp.stats.Statistics;
@@ -23,5 +24,8 @@ public class TestStatistics
 		String json="";
 		assertEquals(stats.toJson().toString(),json);
 	}
-	
+
+	@After
+	void tearDown() throws Exception {
+	}
 }

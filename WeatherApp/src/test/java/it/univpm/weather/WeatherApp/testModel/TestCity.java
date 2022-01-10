@@ -2,6 +2,7 @@ package it.univpm.weather.WeatherApp.testModel;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.Before;
 
@@ -30,10 +31,8 @@ public class TestCity
 		assertEquals(city.toJson().toString(),json);
 	}
 	
-//	@Test //esempio di failure
-//	public void testJSON2()
-//	{
-//		assertEquals(1, 2);
-//	}
+	@After
+	void tearDown() throws Exception {
+	}
 		
 }
