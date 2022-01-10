@@ -7,6 +7,7 @@ import java.io.IOException;
 import it.univpm.weather.WeatherApp.exceptions.*;
 import it.univpm.weather.WeatherApp.filters.*;
 import it.univpm.weather.WeatherApp.service.Service;
+import it.univpm.weather.WeatherApp.service.ServiceImplem;
 import it.univpm.weather.WeatherApp.model.*;
 import it.univpm.weather.WeatherApp.stats.*;
 
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TempController {
 	
 	@Autowired
-	Service service;
+	ServiceImplem service = new ServiceImplem();
 	//https://stackoverflow.com/questions/21282919/spring-3-request-processing-failed-nested-exception-is-java-lang-nullpointerexc/21329173
 	
 	/**Rotta di tipo GET per ottenere la temperatura corrente di una città
