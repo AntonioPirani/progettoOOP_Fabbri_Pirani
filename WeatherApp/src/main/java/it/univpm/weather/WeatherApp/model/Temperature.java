@@ -13,8 +13,7 @@ public class Temperature
 	private double maxTemp;
 	private double minTemp;
 	
-	/**
-	 * Costruttore dell'oggetto.
+	/** Costruttore dell'oggetto.
 	 */
 	public Temperature() 
 	{
@@ -25,7 +24,6 @@ public class Temperature
 	 * @param dateTime
 	 * @param temp
 	 * @param feelsLike
-	 * 
 	 */
 	public Temperature(long dateTime, double temp, double feelsLike) {
 		super();

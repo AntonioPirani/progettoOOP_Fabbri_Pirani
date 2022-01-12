@@ -5,14 +5,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
+/** Classe che personalizza il messaggio di errore della rotta /error.
  * 
  * @author Matteo Fabbri
- *
  */
 @RestController
 public class ErrorHandlerController implements ErrorController{
-
+	
+	/** Metodo che restituisce il parametro content.
+	 * 
+	 * @return content Stringa contenente il corpo HTML della pagina personalizzata di errore.
+	 */
 	@RequestMapping("/error")
 	@ResponseBody
 	public String getErrorPath() {

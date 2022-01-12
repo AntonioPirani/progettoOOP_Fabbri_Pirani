@@ -17,6 +17,10 @@ import it.univpm.weather.WeatherApp.model.Coordinates;
 import it.univpm.weather.WeatherApp.model.Temperature;
 import it.univpm.weather.WeatherApp.service.*;
 
+/** La classe TestService testa i metodi della classe Service.
+ * 
+ * @author Matteo Fabbri
+ */
 public class TestService 
 {
 	//@Autowired
@@ -25,6 +29,8 @@ public class TestService
 	private City city;
 	private Coordinates coord;
 	
+	/** Setup dei parametri utilizzati nei vari metodi dell classe TestService.
+	 */
 	@Before
 	public void setUp()
 	{
@@ -33,30 +39,54 @@ public class TestService
 		city = new City("Ancona", 3183087, 3600, coord, temp, null);
 	}
 	
+	/** Test del metodo testgetTemperature.	 
+	 * 
+	 * @throws IOException
+	 */
 	@Test
 	public void testgetTemperature() throws IOException
 	{
 		assertNotNull(service.getTemperature("Ancona"));		
 	}
 
+	/** Test del metodo testsettimeMachine.	 
+	 * 
+	 * @throws IOException
+	 */
 	@Test
 	public void testsettimeMachine() throws IOException
 	{
 		assertNotNull(service.timeMachine("Ancona", 1641494587));
 	}
 	
+	/** Test del metodo testgetCityCoords.	 
+	 * 
+	 * @throws JsonParseException
+	 * @throws IOException
+	 * @throws CityNotFoundException
+	 */
 	@Test
 	public void testgetCityCoords() throws JsonParseException, IOException, CityNotFoundException
 	{
 		assertNotNull(service.getCityCoords("Ancona"));	
 	}
 	
+	/** Test del metodo testsaveCurrentTemp.	 
+	 * 
+	 * @throws IOException
+	 * @throws HourException
+	 */
 	@Test
 	public void testsaveCurrentTemp() throws IOException, HourException
 	{
 		assertNotNull(service.saveCurrentTemp(city));	
 	}
 	
+	/** Test del metodo testcompareTemp.	 
+	 * 
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	@Test
 	public void testcompareTemp() throws IOException, ParseException
 	{

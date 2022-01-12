@@ -8,6 +8,10 @@ import org.junit.Before;
 
 import it.univpm.weather.WeatherApp.model.*;
 
+/** La classe TestCity testa i metodi della classe City.
+ * 
+ * @author Matteo Fabbri
+ */
 public class TestCity 
 {
 	private Temperature temp ;
@@ -15,6 +19,9 @@ public class TestCity
 	private Coordinates coord;
 	private String json;
 	
+	/** Setup dei parametri utilizzati nei vari metodi dell classe TestCity.
+	 * 
+	 */
 	@Before
 	public void setUp()
 	{
@@ -25,6 +32,8 @@ public class TestCity
 		
 	}
 	
+    /** Test del metodo testJSON.	 * 
+	 */
 	@Test
 	public void testJSON()
 	{
