@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 	/** La classe City descrive le proprietà di ogni città.
 	 * 
 	 * @author Matteo Fabbri
+	 * 
 	 */
 	public class City {
 		
@@ -20,7 +21,7 @@ import org.json.simple.JSONObject;
 	private ArrayList<Temperature> temp;
 	private int timeZone;
 	
-	/** Costruttore dell'oggetto.
+	/** Costruttore senza parametri.
 	 * 
 	 */
 	public City() 
@@ -91,11 +92,19 @@ import org.json.simple.JSONObject;
 	{
 		this.cityId = cityId;
 	}
-
+	
+	/** Metodo get che restituisce il fusorario.
+	 * 
+	 * @return timezone
+	 */
 	public int getTimeZone() {
 		return timeZone;
 	}
 
+	/** Metodo set che imposta il fusorario.
+	 * 
+	 * @param timeZone
+	 */
 	public void setTimeZone(int timeZone) {
 		this.timeZone = timeZone;
 	}
@@ -134,10 +143,18 @@ import org.json.simple.JSONObject;
 		this.currentTemp = currentTemp;
 	}
 
+	/** Metodo get che restituisce i un ArrayList di oggetti di tipo Temperature.
+	 * 
+	 * @return temp
+	 */
 	public ArrayList<Temperature> getTemp() {
 		return temp;
 	}
 
+	/** Metodo set che imposta i un ArrayList di oggetti di tipo Temperature.
+	 * 
+	 * @param temp
+	 */
 	public void setTemp(ArrayList<Temperature> temp) {
 		this.temp = temp;
 	}
@@ -152,7 +169,10 @@ import org.json.simple.JSONObject;
 				+ currentTemp + ", temp=" + temp + ", timeZone=" + timeZone + "]";
 	}
 	
-	
+	/** Metodo che restituisce un oggetto di tipo JSONObject che contiene.
+	 * 
+	 * @return obj
+	 */
 	public JSONObject toJson() {
 		
 		JSONObject obj = new JSONObject();

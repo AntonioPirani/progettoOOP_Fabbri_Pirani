@@ -1,19 +1,18 @@
 package it.univpm.weather.WeatherApp.exceptions;
 
-/**
+/** La classe CityNotFoundExceotion gestice l'eccezzione quando una città non è valida.
  * 
  * @author Matteo Fabbri
- *
  */
 
 public class CityNotFoundException extends Exception
 {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	String output;
-
+	
+	/** Costruttore senza parametri.
+	 */
 	public CityNotFoundException() 
 	{
 		super();

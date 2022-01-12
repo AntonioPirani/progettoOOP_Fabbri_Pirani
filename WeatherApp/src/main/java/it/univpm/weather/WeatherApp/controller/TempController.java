@@ -58,6 +58,14 @@ public class TempController {
 		}
     }
 	
+	/** Rotta di tipo GET per confrontare lo storico sulle temperature effettive e percepite di una città.
+	 * 
+	 * @param cityName
+	 * @param prevDay
+	 * @return
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	@GetMapping(value = "/compare")
 	public ResponseEntity<Object> compare(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName, @RequestParam(value = "previousDay", defaultValue = "1") int prevDay) throws IOException, ParseException {
 		
@@ -77,6 +85,13 @@ public class TempController {
 	
 	}
 	
+	/**  Rotta di tipo GET per restituire il filtraggio delle statistiche in base alla periodicità: giorni, fascia oraria, settimanale.
+	 * 
+	 * @param cityName
+	 * @param filterBy
+	 * @param time
+	 * @return
+	 */
 	@GetMapping(value = "/statistics")
 	public ResponseEntity<Object> statistics(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName,
 										@RequestParam(value = "filterBy", required = false) String filterBy,

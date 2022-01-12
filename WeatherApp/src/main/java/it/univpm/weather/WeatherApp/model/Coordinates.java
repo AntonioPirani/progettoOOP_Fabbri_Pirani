@@ -11,7 +11,6 @@ public class Coordinates
 	private double lon;
 	
 	/** Costruttore dell'oggetto.
-	 * 
 	 */
 	public Coordinates() {
 		super();
