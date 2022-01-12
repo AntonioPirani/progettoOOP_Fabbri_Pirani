@@ -1,14 +1,22 @@
 package it.univpm.weather.WeatherApp.testController;
 
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.IOException;
 
 import org.json.simple.parser.ParseException;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
 import it.univpm.weather.WeatherApp.controller.TempController;
 import it.univpm.weather.WeatherApp.exceptions.HourException;
@@ -18,14 +26,16 @@ import it.univpm.weather.WeatherApp.exceptions.HourException;
  * @author Matteo Fabbri
  */
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 @AutoConfigureMockMvc
 public class TestController 
 {
-	
-	TempController contro = new TempController();
+	@Autowired
+	private MockMvc mockMvc;
 
-	@BeforeEach
-	void setUp() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 	}
 
     /** Test del metodo testGetTemperature.
@@ -35,7 +45,7 @@ public class TestController
 	@Test
 	public void testGetTemperature() throws Exception
 	{
-		assertNotNull(contro.getTemperature("Ancona"));
+		this.mockMvc.perform(get("/current")).andExpect(status().isOk());
 	}
 	
     /** Test del metodo testCompare.
@@ -44,9 +54,9 @@ public class TestController
 	 * @throws ParseException
 	 */
 	@Test
-	public void testCompare() throws IOException, ParseException 
+	public void testCompare() throws Exception
 	{
-		assertNotNull(contro.compare("Ancona", 2));		
+		this.mockMvc.perform(get("/current")).andExpect(status().isOk());
 	}
 	
 	
@@ -55,13 +65,13 @@ public class TestController
 	 * @throws HourException
 	 */
 	@Test
-	public void testStatistics() throws HourException 
+	public void testStatistics() throws Exception 
 	{
-		assertNotNull(contro.statistics("Ancona", "", 0));		
+		this.mockMvc.perform(get("/current")).andExpect(status().isOk());
 	}
 
-	@AfterEach
-	void tearDown() throws Exception {
-	}
+//	@AfterEach
+//	public void tearDown() throws Exception {
+//	}
 	
 }
