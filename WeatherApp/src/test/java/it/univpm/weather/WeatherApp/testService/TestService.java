@@ -39,12 +39,12 @@ public class TestService
 		city = new City("Ancona", 3183087, 3600, coord, temp, null);
 	}
 	
-	/** Test del metodo testgetTemperature.	 
+	/** Test del metodo testGetTemperature.	 
 	 * 
 	 * @throws IOException
 	 */
 	@Test
-	public void testgetTemperature() throws IOException
+	public void testGetTemperature() throws IOException
 	{
 		assertNotNull(service.getTemperature("Ancona"));		
 	}
@@ -54,47 +54,47 @@ public class TestService
 	 * @throws IOException
 	 */
 	@Test
-	public void testsettimeMachine() throws IOException
+	public void testTimeMachine() throws IOException
 	{
-		assertNotNull(service.timeMachine("Ancona", 1641494587));
+		assertNotNull(service.timeMachine("Ancona", 1641923101));
 	}
 	
-	/** Test del metodo testgetCityCoords.	 
+	/** Test del metodo testGetCityCoords.	 
 	 * 
 	 * @throws JsonParseException
 	 * @throws IOException
 	 * @throws CityNotFoundException
 	 */
 	@Test
-	public void testgetCityCoords() throws JsonParseException, IOException, CityNotFoundException
+	public void testGetCityCoords() throws JsonParseException, IOException, CityNotFoundException
 	{
 		assertNotNull(service.getCityCoords("Ancona"));	
 	}
 	
-	/** Test del metodo testsaveCurrentTemp.	 
+	/** Test del metodo testSaveCurrentTemp.	 
 	 * 
 	 * @throws IOException
 	 * @throws HourException
 	 */
 	@Test
-	public void testsaveCurrentTemp() throws IOException, HourException
+	public void testSaveCurrentTemp() throws IOException, HourException
 	{
 		assertNotNull(service.saveCurrentTemp(city));	
 	}
 	
-	/** Test del metodo testcompareTemp.	 
+	/** Test del metodo testCompareTemp.	 
 	 * 
 	 * @throws IOException
 	 * @throws ParseException
 	 */
 	@Test
-	public void testcompareTemp() throws IOException, ParseException
+	public void testCompareTemp() throws IOException, ParseException
 	{
 		assertNotNull(service.compareTemp("Ancona",1));		
 	}
 	
 	@AfterEach
-	void tearDown() throws Exception {
+	public void tearDown() throws Exception {
 	}
 	
 }
