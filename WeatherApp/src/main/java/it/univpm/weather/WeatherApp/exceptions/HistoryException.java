@@ -19,7 +19,7 @@ public class HistoryException extends Exception {
 		this.txt = txt;
 	}
 
-	public String getTxt() {
+	public String getMessage() {
 		return txt;
 	}
 

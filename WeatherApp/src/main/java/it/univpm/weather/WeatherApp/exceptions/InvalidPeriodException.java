@@ -31,7 +31,7 @@ public class InvalidPeriodException extends Exception
 	 * 
 	 * @return output (Messaggio di errore)
 	 */
-	public String getOutput() 
+	public String getMessage() 
 	{
 		return output;
 	}
