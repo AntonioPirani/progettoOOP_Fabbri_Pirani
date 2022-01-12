@@ -6,26 +6,34 @@ import org.junit.Before;
 import org.junit.Test;
 import it.univpm.weather.WeatherApp.stats.Statistics;
 
+/** Classe per testare i metodi della classe Statistics.
+ * 
+ * @author Matteo
+ */
 
 public class TestStatistics 
 {
 	
 	private Statistics stats;
 	
+	/** Setup dei parametri utilizzati nei vari metodi dell classe TestStatics.
+	 */
 	@Before
 	public void setUp()
 	{
-		stats = new Statistics(2.55,3.66,4.44,5.44);
+		stats = new Statistics(-3.07,6.819,4.54,8.266);
 	}
 	
+	/** Test del metodo toJSON.	
+	 */
 	@Test
 	public void testJSON()
 	{
-		String json="";
+		String json="{\"min\":-3.07,\"avg\":6.819,\"max\":4.54,\"var\":8.266}";
 		assertEquals(stats.toJson().toString(),json);
 	}
 
 	@After
-	void tearDown() throws Exception {
+	public void tearDown() throws Exception {
 	}
 }
