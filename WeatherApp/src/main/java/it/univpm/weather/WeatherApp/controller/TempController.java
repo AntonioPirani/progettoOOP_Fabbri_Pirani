@@ -7,7 +7,6 @@ import java.io.IOException;
 import it.univpm.weather.WeatherApp.exceptions.*;
 import it.univpm.weather.WeatherApp.filters.*;
 import it.univpm.weather.WeatherApp.service.Service;
-import it.univpm.weather.WeatherApp.service.ServiceImplem;
 import it.univpm.weather.WeatherApp.model.*;
 import it.univpm.weather.WeatherApp.stats.*;
 
@@ -121,10 +120,6 @@ public class TempController {
 		else {
 			
 			Filter filter;
-			
-//			if(time == 0) {
-//				return new ResponseEntity<> ("<br><center><h4>Non è stato inserito un periodo di tempo valido</h4></center>", HttpStatus.BAD_REQUEST);
-//			}
 			
 			try {
 			
