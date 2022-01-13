@@ -1,1 +1,2 @@
 {"dt":1641494412,"temp":3.48,"name":"Milano","lon":9.1898182,"feels_like":3.48,"lat":45.4642162}
+{"dt":1642100009,"temp":2.57,"name":"Milano","lon":9.1898182,"feels_like":2.57,"lat":45.4642162}

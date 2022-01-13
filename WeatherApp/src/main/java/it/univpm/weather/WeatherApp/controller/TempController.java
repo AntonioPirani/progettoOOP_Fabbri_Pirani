@@ -2,6 +2,7 @@ package it.univpm.weather.WeatherApp.controller;
 
 import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import it.univpm.weather.WeatherApp.exceptions.*;
@@ -115,12 +116,18 @@ public class TempController {
 			Statistics statsTemp = new Statistics();
 			Statistics statsFeels = new Statistics();
 			
-			statsTemp = stats.getStats(cityName, true);
-			statsFeels = stats.getStats(cityName, false);
-			
-			if(statsTemp == null ) {
+			try {
 				
-				return new ResponseEntity<> ("<br><center><h4>Non è stato possibile calcolare le statistiche</h4></center>", HttpStatus.NOT_FOUND);
+				statsTemp = stats.getStats(cityName, true);
+				statsFeels = stats.getStats(cityName, false);
+				
+			} catch (FileNotFoundException e ) {
+				
+				return new ResponseEntity<> ("<br><center><h4>Lo storico di " + cityName + " non esiste</h4></center>", HttpStatus.NOT_FOUND);
+				
+			} catch (ParseException e) {
+				
+				return new ResponseEntity<> ("<br><center><h4>Errore nello storico di " + cityName + "</h4></center>", HttpStatus.NOT_FOUND);
 				
 			}
 			

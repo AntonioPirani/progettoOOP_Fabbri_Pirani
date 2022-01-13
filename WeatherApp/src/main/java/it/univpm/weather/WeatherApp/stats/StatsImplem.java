@@ -13,22 +13,13 @@ import org.json.simple.parser.ParseException;
 
 public class StatsImplem implements StatsInterface {
 	
-	public Statistics getStats(String cityName, boolean b) {
+	public Statistics getStats(String cityName, boolean b) throws FileNotFoundException, ParseException {
 		
 		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + cityName + ".txt";
 		
 		File file = new File(filePath);
 			
-		try {
-			
-			if(!file.exists()) throw new FileNotFoundException();
-				
-		} catch (FileNotFoundException e) {
-
-			System.out.println("Lo storico di " + cityName + " non esiste");
-			
-			return null;
-		}
+		if(!file.exists()) throw new FileNotFoundException();	
 
 		JSONArray array;
 		Statistics stats;
@@ -65,7 +56,7 @@ public class StatsImplem implements StatsInterface {
 	}
 	
 	@SuppressWarnings("unchecked") // per il json simple, si poteva evitare anche la HashMap
-	public JSONArray createArray(File file, boolean b) {
+	public JSONArray createArray(File file, boolean b) throws ParseException {
 		
 		JSONArray array = new JSONArray();
 		JSONParser parser = new JSONParser();
@@ -100,8 +91,7 @@ public class StatsImplem implements StatsInterface {
 			
 		} catch (ParseException | IOException e) {
 			
-			e.printStackTrace();
-			return array = null;
+			throw new ParseException(0);
 			
 		} finally {
 			
