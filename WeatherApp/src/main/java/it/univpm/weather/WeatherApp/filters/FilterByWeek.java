@@ -25,29 +25,16 @@ public class FilterByWeek extends Filter {
 		this.time = time;
 	}
 
-public String calculate() {
+	public String calculate() throws InvalidPeriodException, HistoryException {
 		
 		stats = new Statistics(true);
 		JSONArray filter = null;
 		
-		try {
-			
-			if (time == 0) throw new InvalidPeriodException("<br><center><h4>Non è stato inserito un periodo di tempo valido</h4></center>");
-			
-			filter = filter();
-			if (filter == null || filter.size() == 0) throw new HistoryException("<center>Storico di <b>" + cityName + "</b> vuoto</center>");
+		if (time == 0) throw new InvalidPeriodException("<br><center><h4>Non è stato inserito un periodo di tempo valido</h4></center>");
 		
-		} catch (HistoryException e) {
-			
-			e.printStackTrace();
-			return e.getTxt();
-			
-		} catch (InvalidPeriodException e) {
-			
-			e.printStackTrace();
-			return e.getOutput();
-		}
-		
+		filter = filter();
+		if (filter == null || filter.size() == 0) throw new HistoryException("<br><center>Storico di <b>" + cityName + "</b> vuoto</center>");
+	
 		stats.statsCalc(filter);
 		
 		String response = "Temperatura reale: " + toJson().toString();

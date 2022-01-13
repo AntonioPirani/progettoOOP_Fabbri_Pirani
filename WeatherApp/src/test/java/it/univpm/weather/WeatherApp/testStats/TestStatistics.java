@@ -21,7 +21,7 @@ public class TestStatistics
 	@Before
 	public void setUp()
 	{
-		stats = new Statistics(-3.07,6.819,4.54,8.266);
+		stats = new Statistics(4.54,-3.07,6.819,8.266);
 	}
 	
 	/** Test del metodo toJSON.	

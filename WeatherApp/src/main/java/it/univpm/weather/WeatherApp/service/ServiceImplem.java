@@ -371,11 +371,11 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		String mex = "<br><h3><center><b>Confronto Temperature - " + cityName + ": </b></center></h3><br>";
 		
 		if(compT > 0.0) {
-			mex = mex.concat("<center>La temperatura corrente rispetto alla media di " + prevDay + giorno + " fa è aumentata di <b>" + compT + "</b> gradi. <br><br>");
+			mex = mex.concat("<center>La temperatura reale rispetto alla media di " + prevDay + giorno + " fa è aumentata di <b>" + compT + "</b> gradi. <br><br>");
 		}
 		
 		else {
-			mex = mex.concat("<center>La temperatura corrente rispetto alla media di " + prevDay + giorno + " fa è diminuita di <b>" + Math.abs(compT) + "</b> gradi.<br><br>");
+			mex = mex.concat("<center>La temperatura reale rispetto alla media di " + prevDay + giorno + " fa è diminuita di <b>" + Math.abs(compT) + "</b> gradi.<br><br>");
 		}
 		
 		if(compF > 0.0) {

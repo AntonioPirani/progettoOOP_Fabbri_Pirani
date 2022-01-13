@@ -4,7 +4,6 @@ import it.univpm.weather.WeatherApp.exceptions.*;
 import it.univpm.weather.WeatherApp.model.*;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import com.fasterxml.jackson.core.JsonParseException;

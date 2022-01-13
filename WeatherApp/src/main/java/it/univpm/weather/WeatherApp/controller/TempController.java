@@ -7,7 +7,6 @@ import java.io.IOException;
 import it.univpm.weather.WeatherApp.exceptions.*;
 import it.univpm.weather.WeatherApp.filters.*;
 import it.univpm.weather.WeatherApp.service.Service;
-import it.univpm.weather.WeatherApp.service.ServiceImplem;
 import it.univpm.weather.WeatherApp.model.*;
 import it.univpm.weather.WeatherApp.stats.*;
 
@@ -27,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TempController {
 	
 	@Autowired
-	ServiceImplem service = new ServiceImplem();
+	Service service;
 	//https://stackoverflow.com/questions/21282919/spring-3-request-processing-failed-nested-exception-is-java-lang-nullpointerexc/21329173
 	
 	/**Rotta di tipo GET per ottenere la temperatura corrente di una città
@@ -122,32 +121,34 @@ public class TempController {
 			
 			Filter filter;
 			
-			if(time == 0) {
-				return new ResponseEntity<> ("<br><center><h4>Non è stato inserito un periodo di tempo valido</h4></center>", HttpStatus.BAD_REQUEST);
-			}
+			try {
 			
-			switch(filterBy) {
-			
-				case "hour": 
-					
-					filter = new FilterByHour(cityName, time);
-					return new ResponseEntity<> (( (FilterByHour) filter).calculate(), HttpStatus.OK);
+				switch(filterBy) {
 				
-				case "day": 
+					case "hour": 
+						
+						filter = new FilterByHour(cityName, time);
+						return new ResponseEntity<> (( (FilterByHour) filter).calculate(), HttpStatus.OK);
 					
-					filter = new FilterByDay(cityName, time);
-					return new ResponseEntity<> (( (FilterByDay) filter).calculate(), HttpStatus.OK);
-					
-				case "week": 
-					
-					filter = new FilterByWeek(cityName, time);
-					return new ResponseEntity<> (( (FilterByWeek) filter).calculate(), HttpStatus.OK);
-
-					
-				default: 
-					
-					return new ResponseEntity<> ("<br><center><h4>Il filtro inserito non è corretto</h4><br>Le opzioni sono hour, day, week</center>", HttpStatus.BAD_REQUEST);
+					case "day": 
+						
+						filter = new FilterByDay(cityName, time);
+						return new ResponseEntity<> (( (FilterByDay) filter).calculate(), HttpStatus.OK);
+						
+					case "week": 
+						
+						filter = new FilterByWeek(cityName, time);
+						return new ResponseEntity<> (( (FilterByWeek) filter).calculate(), HttpStatus.OK);
+	
+					default: 
+						
+						return new ResponseEntity<> ("<br><center><h4>Il filtro inserito non è corretto</h4><br>Le opzioni sono hour, day, week</center>", HttpStatus.BAD_REQUEST);
+				
+				}
 			
+			} catch(InvalidPeriodException | HistoryException e) {
+				return new ResponseEntity<> (e.getMessage(), HttpStatus.BAD_REQUEST);
+				
 			}
 			
 		}
