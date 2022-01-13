@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public interface Service {
 	
-	public City getTemperature(String cityName) throws IOException; //current
+	public City getTemperature(String cityName) throws IOException, CityNotFoundException; //current
 	
 	public JSONArray timeMachine(String cityName, long dt) throws IOException;
 	

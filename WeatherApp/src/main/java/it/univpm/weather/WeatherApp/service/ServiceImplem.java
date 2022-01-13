@@ -56,7 +56,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 * @throws IOException eccezione di input/output
 	 * @throws ParseException se ci sono errori nel formato JSON
 	 */
-	public City getTemperature(String cityName) throws IOException {
+	public City getTemperature(String cityName) throws IOException, CityNotFoundException {
 
 		JSONParser parser = new JSONParser();
 		City city = new City();
@@ -68,6 +68,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		} catch (IOException | CityNotFoundException e) {
 
 			e.printStackTrace();
+			throw new CityNotFoundException();
 			
 		}
 
@@ -146,7 +147,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	      
 	      //return city;
 	      
-	    } catch (CityNotFoundException | ParseException e) {
+	    } catch (ParseException e) {
 	    
 	      System.out.println(e);
 	      
@@ -294,6 +295,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 
 					e.printStackTrace();
 					
+				} catch (CityNotFoundException e) {
+					e.printStackTrace();
 				}
 		    }
 		    

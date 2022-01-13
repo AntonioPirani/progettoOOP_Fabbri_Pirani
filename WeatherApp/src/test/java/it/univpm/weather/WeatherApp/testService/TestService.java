@@ -42,9 +42,10 @@ public class TestService
 	/** Test del metodo testGetTemperature.	 
 	 * 
 	 * @throws IOException
+	 * @throws CityNotFoundException 
 	 */
 	@Test
-	public void testGetTemperature() throws IOException
+	public void testGetTemperature() throws IOException, CityNotFoundException
 	{
 		assertNotNull(service.getTemperature("Ancona"));		
 	}

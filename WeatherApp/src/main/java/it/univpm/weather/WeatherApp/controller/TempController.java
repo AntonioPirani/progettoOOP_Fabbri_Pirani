@@ -42,19 +42,19 @@ public class TempController {
 			
 			City city = service.getTemperature(cityName);
 			
-			if(city.getCoords().getLat() == 0 && city.getCoords().getLon() == 0) {
-				return new ResponseEntity<> ("<br><center><h4>Città <b>\"" + cityName + "\"</b> non trovata</h4></center>", HttpStatus.NOT_FOUND);
-			}
+//			if(city.getCoords().getLat() == 0 && city.getCoords().getLon() == 0) {
+//				return new ResponseEntity<> ("<br><center><h4>Città <b>\"" + cityName + "\"</b> non trovata</h4></center>", HttpStatus.NOT_FOUND);
+//			}
 			
 			//service.saveCurrentTemp(obj);
 			service.saveEveryHour(cityName);
 			
 			return new ResponseEntity<> (city.toJson().toString() + "<br><br>Creazione dello storico in corso", HttpStatus.OK);
 			
-		} catch (IOException e) {
+		} catch (IOException | CityNotFoundException e) {
 			
-			return new ResponseEntity<> ("Qualcosa è andato storto", HttpStatus.INTERNAL_SERVER_ERROR);
-			
+			return new ResponseEntity<> ("<br><center><h4>Città <b>\"" + cityName + "\"</b> non trovata</h4></center>", HttpStatus.NOT_FOUND);
+		
 		}
     }
 	
@@ -148,7 +148,6 @@ public class TempController {
 			
 			} catch(InvalidPeriodException | HistoryException e) {
 				return new ResponseEntity<> (e.getMessage(), HttpStatus.BAD_REQUEST);
-				
 			}
 			
 		}
