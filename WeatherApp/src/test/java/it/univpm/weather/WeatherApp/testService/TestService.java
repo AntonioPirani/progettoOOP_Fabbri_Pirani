@@ -87,9 +87,10 @@ public class TestService
 	 * 
 	 * @throws IOException
 	 * @throws ParseException
+	 * @throws CityNotFoundException 
 	 */
 	@Test
-	public void testCompareTemp() throws IOException, ParseException
+	public void testCompareTemp() throws IOException, ParseException, CityNotFoundException
 	{
 		assertNotNull(service.compareTemp("Ancona",1));		
 	}

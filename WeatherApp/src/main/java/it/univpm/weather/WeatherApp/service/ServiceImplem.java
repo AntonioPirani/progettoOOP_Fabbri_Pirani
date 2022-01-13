@@ -27,8 +27,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonParseException;
-
 import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
 import it.univpm.weather.WeatherApp.exceptions.HourException;
 import it.univpm.weather.WeatherApp.model.*;
@@ -42,19 +40,19 @@ import it.univpm.weather.WeatherApp.model.*;
 @Service
 public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Service { 
 	//richiamando solo Service lo scambia per una interfaccia predefinita di Spring
-	//(rendendo necessaria l'implementazione di 2 metodi, stampando comunque un warning)
 	
 	/**
 	 * {@value} apiKey chiave privata per l'accesso alle API
 	 */
 	private final String apiKey = "e75a0a03e0d0542a15e263930e56f99a";
 
-	/**
+	/**Metodo che permette di ottenere le informazioni meteo relative alla temperatura reale e 
+	 * percepita attuali della città specificata
+	 * 
 	 * @param cityName stringa contenente il nome della città da cercare
 	 * @return obj oggetto JSON con tutte le informazioni ottenute con la One Call API corrente
 	 * @throws CityNotFoundException eccezione per quando la città inserita non viene trovata
 	 * @throws IOException eccezione di input/output
-	 * @throws ParseException se ci sono errori nel formato JSON
 	 */
 	public City getTemperature(String cityName) throws IOException, CityNotFoundException {
 
@@ -104,15 +102,17 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		return city;
 	}
 	
-	/** Metodo che permette di ottenere le coordinate per una specifica città, necessarie per la One Call API
+	/**Metodo che permette di ottenere le coordinate per una specifica città, necessarie per la One Call API
+	 * Il metodo è suddiviso in due parti: nella prima si fa la chiamata alla geo API per prendere le coordinate 
+	 * della città richiesta, mentre nella seconda si richiama la weather API per prelevare le informazioni che 
+	 * nella prima chiamata non venivano restituite, ossia la timezone e l'id della città  
 	 * 
 	 * @param cityName stringa contenente il nome della città da cercare
-	 * @return classe coordinate: latitudine e longitudine relative alla città
+	 * @return City istanza di City con latitudine, longitudine, timezone, id e nome della città richiesta
 	 * @throws IOException per errori di input/output
-	 * @throws JsonParseException in caso di errori nel JSON
-	 * @throws CityNotFoundException eccezione per quando non si trova la città desiderata
+	 * @throws CityNotFoundException eccezione per quando non la città desiderata non è stata trovata
 	 */
-	public City getCityCoords(String cityName) throws IOException, JsonParseException, CityNotFoundException {
+	public City getCityCoords(String cityName) throws IOException, CityNotFoundException {
 		
 		JSONParser parser = new JSONParser();
 		Coordinates coord = null;
@@ -151,10 +151,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	    
 	      System.out.println(e);
 	      
-	      coord = new Coordinates(0, 0);
-	      city.setCoords(coord);
-	      
-	      return city;
+	      return null;
 	      
 	    } finally {
 	    	
@@ -186,10 +183,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	    
 	      System.out.println(e);
 	      
-	      coord = new Coordinates(0, 0);
-	      city.setCoords(coord);
-	      
-	      return city;
+	      return null;
 	      
 	    } finally {
 	    	
@@ -198,8 +192,9 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	    }
 	}
 
-	/** Metodo che permette di salvare su file la temperatura corrente. Il nuovo file viene salvato nella cartella "files" con lo stesso nome della città ricercata
-	 *  Il metodo non scrive sul file se non è passata almeno 1 ora (cosa che si verifica se l'utente richiama più volte la rotta /current) 
+	/**Metodo che permette di salvare su file la temperatura corrente. Il nuovo file viene salvato 
+	 * nella cartella "files" con lo stesso nome della città ricercata. Il metodo non scrive sul file 
+	 * se non è passata almeno 1 ora (cosa che si verifica se l'utente richiama più volte la rotta /current) 
 	 * 
 	 * @param City city che contiene tutte le informazioni principali da salvare su file
 	 * @throws IOException in caso di problemi sul file
@@ -211,27 +206,13 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + city.getCityName() + ".txt";
 		//System.out.println("percorso: " + filePath); //C:\Users\anton\git\progettoOOP_Fabbri_Pirani\WeatherApp\files\
-		//https://docs.oracle.com/javase/tutorial/essential/environment/sysprop.html user.home no
 		
 		File file = new File(filePath);
 		//Writer writer = null; non funziona l'append con Writer
 		
-		try {
+		if(checkLastLineDate(file, city.getCurrentTemp().getDateTime())) 
+			throw new HourException();
 			
-			if(checkLastLineDate(file, city.getCurrentTemp().getDateTime())) {
-			
-				throw new HourException();
-				
-			}
-			
-		} catch (HourException e){
-			
-			System.out.println("Differenza di orario inferiore ad 1 ora");
-			System.out.println(e);
-			return false;
-			
-		}
-		
 		BufferedWriter bufferedWriter = null;
 		
 		try  {
@@ -262,9 +243,11 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			
 	}
 
-	/** Metodo che prova a salvare ogni ora i dati correnti di una città su un file tramite l'uso di uno scheduler (piuttosto che un Timer)
+	/**Metodo che prova a salvare ogni ora i dati correnti di una città su un file, trovabile
+	 * nella cartella "WeatherApp\files",  tramite l'uso di uno scheduler
 	 * 
 	 * @param cityName nome della città da salvare
+	 * @throws IOException per errori input/output
 	 * 
 	 */
 	public void saveEveryHour(String cityName) throws IOException {
@@ -279,21 +262,17 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		    		
 		    		City city = getTemperature(cityName);
 		    		
-					if(saveCurrentTemp(city)) { 
-						
+					if(saveCurrentTemp(city)) 
 						System.out.println("Salvataggio riuscito");
 						
-					}
-					
-					else { 
-						
+					else 
 						System.out.println("Salvataggio non riuscito - riprovare più tardi");
 						
-					}
-					
 				} catch (IOException | HourException e) {
 
-					e.printStackTrace();
+					System.out.println("Differenza di orario inferiore ad 1 ora");
+					System.out.println(e);
+					//e.printStackTrace();
 					
 				} catch (CityNotFoundException e) {
 					e.printStackTrace();
@@ -304,32 +283,26 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 	}
 
-	/** Metodo che permette di confrontare le temperature attuali e di X giorni fa, tramite una media, ritornando l'eventuale differenza di temperatura
+	/**Metodo che permette di confrontare le temperature attuali e di X giorni fa, tramite una media, 
+	 * ritornando l'eventuale differenza di temperatura. Il numero di giorni indietro deve essere
+	 * inferiore a 5, poichè questo è il limite stabilito dalla API gratuita
 	 * 
 	 * @param cityName nome della città di cui si vogliono confrontare le temperature
 	 * @param prevDay periodo di tempo corrispondente al numero di giorni precedenti all'attuale
 	 * @return mex Stringa contenente la differenza di temperatura tra attuale e media
 	 */
-	public String compareTemp(String cityName, int prevDay) throws IOException, ParseException {
+	public String compareTemp(String cityName, int prevDay) throws IOException, ParseException, CityNotFoundException {
 
 		City current = null;
 		
 		try {
 			
 			current = getTemperature(cityName); //corrente
-		
-			if(current.getCoords().getLat() == 0 && current.getCoords().getLon() == 0) {
-				
-				throw new CityNotFoundException();
 			
-			}
-			
-		} catch (CityNotFoundException  e) {
-			
-			return "0";
-			
+		} catch(CityNotFoundException e) {
+			throw new CityNotFoundException();
 		}
-		
+	
 		long dt = previousDay(prevDay);
 		
 		String giorno = prevDay == 1 ? " giorno" : " giorni";

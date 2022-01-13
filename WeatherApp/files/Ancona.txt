@@ -17,9 +17,3 @@
 {"dt":1641494202,"temp":5.51,"name":"Ancona","lon":13.5170982,"feels_like":6.89,"lat":43.6170137}
 {"dt":1641753633,"temp":-3.07,"name":"Ancona","lon":13.5170982,"feels_like":1.05,"lat":43.6170137}
 {"dt":1641851574,"temp":4.54,"name":"Ancona","lon":13.5170982,"feels_like":8.41,"lat":43.6170137}
-<<<<<<< HEAD
-{"dt":1642001669,"temp":4.21,"name":"Ancona","lon":13.5170982,"feels_like":7.51,"lat":43.6170137}
-=======
-{"dt":1642018234,"temp":3.04,"name":"Ancona","lon":13.5170982,"feels_like":6.22,"lat":43.6170137}
->>>>>>> refs/remotes/origin/main
-{"dt":1642089253,"temp":3.91,"name":"Ancona","lon":13.5170982,"feels_like":7.27,"lat":43.6170137}

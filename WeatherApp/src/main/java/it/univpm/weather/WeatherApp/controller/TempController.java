@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/**Classe che gestisce le chiamate utente tramite rotte GET e POST
+/**Classe che gestisce le chiamate utente tramite rotte GET 
  * 
  * @author Antonio Pirani
  *
@@ -31,9 +31,9 @@ public class TempController {
 	
 	/**Rotta di tipo GET per ottenere la temperatura corrente di una città
 	 * 
-	 * @param cityName città da cercare
-	 * @return obj JSONObject con le informazioni richieste: nome, coordinate, data, temperatura attuale e percepita
-	 * @throws HourException 
+	 * @param cityName città da cercare, con valore di default = "Ancona"
+	 * @return JSONObject con le informazioni richieste: nome, coordinate, data, temperatura attuale e percepita
+	 * @throws HourException se la differenza di orario tra la data attuale e quella presente nell'ultima riga del file è inferiore a 1 ora
 	 */
 	@GetMapping(value = "/current")
     public ResponseEntity<Object> getTemperature(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) throws HourException {
@@ -58,11 +58,12 @@ public class TempController {
 		}
     }
 	
-	/** Rotta di tipo GET per confrontare lo storico sulle temperature effettive e percepite di una città.
+	/**Rotta di tipo GET che restituisce la variazione delle temperature reali e percepite del giorno attuale 
+	 * rispetto al numero di giorni inseriti nella richiesta (di default 1)
 	 * 
-	 * @param cityName
-	 * @param prevDay
-	 * @return
+	 * @param cityName Stringa con il nome della città di cui si vogliono confrontare le temperature dei giorni passati
+	 * @param prevDay numero di giorni precedenti a quello attuale (validi solo gli interi compresi tra 1 e 5)
+	 * @return mex Stringa mista contenente un testo in formato HTML alternato a oggetti JSON contenenti le informazioni delle temperature
 	 * @throws IOException
 	 * @throws ParseException
 	 */
@@ -73,9 +74,13 @@ public class TempController {
 			return new ResponseEntity<> ("<br><center><h4>Il numero di giorni precedenti da ricercare deve essere tra <b>1</b> e <b>5</b></h4></center>", HttpStatus.NOT_FOUND);
 		}
 		
-		String mex = service.compareTemp(cityName, prevDay);
+		String mex = "";
 		
-		if(mex.equals("0")) {
+		try {
+			
+			mex = service.compareTemp(cityName, prevDay);
+			
+		} catch (CityNotFoundException e) {
 			
 			return new ResponseEntity<> ("<br><center><h4>Città \"<b>" + cityName + "\"</b> non trovata</h4></center>", HttpStatus.NOT_FOUND);
 			
@@ -85,12 +90,18 @@ public class TempController {
 	
 	}
 	
-	/**  Rotta di tipo GET per restituire il filtraggio delle statistiche in base alla periodicità: giorni, fascia oraria, settimanale.
+	/**Rotta di tipo GET che permette di visualizzare le statistiche della città inserita, 
+	 * sia della temperature reale che quella percepita.
+	 * Le informazioni vengono prelevate dai relativi storici creati con la rotta "/current" 
+	 * (se esistenti) e, a seconda della modalità desiderata, si confronta tutto lo storico
+	 * oppure tramite filtri si decide di analizzare solo una determinata cadenza temporale, 
+	 * che può essere oraria, giornaliera o settimanale. Se non viene inserito nessun filtro
+	 * si considera l'analisi di tutto lo storico esistente
 	 * 
-	 * @param cityName
-	 * @param filterBy
-	 * @param time
-	 * @return
+	 * @param cityName Nome della città di cui si vogliono conoscere le statistiche
+	 * @param filterBy Stringa contentente il tipo di filtro che si vuole applicare
+	 * @param time Quantità di tempo precendente all'orario attuale 
+	 * @return Stringa mista a testo in HTML e JSON con tutte le informazioni richieste
 	 */
 	@GetMapping(value = "/statistics")
 	public ResponseEntity<Object> statistics(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName,
