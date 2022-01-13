@@ -11,8 +11,26 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/**Classe che implementa l'interfaccia StatsInterface, definendo i metodi necessari
+ * al funzionamento del programma
+ * 
+ * @author Antonio Pirani
+ * @author Matteo Fabbri
+ *
+ */
 public class StatsImplem implements StatsInterface {
 	
+	/**Metodo che restituisce un oggetto di tipo Statistics con tutte le informazioni relative
+	 * alle statistiche calcolate
+	 * 
+	 * @param cityName nome della città di cui si vogliono analizzare le statistiche
+	 * @param b booleano che indentifica se si tratta di temperatura reale o percepita
+	 * @return oggetto Statistics con le informazioni relative a valore massimo, minimo, 
+	 * 		medio e varianza
+	 * @throws FileNotFoundException eccezione che indica che lo storico della città passata non esiste
+	 * @throws ParseException eccezione che indica che c'è stato un errore nel parsing dello storico
+	 * 
+	 */
 	public Statistics getStats(String cityName, boolean b) throws FileNotFoundException, ParseException {
 		
 		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + cityName + ".txt";
@@ -44,9 +62,7 @@ public class StatsImplem implements StatsInterface {
 			
 		} catch (Exception e) {
 			
-			System.out.println("Eccezione calcolo statistiche");
-			e.printStackTrace();
-			
+			System.out.println(e);
 			return null;
 			
 		}
@@ -55,6 +71,14 @@ public class StatsImplem implements StatsInterface {
 		
 	}
 	
+	/**Metodo che si occupa di creare il JSONArray che verrà usato per calcolare le statistiche
+	 * 
+	 * @param file File da cui verranno lette le informazioni e tradotte in array (storico)
+	 * @param b booleano per indicare se si tratta di temperatura reale o corrente
+	 * @return array JSONArray con tutte le informazioni da calcolare
+	 * @throws ParseException eccezione per errori di parsing del file
+	 * 
+	 */
 	@SuppressWarnings("unchecked") // per il json simple, si poteva evitare anche la HashMap
 	public JSONArray createArray(File file, boolean b) throws ParseException {
 		

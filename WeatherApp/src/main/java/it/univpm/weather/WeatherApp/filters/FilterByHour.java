@@ -30,7 +30,7 @@ public class FilterByHour extends Filter {
 		stats = new Statistics(true);
 		JSONArray filter = null;
 		
-		if (time == 0) throw new InvalidPeriodException("<br><center><h4>Non è stato inserito un periodo di tempo valido</h4></center>");	
+		if (time < 1) throw new InvalidPeriodException("<br><center><h4>Non è stato inserito un periodo di tempo valido</h4></center>");	
 		
 		filter = filter();
 		if (filter == null || filter.size() == 0) throw new HistoryException("<br><center>Storico di <b>" + cityName + "</b> vuoto</center>");

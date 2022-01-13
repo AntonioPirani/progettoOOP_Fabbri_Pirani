@@ -17,3 +17,4 @@
 {"dt":1641494202,"temp":5.51,"name":"Ancona","lon":13.5170982,"feels_like":6.89,"lat":43.6170137}
 {"dt":1641753633,"temp":-3.07,"name":"Ancona","lon":13.5170982,"feels_like":1.05,"lat":43.6170137}
 {"dt":1641851574,"temp":4.54,"name":"Ancona","lon":13.5170982,"feels_like":8.41,"lat":43.6170137}
+{"dateTime":1642106696,"feelsLike":4.31,"temp":2.5,"cityName":"Ancona","timeZone":3600,"lon":13.5170982,"cityId":3183087,"lat":43.6170137}

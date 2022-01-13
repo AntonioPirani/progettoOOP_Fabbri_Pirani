@@ -11,7 +11,6 @@ import java.io.Reader;
 import java.net.URL;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
@@ -31,7 +30,8 @@ import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
 import it.univpm.weather.WeatherApp.exceptions.HourException;
 import it.univpm.weather.WeatherApp.model.*;
 
-/** Classe che implementa l'interfaccia Service mettendo a disposizione i metodi richiamati dal controller
+/**Classe che implementa l'interfaccia Service mettendo a disposizione i metodi richiamati dal controller,
+ * più alcuni metodi aggiuntivi minori
  * 
  * @author Antonio Pirani
  * @author Matteo Fabbri
@@ -219,7 +219,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			
 			bufferedWriter = new BufferedWriter(new FileWriter(file, true));
 			
-			JSONObject obj = cityToJson(city);
+			JSONObject obj = city.toJson();
 			bufferedWriter.write(obj.toString() + System.lineSeparator());
 			
 			System.out.println("Dati salvati in: " + filePath);
@@ -243,8 +243,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			
 	}
 
-	/**Metodo che prova a salvare ogni ora i dati correnti di una città su un file, trovabile
-	 * nella cartella "WeatherApp\files",  tramite l'uso di uno scheduler
+	/**Metodo che prova a salvare ogni ora i dati correnti di una città su un file tramite 
+	 * l'uso di uno scheduler. I vari file si possono trovare nella cartella "WeatherApp\files".
 	 * 
 	 * @param cityName nome della città da salvare
 	 * @throws IOException per errori input/output
@@ -290,6 +290,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 * @param cityName nome della città di cui si vogliono confrontare le temperature
 	 * @param prevDay periodo di tempo corrispondente al numero di giorni precedenti all'attuale
 	 * @return mex Stringa contenente la differenza di temperatura tra attuale e media
+	 * @throws CityNotFoundException eccezione per quando la città non viene trovata
 	 */
 	public String compareTemp(String cityName, int prevDay) throws IOException, ParseException, CityNotFoundException {
 
@@ -366,12 +367,14 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 	}
 	
-	/** Metodo che permette di ottenere le informazioni passate relative alla temperatura di una città. La API considera il giorno a partire dalle 00:00 fino alle 23:59 
-	 * dello stesso giorno, piuttosto che dall'orario passato per parametro e il giorno successivo
+	/**Metodo che permette di ottenere le informazioni passate relative alla temperatura di una città. 
+	 * La API considera il giorno a partire dalle 00:00 fino alle 23:59 dello stesso giorno, 
+	 * piuttosto che dall'orario passato per parametro, e il giorno successivo
 	 * 
 	 * @param cityName nome della città
 	 * @param dt data in formato UNIX relativa al giorno passato
 	 * @return array JSONArray contenente tutte le informazioni
+	 * @throws IOException eccezione per errori di input/output
 	 */
 	public JSONArray timeMachine(String cityName, long dt) throws IOException {
 
@@ -382,9 +385,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			
 			city = getCityCoords(cityName);
 			
-		} catch (IOException | CityNotFoundException e) {
+		} catch (CityNotFoundException e) {
 			
-			System.out.println("Errore time machine");
 			e.printStackTrace();
 		}
 
@@ -419,13 +421,12 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		return array;
 	}
 	
+	//Quelli che seguono sono metodi aggiuntivi utili al corretto funzionamento
+	//del programma
 	
-	
-	//metodi aggiuntivi
-	
-	/** Metodo che legge tutto in contenuto dell'url
+	/**Metodo che legge tutto in contenuto dell'oggetto passato (lettura URL)
 	 * 
-	 * @param re Lettore necessario alla lettura
+	 * @param re Lettore contenente le informazioni
 	 * @return stringa contenente tutto il contenuto letto
 	 * @throws IOException in caso di errore di input/output
 	 */
@@ -441,12 +442,11 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 
 	    } while (temp != -1);        
 	    
-	    //  https://www.delftstack.com/howto/java/java-get-json-from-url/
 	    return str.toString();
 
 	}
 	
-	/** Metodo che calcola il valore in formato UNIX del giorno scelto rispetto alla data attuale
+	/**Metodo che calcola il valore in formato UNIX del giorno scelto rispetto alla data attuale
 	 * 
 	 * @param d numero di giorni indietro
 	 * @return now data calcolata
@@ -458,7 +458,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
         
     }
 	
-	/** Metodo che controlla se la differenza tra il valore "dt" dell'ultima riga del file passato e il valore del valore "dt" preso dall'url è superiore a 1 ora
+	/**Metodo che controlla se la differenza tra il valore "dt" dell'ultima riga del file passato 
+	 * e il valore del valore "dt" preso dall'url è superiore a 1 ora
 	 * 
 	 * @param file il file da aprire
 	 * @param urlDT il valore dt preso dall' url
@@ -501,40 +502,22 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 	}
 	
-	/** Metodo per tradurre le informazioni principali della City in formato JSON
-	 * 
-	 * @param city istanza City da tradurre
-	 * @return obj JSON da salvare
-	 */
-	public JSONObject cityToJson(City city) {
-		
-		JSONObject obj = new JSONObject();
-		HashMap<String,Object> map = new HashMap<String,Object>();
-
-	    map.put("name", city.getCityName());
-		map.put("lat", city.getCoords().getLat());
-		map.put("lon", city.getCoords().getLon());
-
-		map.put("temp", city.getCurrentTemp().getTemp());
-		map.put("feels_like", city.getCurrentTemp().getFeelsLike());
-		map.put("dt", city.getCurrentTemp().getDateTime());
-
-		obj = new JSONObject(map);
-
-		return obj;
 	
-	}
-	
-	/** Metodo che ritorna un double. Utilizzato poichè a seconda del valore in un formato JSON, il dato viene interpretato in modo differente
-	 * Per esempio Long e Double: 0 lo considera Long anche se il programma necessita di un Double
+	/**Metodo che ritorna un double. Utilizzato poichè a seconda del valore in un formato JSON, il dato 
+	 * viene interpretato in modo differente. Per esempio Long e Double: 0 lo considera Long anche se il programma 
+	 * necessita di un Double
 	 * 
-	 * @param value
-	 * @return double
+	 * @param value Oggetto su cui effettuare il casting in double
+	 * @return double valore corretto
 	 */
 	private static double doubleValue(Object value) {
 	    return (value instanceof Number ? ((Number)value).doubleValue() : -1.0);
 	}
-	
+	/**Metodo analogo a doubleValue. Restituisce un oggetto intero
+	 * 
+	 * @param value Oggetto su cui effettuare il casting in int
+	 * @return int valore corretto
+	 */
 	private static int intValue(Object value) {
 	    return (int) (value instanceof Number ? ((Number)value).intValue() : -1.0);
 	}

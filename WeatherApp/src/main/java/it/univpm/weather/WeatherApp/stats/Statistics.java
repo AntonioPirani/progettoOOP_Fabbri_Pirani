@@ -8,6 +8,11 @@ import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**Classe che rappresenta le statistiche di una determinata città
+ * 
+ * @author Antonio Pirani
+ *
+ */
 public class Statistics {
 	
 	private double max = 0;
@@ -16,22 +21,35 @@ public class Statistics {
 	private double var = 0;
 	private boolean bool;
 	
+	/**Costruttore della classe
+	 * 
+	 */
 	public Statistics() {
 		super();
 	}
 	
+	/**Costruttore per lo specifico parametro booleano per differenziare tra temperatura reale
+	 * e percepita
+	 * 
+	 * @param b true -> temperature reale, false -> temperatura percepita 
+	 */
 	public Statistics(boolean b) {
 		this.bool = b;
 	}
 	
+	/**Costruttore con parametri principali
+	 * 
+	 * @param max Valore massimo
+	 * @param min Valore minimo
+	 * @param avg Valore medio
+	 * @param var Varianza
+	 */
 	public Statistics(double max, double min, double avg, double var) {
-		
 		super();
 		this.max = max;
 		this.min = min;
 		this.avg = avg;
 		this.var = var;
-		
 	}
 	
 	public double getMax() {
@@ -70,6 +88,10 @@ public class Statistics {
 		return bool;
 	}
 
+	/**Metodo che calcola e setta i parametri della classe
+	 * 
+	 * @param array JSONArray contenente le informazioni da calcolare
+	 */
 	public void statsCalc(JSONArray array) {
 		
 		JSONObject obj = new JSONObject();
@@ -115,6 +137,10 @@ public class Statistics {
 		
 	}
 	
+	/**Metodo che costruisce il JSONObject della classe con le principali informazioni
+	 * 
+	 * @return JSONObject richiesto
+	 */
 	public JSONObject toJson() {
 		
 		JSONObject obj = new JSONObject();
@@ -139,7 +165,13 @@ public class Statistics {
 	public String toString() {
 		return "Statistics [max=" + max + ", min=" + min + ", avg=" + avg + ", var=" + var + "]";
 	}
-
+	
+	/**Metodo analogo a quello presente su ServiceImplem. Necessario alla correzione del tipo
+	 * restituito dal JSONObject
+	 * 
+	 * @param value Oggetto da trasformare in double
+	 * @return valore corretto
+	 */
 	private static double doubleValue(Object value) {
 	    return (value instanceof Number ? ((Number)value).doubleValue() : -1.0);
 	}

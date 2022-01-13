@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/**Classe che gestisce le chiamate utente tramite rotte GET 
+/**Controller del progetto, gestisce le chiamate utente sotto forma di rotte GET, e adibisce
+ * al funzionamento dell'intero programma 
  * 
  * @author Antonio Pirani
+ * @author Matteo Fabbri
  *
  */
 @RestController
@@ -30,14 +32,18 @@ public class TempController {
 	Service service;
 	//https://stackoverflow.com/questions/21282919/spring-3-request-processing-failed-nested-exception-is-java-lang-nullpointerexc/21329173
 	
-	/**Rotta di tipo GET per ottenere la temperatura corrente di una città
+	/**Rotta di tipo GET per ottenere le temperatura reali e percepite attuali di una città. 
+	 * Inoltre si occupa di salvare le informazioni con cadenza oraria su specifici file, 
+	 * creando così gli storici necessari alla analisi delle statistiche.
 	 * 
 	 * @param cityName città da cercare, con valore di default = "Ancona"
 	 * @return JSONObject con le informazioni richieste: nome, coordinate, data, temperatura attuale e percepita
-	 * @throws HourException se la differenza di orario tra la data attuale e quella presente nell'ultima riga del file è inferiore a 1 ora
+	 * @throws HourException eccezione custom: se la differenza di orario tra la data attuale e quella presente nell'ultima riga del 
+	 * 		file è inferiore a 1 ora
+	 * @throws CityNotFoundException eccezione custom: se la città immessa non è stata trovata
 	 */
 	@GetMapping(value = "/current")
-    public ResponseEntity<Object> getTemperature(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) throws HourException {
+    public ResponseEntity<Object> getTemperature(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) throws HourException, CityNotFoundException {
 		
 		try {
 			
@@ -63,10 +69,12 @@ public class TempController {
 	 * rispetto al numero di giorni inseriti nella richiesta (di default 1)
 	 * 
 	 * @param cityName Stringa con il nome della città di cui si vogliono confrontare le temperature dei giorni passati
+	 * 		valore di default = "Ancona"
 	 * @param prevDay numero di giorni precedenti a quello attuale (validi solo gli interi compresi tra 1 e 5)
+	 * 		valore di default = 1
 	 * @return mex Stringa mista contenente un testo in formato HTML alternato a oggetti JSON contenenti le informazioni delle temperature
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws IOException eccezione per errori di input/output
+	 * @throws ParseException eccezione per errori di parsing del JSON
 	 */
 	@GetMapping(value = "/compare")
 	public ResponseEntity<Object> compare(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName, @RequestParam(value = "previousDay", defaultValue = "1") int prevDay) throws IOException, ParseException {
@@ -103,11 +111,14 @@ public class TempController {
 	 * @param filterBy Stringa contentente il tipo di filtro che si vuole applicare
 	 * @param time Quantità di tempo precendente all'orario attuale 
 	 * @return Stringa mista a testo in HTML e JSON con tutte le informazioni richieste
+	 * @throws FileNotFoundException, HistoryException eccezioni in caso di mancanza dello storico
+	 * @throws ParseException eccezione per errori di parsing nello storico
+	 * @throws InvalidPeriodException eccezione per quando si inserisce un periodo di tempo non valido ( < 1 )
 	 */
 	@GetMapping(value = "/statistics")
 	public ResponseEntity<Object> statistics(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName,
 										@RequestParam(value = "filterBy", required = false) String filterBy,
-										@RequestParam(value = "time", required = false) Integer time) {
+										@RequestParam(value = "time", required = false) Integer time) throws FileNotFoundException, ParseException, InvalidPeriodException, HistoryException {
  
 		StatsImplem stats = new StatsImplem();
 		
