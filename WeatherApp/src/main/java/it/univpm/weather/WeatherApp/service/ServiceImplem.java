@@ -11,6 +11,7 @@ import java.io.Reader;
 import java.net.URL;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
@@ -223,7 +224,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			
 			bufferedWriter = new BufferedWriter(new FileWriter(file, true));
 			
-			JSONObject obj = city.toJson();
+			JSONObject obj = cityToJson(city);
 			bufferedWriter.write(obj.toString() + System.lineSeparator());
 			
 			System.out.println("Dati salvati in: " + filePath);
@@ -466,6 +467,30 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
         return now - d*3600*24;
         
     }
+	
+	/** Metodo per tradurre le informazioni principali della City in formato JSON
+	 * 
+	 * @param city istanza City da tradurre
+	 * @return obj JSON da salvare
+	 */
+	public JSONObject cityToJson(City city) {
+
+		JSONObject obj = new JSONObject();
+		HashMap<String,Object> map = new HashMap<String,Object>();
+
+	    map.put("name", city.getCityName());
+		map.put("lat", city.getCoords().getLat());
+		map.put("lon", city.getCoords().getLon());
+
+		map.put("temp", city.getCurrentTemp().getTemp());
+		map.put("feels_like", city.getCurrentTemp().getFeelsLike());
+		map.put("dt", city.getCurrentTemp().getDateTime());
+
+		obj = new JSONObject(map);
+
+		return obj;
+
+	}
 	
 	/**
 	 * Metodo che controlla se la differenza tra il valore "dt" dell'ultima riga del file passato 
