@@ -9,6 +9,11 @@ import org.json.simple.JSONObject;
 
 import it.univpm.weather.WeatherApp.stats.Statistics;
 
+/**
+ * 
+ * @author Antonio Pirani
+ *
+ */
 public class Filter {
 
 	Statistics stats;

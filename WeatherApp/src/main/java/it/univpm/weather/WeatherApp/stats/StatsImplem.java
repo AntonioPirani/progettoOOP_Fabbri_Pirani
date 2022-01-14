@@ -11,7 +11,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-/**Classe che implementa l'interfaccia StatsInterface, definendo i metodi necessari
+/**
+ * Classe che implementa l'interfaccia StatsInterface, definendo i metodi necessari
  * al funzionamento del programma
  * 
  * @author Antonio Pirani
@@ -20,7 +21,8 @@ import org.json.simple.parser.ParseException;
  */
 public class StatsImplem implements StatsInterface {
 	
-	/**Metodo che restituisce un oggetto di tipo Statistics con tutte le informazioni relative
+	/**
+	 * Metodo che restituisce un oggetto di tipo Statistics con tutte le informazioni relative
 	 * alle statistiche calcolate
 	 * 
 	 * @param cityName nome della città di cui si vogliono analizzare le statistiche
@@ -71,7 +73,8 @@ public class StatsImplem implements StatsInterface {
 		
 	}
 	
-	/**Metodo che si occupa di creare il JSONArray che verrà usato per calcolare le statistiche
+	/**
+	 * Metodo che si occupa di creare il JSONArray che verrà usato per calcolare le statistiche
 	 * 
 	 * @param file File da cui verranno lette le informazioni e tradotte in array (storico)
 	 * @param b booleano per indicare se si tratta di temperatura reale o corrente

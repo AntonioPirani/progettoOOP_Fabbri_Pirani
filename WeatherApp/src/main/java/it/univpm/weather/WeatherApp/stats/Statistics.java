@@ -8,7 +8,8 @@ import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Iterator;
 
-/**Classe che rappresenta le statistiche di una determinata città
+/**
+ * Classe che rappresenta le statistiche di una determinata città
  * 
  * @author Antonio Pirani
  *
@@ -21,14 +22,15 @@ public class Statistics {
 	private double var = 0;
 	private boolean bool;
 	
-	/**Costruttore della classe
-	 * 
+	/**
+	 * Costruttore della classe
 	 */
 	public Statistics() {
 		super();
 	}
 	
-	/**Costruttore per lo specifico parametro booleano per differenziare tra temperatura reale
+	/**
+	 * Costruttore per lo specifico parametro booleano per differenziare tra temperatura reale
 	 * e percepita
 	 * 
 	 * @param b true -> temperature reale, false -> temperatura percepita 
@@ -37,7 +39,8 @@ public class Statistics {
 		this.bool = b;
 	}
 	
-	/**Costruttore con parametri principali
+	/**
+	 * Costruttore con parametri principali
 	 * 
 	 * @param max Valore massimo
 	 * @param min Valore minimo
@@ -88,7 +91,8 @@ public class Statistics {
 		return bool;
 	}
 
-	/**Metodo che calcola e setta i parametri della classe
+	/**
+	 * Metodo che calcola e setta i parametri della classe
 	 * 
 	 * @param array JSONArray contenente le informazioni da calcolare
 	 */
@@ -137,7 +141,8 @@ public class Statistics {
 		
 	}
 	
-	/**Metodo che costruisce il JSONObject della classe con le principali informazioni per
+	/**
+	 * Metodo che costruisce il JSONObject della classe con le principali informazioni per
 	 * le statistiche. I valori di media e varianza vengono arrotondati alla terza cifra decimale
 	 * 
 	 * @return JSONObject richiesto
@@ -163,11 +168,15 @@ public class Statistics {
 		
 	}
 	
+	/**
+	 * Metodo toString
+	 */
 	public String toString() {
 		return "Statistics [max=" + max + ", min=" + min + ", avg=" + avg + ", var=" + var + "]";
 	}
 	
-	/**Metodo analogo a quello presente su ServiceImplem. Necessario alla correzione del tipo
+	/**
+	 * Metodo analogo a quello presente su ServiceImplem. Necessario alla correzione del tipo
 	 * restituito dal JSONObject
 	 * 
 	 * @param value Oggetto da trasformare in double

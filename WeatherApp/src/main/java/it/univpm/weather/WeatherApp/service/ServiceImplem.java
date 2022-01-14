@@ -30,7 +30,8 @@ import it.univpm.weather.WeatherApp.exceptions.CityNotFoundException;
 import it.univpm.weather.WeatherApp.exceptions.HourException;
 import it.univpm.weather.WeatherApp.model.*;
 
-/**Classe che implementa l'interfaccia Service mettendo a disposizione i metodi richiamati dal controller,
+/**
+ * Classe che implementa l'interfaccia Service mettendo a disposizione i metodi richiamati dal controller,
  * più alcuni metodi aggiuntivi minori
  * 
  * @author Antonio Pirani
@@ -46,7 +47,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 */
 	private final String apiKey = "e75a0a03e0d0542a15e263930e56f99a";
 
-	/**Metodo che permette di ottenere le informazioni meteo relative alla temperatura reale e 
+	/**
+	 * Metodo che permette di ottenere le informazioni meteo relative alla temperatura reale e 
 	 * percepita attuali della città specificata
 	 * 
 	 * @param cityName stringa contenente il nome della città da cercare
@@ -102,7 +104,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		return city;
 	}
 	
-	/**Metodo che permette di ottenere le coordinate per una specifica città, necessarie per la One Call API
+	/**
+	 * Metodo che permette di ottenere le coordinate per una specifica città, necessarie per la One Call API
 	 * Il metodo è suddiviso in due parti: nella prima si fa la chiamata alla geo API per prendere le coordinate 
 	 * della città richiesta, mentre nella seconda si richiama la weather API per prelevare le informazioni che 
 	 * nella prima chiamata non venivano restituite, ossia la timezone e l'id della città  
@@ -192,7 +195,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	    }
 	}
 
-	/**Metodo che permette di salvare su file la temperatura corrente. Il nuovo file viene salvato 
+	/**
+	 * Metodo che permette di salvare su file la temperatura corrente. Il nuovo file viene salvato 
 	 * nella cartella "files" con lo stesso nome della città ricercata. Il metodo non scrive sul file 
 	 * se non è passata almeno 1 ora (cosa che si verifica se l'utente richiama più volte la rotta /current) 
 	 * 
@@ -243,7 +247,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			
 	}
 
-	/**Metodo che prova a salvare ogni ora i dati correnti di una città su un file tramite 
+	/**
+	 * Metodo che prova a salvare ogni ora i dati correnti di una città su un file tramite 
 	 * l'uso di uno scheduler. I vari file si possono trovare nella cartella "WeatherApp\files".
 	 * 
 	 * @param cityName nome della città da salvare
@@ -283,7 +288,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 	}
 
-	/**Metodo che permette di confrontare le temperature attuali e di X giorni fa, tramite una media, 
+	/**
+	 * Metodo che permette di confrontare le temperature attuali e di X giorni fa, tramite una media, 
 	 * ritornando l'eventuale differenza di temperatura. Il numero di giorni indietro deve essere
 	 * inferiore a 5, poichè questo è il limite stabilito dalla API gratuita
 	 * 
@@ -367,7 +373,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		
 	}
 	
-	/**Metodo che permette di ottenere le informazioni passate relative alla temperatura di una città. 
+	/**
+	 * Metodo che permette di ottenere le informazioni passate relative alla temperatura di una città. 
 	 * La API considera il giorno a partire dalle 00:00 fino alle 23:59 dello stesso giorno, 
 	 * piuttosto che dall'orario passato per parametro, e il giorno successivo
 	 * 
@@ -424,7 +431,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	//Quelli che seguono sono metodi aggiuntivi utili al corretto funzionamento
 	//del programma
 	
-	/**Metodo che legge tutto in contenuto dell'oggetto passato (lettura URL)
+	/**
+	 * Metodo che legge tutto in contenuto dell'oggetto passato (lettura URL)
 	 * 
 	 * @param re Lettore contenente le informazioni
 	 * @return stringa contenente tutto il contenuto letto
@@ -446,7 +454,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 
 	}
 	
-	/**Metodo che calcola il valore in formato UNIX del giorno scelto rispetto alla data attuale
+	/**
+	 * Metodo che calcola il valore in formato UNIX del giorno scelto rispetto alla data attuale
 	 * 
 	 * @param d numero di giorni indietro
 	 * @return now data calcolata
@@ -458,7 +467,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
         
     }
 	
-	/**Metodo che controlla se la differenza tra il valore "dt" dell'ultima riga del file passato 
+	/**
+	 * Metodo che controlla se la differenza tra il valore "dt" dell'ultima riga del file passato 
 	 * e il valore del valore "dt" preso dall'url è superiore a 1 ora
 	 * 
 	 * @param file il file da aprire
@@ -503,7 +513,8 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	}
 	
 	
-	/**Metodo che ritorna un double. Utilizzato poichè a seconda del valore in un formato JSON, il dato 
+	/**
+	 * Metodo che ritorna un double. Utilizzato poichè a seconda del valore in un formato JSON, il dato 
 	 * viene interpretato in modo differente. Per esempio Long e Double: 0 lo considera Long anche se il programma 
 	 * necessita di un Double
 	 * 
@@ -513,7 +524,9 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	private static double doubleValue(Object value) {
 	    return (value instanceof Number ? ((Number)value).doubleValue() : -1.0);
 	}
-	/**Metodo analogo a doubleValue. Restituisce un oggetto intero
+	
+	/**
+	 * Metodo analogo a doubleValue. Restituisce un oggetto intero
 	 * 
 	 * @param value Oggetto su cui effettuare il casting in int
 	 * @return int valore corretto

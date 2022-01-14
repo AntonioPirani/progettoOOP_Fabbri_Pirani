@@ -13,6 +13,8 @@ public class HistoryException extends Exception {
 
 	/**
 	 * 
+	 * Costruttore con parametro
+	 * 
 	 * @param txt
 	 */
 	public HistoryException(String txt) {
@@ -20,6 +22,9 @@ public class HistoryException extends Exception {
 		this.txt = txt;
 	}
 
+	/**
+	 * Metodo che restituisce il messaggio
+	 */
 	public String getMessage() {
 		return txt;
 	}

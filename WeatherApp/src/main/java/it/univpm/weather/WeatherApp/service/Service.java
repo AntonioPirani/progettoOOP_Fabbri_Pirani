@@ -8,7 +8,8 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 
-/**Interfaccia che contiene i principali metodi utilizzati nel progetto, usati per ottenere i dati relativi
+/**
+ * Interfaccia che contiene i principali metodi utilizzati nel progetto, usati per ottenere i dati relativi
  * alle temperature reali e percepite, attuali e passate, mediante chiamata alle API di OpenWeather. Tra le 
  * operazioni possibili vi è inoltre la possibilità di salvare i dati con cadenza oraria, confrontare le 
  * temperature di tot giorni passati con chiamate alle API

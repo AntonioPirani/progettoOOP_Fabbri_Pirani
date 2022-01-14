@@ -18,7 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/**Controller del progetto, gestisce le chiamate utente sotto forma di rotte GET, e adibisce
+/**
+ * Controller del progetto, gestisce le chiamate utente sotto forma di rotte GET, e adibisce
  * al funzionamento dell'intero programma 
  * 
  * @author Antonio Pirani
@@ -32,7 +33,8 @@ public class TempController {
 	Service service;
 	//https://stackoverflow.com/questions/21282919/spring-3-request-processing-failed-nested-exception-is-java-lang-nullpointerexc/21329173
 	
-	/**Rotta di tipo GET per ottenere le temperatura reali e percepite attuali di una città. 
+	/**
+	 * Rotta di tipo GET per ottenere le temperatura reali e percepite attuali di una città. 
 	 * Inoltre si occupa di salvare le informazioni con cadenza oraria su specifici file, 
 	 * creando così gli storici necessari alla analisi delle statistiche.
 	 * 
@@ -65,7 +67,8 @@ public class TempController {
 		}
     }
 	
-	/**Rotta di tipo GET che restituisce la variazione delle temperature reali e percepite del giorno attuale 
+	/**
+	 * Rotta di tipo GET che restituisce la variazione delle temperature reali e percepite del giorno attuale 
 	 * rispetto al numero di giorni inseriti nella richiesta (di default 1)
 	 * 
 	 * @param cityName Stringa con il nome della città di cui si vogliono confrontare le temperature dei giorni passati
@@ -99,7 +102,8 @@ public class TempController {
 	
 	}
 	
-	/**Rotta di tipo GET che permette di visualizzare le statistiche della città inserita, 
+	/**
+	 * Rotta di tipo GET che permette di visualizzare le statistiche della città inserita, 
 	 * sia della temperature reale che quella percepita.
 	 * Le informazioni vengono prelevate dai relativi storici creati con la rotta "/current" 
 	 * (se esistenti) e, a seconda della modalità desiderata, si confronta tutto lo storico
