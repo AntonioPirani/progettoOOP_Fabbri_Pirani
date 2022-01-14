@@ -137,7 +137,8 @@ public class Statistics {
 		
 	}
 	
-	/**Metodo che costruisce il JSONObject della classe con le principali informazioni
+	/**Metodo che costruisce il JSONObject della classe con le principali informazioni per
+	 * le statistiche. I valori di media e varianza vengono arrotondati alla terza cifra decimale
 	 * 
 	 * @return JSONObject richiesto
 	 */

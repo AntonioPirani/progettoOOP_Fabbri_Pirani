@@ -1,6 +1,6 @@
 package it.univpm.weather.WeatherApp.exceptions;
 
-/** La classe CityNotFoundExceotion gestice l'eccezzione quando una città non è valida.
+/** La classe CityNotFoundExceotion gestice l'eccezione quando una città non è valida.
  * 
  * @author Matteo Fabbri
  */
