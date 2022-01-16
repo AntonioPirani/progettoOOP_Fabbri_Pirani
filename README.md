@@ -1,9 +1,10 @@
 
 <div style="text-align: center">
-  <img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/tree/main/WeatherApp/src/main/resources/static" alt="Mia foto">
+  <img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/tree/main/WeatherApp/src/main/resources/static/icon.png" alt="LOGO">
 </div>
 <br>
-#   **WeatherApp TempReader**
+
+##**WeatherApp TempReader**
 
 Il seguente programma consente di visionare i dati relativi alle temperature di una città presa in ingresso. Tra le operazioni consentite si potrà confrontare tali dati e analizzarne le statistiche, a cui sarà possibile applicare dei filtri.
 
@@ -50,7 +51,7 @@ Il programma è scritto interamente in linguaggio Java versione 11. Esso funzion
 ## **Rotte**
 
 |**N**| **Tipo** | **Rotta**     | **Descrizione**|
-| :-------- | | :--------: | :-------: | :------------------------- |
+| -------- | | :--------: | :-------: | :------------------------- |
 |**1**|`GET` | `/current?cityName=Ancona` |Rotta di tipo GET per ottenere la temperatura corrente di una città, con il metodo saveEveryHour che ci permette di salvarle con cadenta oraria.|
 |**2**|`GET` | `/compare?cityName=Ancona&prevDay=1` |Rotta di tipo GET per confrontare le temperature correnti e percepite, in dato range temporale.|
 |**3**|| `GET` | `/statistics`| Rotta di tipo GET per restituire il filtraggio delle statistiche in base alla periodicità: giorni, fascia oraria, settimanale.|
@@ -81,7 +82,7 @@ Questa rotta permette di restituire una pgina HTML personalizzata come messaggio
 ## **Eccezioni**
 
 |**N**|**Nome**     | **Descrizione**|
-| :-------- | |:-------: | :------------------------- |
+| -------- | |:-------: | :------------------------- |
 |**1**||`CityNotFoundException`| Classe per la gestione dell'eccezione di inserimento di una città non valida. |
 |**2**||`HistoryException`| Classe per la gestione dell'eccezione... |
 |**3**||`HourException`| Classe per la gestione dell'eccezione di un intervallo orario non valido.  |
@@ -110,7 +111,7 @@ Questa eccezione viene eseguita qualora l'inserimento del periodo preso in consi
 ## **Test**
 
 |**N**|**Nome**     | **Descrizione**|
-| :-------- | |:-------: | :------------------------- |
+| -------- | |:-------: | :------------------------- |
 |**1**||`TestController`| Classe per la gestione del test dei metodi della classe `TempController`.|
 |**2**||`TestCity`| Classe per la gestione del test dei metodi della classe `City`.|
 |**3**||`TestService`| Classe per la gestione del test dei metodi della classe `Service`. |
