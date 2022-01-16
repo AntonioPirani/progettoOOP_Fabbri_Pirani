@@ -1,6 +1,11 @@
-#   **Progetto Programmazione a Oggetti**
 
-Il seguente programma consente di visionare e confrontare dati relativi alle temperature reali e percepite, di una città presa in ingresso. Inoltre questi ultimi potranno essere filtrate in base alla periodicità: giornaliera, settimanale e per fascia oraria.
+<div style="text-align: center">
+  <img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/tree/main/WeatherApp/src/main/resources/static" alt="Mia foto">
+</div>
+<br>
+#   **WeatherApp TempReader**
+
+Il seguente programma consente di visionare i dati relativi alle temperature di una città presa in ingresso. Tra le operazioni consentite si potrà confrontare tali dati e analizzarne le statistiche, a cui sarà possibile applicare dei filtri.
 
 ## **Indice**
 - **[Descrizione](https://linktodocumentation)**
@@ -14,14 +19,14 @@ Il seguente programma consente di visionare e confrontare dati relativi alle tem
 - **[Test](https://linktodocumentation)**
 - **[Documentazione](https://linktodocumentation)**
 - **[Struttura del progetto](https://linktodocumentation)**
+- **[Note](https://linktodocumentation)**
 - **[Autori](https://linktodocumentation)**
 
 ## **Descrizione**
 
-Il seguente programma consente di visionare e confrontare dati relativi alle temperature reali e percepite, di una città presa in ingresso. I dati presi posso essere di due tipi:
-- Attuali: i quali verranno salvati in un file di testo, consentendone quindi la crezione di uno storico;
-- Passati: riferiti a un periodo di tempo passato indicato dall'utente stesso.
-Inoltre potranno essere filtrati in base alla periodicità: giornaliera, settimanale e per fascia oraria.
+L'applicativo è basato su dati che vengono forniti mediante chiamate a [OpenWeather](https://openweathermap.org/), tramite l’utilizzo di API gratuite. Grazie a queste ultime sarà possibile visionare e confrontare dati relativi alle temperature reali e percepite, di una specifica città fornita dall’utente. I dati restituiti posso essere di due tipi:
+- Attuali: i quali verranno salvati in un file di testo in formato JSON, andando così a formare lo storico;
+- Passati: riferiti a un periodo di tempo passato indicato dall'utente stesso, a seconda dell’opzione selezionata.
 
 ## **Installazione**
 
@@ -33,19 +38,19 @@ git clone https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani
 
 ## **Configurazione**
 
-L'applicativo è basato su dati che vengono forniti mediante chiamate a [OpenWeather](https://openweathermap.org/). Tutto questo è stato possibile grazie all'utilizzo di una `API KEY`, fornita dal sito citato sopra, in maniera gratuita. Proprio per questo il progetto è sottoposto ad alcune limitazioni, tra cui:
+ Tutto questo è stato possibile grazie all'utilizzo di una `API KEY`, fornita dal sito citato sopra, in maniera gratuita. Proprio per questo il progetto è sottoposto ad alcune limitazioni, tra cui:
 - la durata limitata della chiave;
 - il numero limitato di chiamate orarie disponibili;
 - lo storico relativo a una città di massimo 5 giorni antecedenti alla chiamata.
 
 ## **Funzionalità**
 
-Il programma è basato sulle chiamate a delle API esterne. Per fare ciò è stata resa disponibile l'interfaccia `Service`, che contiene i metodi adibiti alle chiamate riguardanti il meteo passato e presente. Questa interfaccia viene utilizzata al'interno di `TempController`, la quale è la classe che gestisce le chiamate effettuate dall'utente, tramite l'utilizzo di rotte specifiche. Inoltre, grazie a questo controller, è possibile interfacciarsi alle statistiche, le quali vengono gestite da `StatsInterface`. Queste ultime ottengono i dati relativi ai valori massimi, minimi, di media e di varianza di temperature reali e percepite, prelevati dallo storico.
+Il programma è scritto interamente in linguaggio Java versione 11. Esso funziona mediante chiamate a delle API esterne. Per fare ciò è stata resa disponibile l'interfaccia `Service`, che contiene i metodi adibiti alle chiamate riguardanti il meteo passato e presente. Questa interfaccia viene utilizzata all'interno di `TempController`, il quale è la classe che gestisce le chiamate effettuate dall'utente, tramite l'utilizzo di rotte specifiche. Inoltre, grazie a questo controller, è possibile interfacciarsi alle statistiche, le quali utilizzano metodi presenti nell’interfaccia `StatsInterface`. Esse restituiscono i dati relativi ai valori massimi, minimi, di media e di varianza di temperature reali e percepite, prelevati dallo storico. E’ inoltre possibile applicare un filtro (orario, giornaliero o settimanale) per scindere le informazioni restituite.
 
 ## **Rotte**
 
 |**N**| **Tipo** | **Rotta**     | **Descrizione**|
-| :-------- | | :-------- | :------- | :------------------------- |
+| :-------- | | :--------: | :-------: | :------------------------- |
 |**1**|`GET` | `/current?cityName=Ancona` |Rotta di tipo GET per ottenere la temperatura corrente di una città, con il metodo saveEveryHour che ci permette di salvarle con cadenta oraria.|
 |**2**|`GET` | `/compare?cityName=Ancona&prevDay=1` |Rotta di tipo GET per confrontare le temperature correnti e percepite, in dato range temporale.|
 |**3**|| `GET` | `/statistics`| Rotta di tipo GET per restituire il filtraggio delle statistiche in base alla periodicità: giorni, fascia oraria, settimanale.|
@@ -76,7 +81,7 @@ Questa rotta permette di restituire una pgina HTML personalizzata come messaggio
 ## **Eccezioni**
 
 |**N**|**Nome**     | **Descrizione**|
-| :-------- | |:------- | :------------------------- |
+| :-------- | |:-------: | :------------------------- |
 |**1**||`CityNotFoundException`| Classe per la gestione dell'eccezione di inserimento di una città non valida. |
 |**2**||`HistoryException`| Classe per la gestione dell'eccezione... |
 |**3**||`HourException`| Classe per la gestione dell'eccezione di un intervallo orario non valido.  |
@@ -105,7 +110,7 @@ Questa eccezione viene eseguita qualora l'inserimento del periodo preso in consi
 ## **Test**
 
 |**N**|**Nome**     | **Descrizione**|
-| :-------- | |:------- | :------------------------- |
+| :-------- | |:-------: | :------------------------- |
 |**1**||`TestController`| Classe per la gestione del test dei metodi della classe `TempController`.|
 |**2**||`TestCity`| Classe per la gestione del test dei metodi della classe `City`.|
 |**3**||`TestService`| Classe per la gestione del test dei metodi della classe `Service`. |
