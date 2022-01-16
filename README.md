@@ -1,6 +1,6 @@
 
 <div style="text-align: center">
-  <img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/tree/main/WeatherApp/src/main/resources/static/icon.png" alt="LOGO">
+  <img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/blob/main/WeatherApp/src/main/resources/static/icon.png" alt="LOGO">
 </div>
 <br>
 
@@ -51,11 +51,11 @@ Il programma è scritto interamente in linguaggio Java versione 11. Esso funzion
 ## **Rotte**
 
 |**N**| **Tipo** | **Rotta**     | **Descrizione**|
-| -------- | | :--------: | :-------: | :------------------------- |
+| -------- | -------- | ------ | ------------------------- |
 |**1**|`GET` | `/current?cityName=Ancona` |Rotta di tipo GET per ottenere la temperatura corrente di una città, con il metodo saveEveryHour che ci permette di salvarle con cadenta oraria.|
 |**2**|`GET` | `/compare?cityName=Ancona&prevDay=1` |Rotta di tipo GET per confrontare le temperature correnti e percepite, in dato range temporale.|
-|**3**|| `GET` | `/statistics`| Rotta di tipo GET per restituire il filtraggio delle statistiche in base alla periodicità: giorni, fascia oraria, settimanale.|
-|**4**||`GET` | `/error`| Rotta che restituisce una pgina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.|
+|**3**| `GET` | `/statistics`| Rotta di tipo GET per restituire il filtraggio delle statistiche in base alla periodicità: giorni, fascia oraria, settimanale.|
+|**4**|`GET` | `/error`| Rotta che restituisce una pgina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.|
 
 ### **1-** `/current?cityName=Ancona`
 Questa rotta permette di ottenere la temperatura corrente di una determinata città, in particolare il metodo `saveEveryHour` ha la funzione di salvare queste temperature con cadenta oraria in un file di testo, che costituirà lo storico lo storico.
@@ -82,11 +82,11 @@ Questa rotta permette di restituire una pgina HTML personalizzata come messaggio
 ## **Eccezioni**
 
 |**N**|**Nome**     | **Descrizione**|
-| -------- | |:-------: | :------------------------- |
-|**1**||`CityNotFoundException`| Classe per la gestione dell'eccezione di inserimento di una città non valida. |
-|**2**||`HistoryException`| Classe per la gestione dell'eccezione... |
-|**3**||`HourException`| Classe per la gestione dell'eccezione di un intervallo orario non valido.  |
-|**4**||`InvalidPeriodException`| Classe per la gestione dell'eccezione di un inserimento del periodo preso in considerazione non valido. |
+| -------- |------- | ------------------------- |
+|**1**|`CityNotFoundException`| Classe per la gestione dell'eccezione di inserimento di una città non valida. |
+|**2**|`HistoryException`| Classe per la gestione dell'eccezione... |
+|**3**|`HourException`| Classe per la gestione dell'eccezione di un intervallo orario non valido.  |
+|**4**|`InvalidPeriodException`| Classe per la gestione dell'eccezione di un inserimento del periodo preso in considerazione non valido. |
 
 ### **1-** `CityNotFoundException`
 Questa eccezione viene generata qualora l'inserimento di una città non è valida.
@@ -111,11 +111,11 @@ Questa eccezione viene eseguita qualora l'inserimento del periodo preso in consi
 ## **Test**
 
 |**N**|**Nome**     | **Descrizione**|
-| -------- | |:-------: | :------------------------- |
-|**1**||`TestController`| Classe per la gestione del test dei metodi della classe `TempController`.|
-|**2**||`TestCity`| Classe per la gestione del test dei metodi della classe `City`.|
-|**3**||`TestService`| Classe per la gestione del test dei metodi della classe `Service`. |
-|**4**||`TestStatistics`| Classe per la gestione del test dei metodi della classe `Statistics`.|
+| -------- |------- | ------------------------- |
+|**1**|`TestController`| Classe per la gestione del test dei metodi della classe `TempController`.|
+|**2**|`TestCity`| Classe per la gestione del test dei metodi della classe `City`.|
+|**3**|`TestService`| Classe per la gestione del test dei metodi della classe `Service`. |
+|**4**|`TestStatistics`| Classe per la gestione del test dei metodi della classe `Statistics`.|
 
 ### **1-** `TestController`
 Questa classe di test serve per verificare il corretto funzionamento dei metodi della classe `TempController`.
