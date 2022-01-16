@@ -10,6 +10,8 @@ import org.json.simple.JSONObject;
 import it.univpm.weather.WeatherApp.stats.Statistics;
 
 /**
+ * Classe di Filtro delle statistiche, che comprende un oggetto di Statistics, il nome della città, 
+ * il tipo di filtro applicato e il tempo passato specificato
  * 
  * @author Antonio Pirani
  *
@@ -21,6 +23,13 @@ public class Filter {
 	String filterBy;
 	int time;
 	
+	/**
+	 * Metodo che restituisce il contenuto della classe in formato JSON, con all'interno
+	 * tutte le informazioni richieste dalle statistiche, con aggiunta del tipo di filtro e del
+	 * valore di tempo passato inserito
+	 * 
+	 * @return JSONObject il json richiesto
+	 */
 	public JSONObject toJson() {
 		
 		JSONObject obj = new JSONObject();
@@ -44,13 +53,18 @@ public class Filter {
 		
 	}
 	
-	//base oraria
+	/**
+	 * Metodo che calcola il tempo in formato UNIX del numero di ore passate 
+	 * inserite dall'utente rispetto alla data attuale 
+	 * 
+	 * @param d numero di ore passate
+	 * @return data in formato UNIX corrispondente
+	 */
 	public long previousTime(int d) {
 		
         long now = Instant.now().getEpochSecond();
         return now - d*3600;
         
     }
-	
 	
 }

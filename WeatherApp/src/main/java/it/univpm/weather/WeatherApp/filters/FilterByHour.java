@@ -16,8 +16,21 @@ import it.univpm.weather.WeatherApp.exceptions.*;
 
 import it.univpm.weather.WeatherApp.stats.*;
 
+/**
+ * Classe che estende la classe Filter. Riguarda l'utilizzo del filtro secondo la base oraria
+ * 
+ * @author Antonio Pirani
+ * @author Matteo Fabbri
+ *
+ */
 public class FilterByHour extends Filter {
 
+	/**
+	 * Costruttore con parametri
+	 * 
+	 * @param cityName Nome della città richiesta
+	 * @param time Numero di ore passate rispetto alla data attuale
+	 */
 	public FilterByHour(String cityName, int time) {
 		super();
 		this.filterBy = "hour";
@@ -25,6 +38,14 @@ public class FilterByHour extends Filter {
 		this.time = time;
 	}
 	
+	/**
+	 * Metodo usato per calcolare le statistiche alle quali viene applicato il filtro orario.
+	 * 
+	 * @return Stringa mista contentente testo e JSON dei valori delle temperature reali e 
+	 * 		percepite calcolati
+	 * @throws InvalidPeriodException se il periodo inserito non è valido
+	 * @throws HistoryException se lo storico non esiste
+	 */
 	public String calculate() throws InvalidPeriodException, HistoryException {
 		
 		stats = new Statistics(true);
@@ -48,6 +69,13 @@ public class FilterByHour extends Filter {
 		return response;
 	}
 
+	/**
+	 * Metodo che si occupa della creazione e del riempimento del JSONArray che è necessario per 
+	 * il metodo calculate(). I dati vengono prelevati dallo storico se rispettano la condizione
+	 * di appartenere al periodo di tempo esatto.
+	 * 
+	 * @return JSONArray array con tutti i dati necessari al calcolo dei valori
+	 */
 	@SuppressWarnings("unchecked")
 	public JSONArray filter() {
 		
