@@ -1,10 +1,7 @@
-
-<div style="text-align: center">
-  <img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/blob/main/WeatherApp/src/main/resources/static/icon.png" alt="LOGO">
-</div>
+<center><img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/blob/main/WeatherApp/src/main/resources/static/icon.png" alt="LOGO"></center>
 <br>
 
-##**WeatherApp TempReader**
+## **WeatherApp TempReader**
 
 Il seguente programma consente di visionare i dati relativi alle temperature di una città presa in ingresso. Tra le operazioni consentite si potrà confrontare tali dati e analizzarne le statistiche, a cui sarà possibile applicare dei filtri.
 
@@ -52,17 +49,17 @@ Il programma è scritto interamente in linguaggio Java versione 11. Esso funzion
 
 |**N**| **Tipo** | **Rotta**     | **Descrizione**|
 | -------- | -------- | ------ | ------------------------- |
-|**1**|`GET` | `/current?cityName=Ancona` |Rotta di tipo GET per ottenere la temperatura corrente di una città, con il metodo saveEveryHour che ci permette di salvarle con cadenta oraria.|
-|**2**|`GET` | `/compare?cityName=Ancona&prevDay=1` |Rotta di tipo GET per confrontare le temperature correnti e percepite, in dato range temporale.|
+|**1**|`GET` | `/current` |Rotta di tipo GET per ottenere la temperatura corrente di una città, con il metodo saveEveryHour che ci permette di salvarle con cadenta oraria.|
+|**2**|`GET` | `/compare` |Rotta di tipo GET per confrontare le temperature correnti e percepite, in dato range temporale.|
 |**3**| `GET` | `/statistics`| Rotta di tipo GET per restituire il filtraggio delle statistiche in base alla periodicità: giorni, fascia oraria, settimanale.|
-|**4**|`GET` | `/error`| Rotta che restituisce una pgina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.|
+|**4**|`GET` | `/error`| Rotta che restituisce una pagina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.|
 
-### **1-** `/current?cityName=Ancona`
+### **1-** `/current`
 Questa rotta permette di ottenere la temperatura corrente di una determinata città, in particolare il metodo `saveEveryHour` ha la funzione di salvare queste temperature con cadenta oraria in un file di testo, che costituirà lo storico lo storico.
 ```bash
 ```
 
-### **2-** `/compare?cityName=Ancona&prevDay=1`
+### **2-** `/compare`
 Questa rotta ha la funzione di confrontare lo storico sulle temperature effettive e percepite di una città in dato range temporale, definito con l'attributo `previousDay` che deve essere compreso tra 1 e 5.
 ```bash
 ```
