@@ -1,4 +1,6 @@
-<center><img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/blob/main/WeatherApp/src/main/resources/static/icon.png" alt="LOGO"></center>
+<p align="center">
+  <img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/blob/main/WeatherApp/src/main/resources/static/icon.png" alt="Logo"/>
+</p>
 <br>
 
 ## **WeatherApp TempReader**
@@ -6,19 +8,18 @@
 Il seguente programma consente di visionare i dati relativi alle temperature di una città presa in ingresso. Tra le operazioni consentite si potrà confrontare tali dati e analizzarne le statistiche, a cui sarà possibile applicare dei filtri.
 
 ## **Indice**
-- **[Descrizione](https://linktodocumentation)**
-- **[Installazione](https://linktodocumentation)**
-- **[Configurazione](https://linktodocumentation)**
-- **[Funzionalità](https://linktodocumentation)**
-- **[Rotte](https://linktodocumentation)**
-    - **[Statistiche](https://linktodocumentation)**
-- **[Filtri](https://linktodocumentation)**
-- **[Eccezioni](https://linktodocumentation)**
-- **[Test](https://linktodocumentation)**
-- **[Documentazione](https://linktodocumentation)**
-- **[Struttura del progetto](https://linktodocumentation)**
-- **[Note](https://linktodocumentation)**
-- **[Autori](https://linktodocumentation)**
+- **[Descrizione](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#descrizione)**
+- **[Installazione](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#installazione)**
+- **[Configurazione](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#configurazione)**
+- **[Funzionalità](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#funzionalit%C3%A0)**
+- **[Rotte](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#rotte)**
+    - **[Statistiche e Filtri](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#statistiche)**
+- **[Eccezioni](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#eccezioni)**
+- **[Test](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#test)**
+- **[Documentazione](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#documentazione)**
+- **[Struttura del progetto](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#struttura-progetto)**
+- **[Note](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#note)**
+- **[Autori](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#authors)**
 
 ## **Descrizione**
 
@@ -33,13 +34,10 @@ progettoOOP_Fabbri_Pirani è installabile dal Prompt dei Comandi digitando:
 ```bash
 git clone https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani
 ```
-
-## **Configurazione**
-
- Tutto questo è stato possibile grazie all'utilizzo di una `API KEY`, fornita dal sito citato sopra, in maniera gratuita. Proprio per questo il progetto è sottoposto ad alcune limitazioni, tra cui:
-- la durata limitata della chiave;
-- il numero limitato di chiamate orarie disponibili;
-- lo storico relativo a una città di massimo 5 giorni antecedenti alla chiamata.
+E' necessario settare la propria `API KEY` fornita da OpenWeather all'interno di `service/ServiceImplem.java`
+```bash
+private final String apiKey = "********************************";
+```
 
 ## **Funzionalità**
 
@@ -57,11 +55,26 @@ Il programma è scritto interamente in linguaggio Java versione 11. Esso funzion
 ### **1-** `/current`
 Questa rotta permette di ottenere la temperatura corrente di una determinata città, in particolare il metodo `saveEveryHour` ha la funzione di salvare queste temperature con cadenta oraria in un file di testo, che costituirà lo storico lo storico.
 ```bash
+    {
+        "dateTime":1642357460,
+        "feelsLike":6.39,
+        "temp":4.93,
+        "cityName":"Ancona",
+        "timeZone":3600,
+        "lon":13.5170982,
+        "cityId":3183087,
+        "lat":43.6170137
+    }
 ```
 
 ### **2-** `/compare`
 Questa rotta ha la funzione di confrontare lo storico sulle temperature effettive e percepite di una città in dato range temporale, definito con l'attributo `previousDay` che deve essere compreso tra 1 e 5.
 ```bash
+    Confronto Temperature - Ancona:
+
+    La temperatura reale rispetto alla media di 1 giorno fa è diminuita di 2.047 gradi.
+
+    La temperatura percepita rispetto alla media di 1 giorno fa è diminuita di 0.796 gradi.
 ```
 
 ### **3-** `/statistics`
@@ -74,7 +87,7 @@ Questa rotta permette di restituire una pgina HTML personalizzata come messaggio
 ```bash
 ```
 
-## **Statistiche**
+## **Statistiche e Filtri**
 
 ## **Eccezioni**
 
@@ -142,10 +155,17 @@ Di seguito forniremo la documentazione JavaDoc dell'applicativo
 
 ## **Struttura progetto**
 
+## **Note**
+
+Il programma è stato realizzato tramite l'utilizzo di una `API KEY` gratuita. Proprio per questo il progetto è sottoposto ad alcune limitazioni, tra cui:
+- la durata limitata della chiave;
+- il numero limitato di chiamate orarie disponibili;
+- lo storico relativo a una città di massimo 5 giorni antecedenti alla chiamata.
+
 ## **Authors**
 
-- [@Antonio Pirani ](https://www.github.com/octokatherine)
-- [@Matteo Fabbri](https://www.github.com/octokatherine)
+- [@Antonio Pirani ](https://github.com/AntonioPirani)
+- [@Matteo Fabbri](https://github.com/MatteoFabbri136)
 
 
 
