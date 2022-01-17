@@ -119,25 +119,21 @@ Questa **eccezione** viene generata qualora l'inserimento di una città non è v
 ### **2-** `HistoryException`
 Questa **eccezione** viene eseguita qualora lo storico richiesto per le statistiche non esiste.
 ```bash
-Il filtro inserito non è corretto
-
-Le opzioni sono hour, day, week
+  Storico di Ancona vuoto
 ```
 
 ### **3-** `HourException`
 Questa **eccezione** viene generata qualora un intervallo orario non è valido.
 ```bash
-Il filtro inserito non è corretto
+  Il filtro inserito non è corretto
 
-Le opzioni sono hour, day, week
+  Le opzioni sono hour, day, week
 ```
 
 ### **4-** `InvalidPeriodException`
 Questa **eccezione** viene eseguita qualora l'inserimento del periodo preso in considerazione non è valido.
 ```bash
-Il filtro inserito non è corretto
-
-Le opzioni sono hour, day, week
+  Non è stato inserito un periodo di tempo valido
 ```
 
 ## **Test**
