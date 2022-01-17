@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/blob/main/WeatherApp/src/main/resources/static/icon.png" alt="Logo"/>
+  <img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/blob/main/WeatherApp/src/main/resources/static/icon.png" alt="Logo" style="width:128px;height:128px;"/>
 </p>
 <br>
 
-## **WeatherApp TempReader**
+# <p align=center> **WeatherApp TempReader** </p>
 
 Il seguente programma consente di visionare i dati relativi alle temperature di una città presa in ingresso. Tra le operazioni consentite si potrà confrontare tali dati e analizzarne le statistiche, a cui sarà possibile applicare dei filtri.
 
@@ -23,9 +23,10 @@ Il seguente programma consente di visionare i dati relativi alle temperature di 
 
 ## **Descrizione**
 
-L'applicativo è basato su dati che vengono forniti mediante chiamate a [OpenWeather](https://openweathermap.org/), tramite l’utilizzo di API gratuite. Grazie a queste ultime sarà possibile visionare e confrontare dati relativi alle temperature reali e percepite, di una specifica città fornita dall’utente. I dati restituiti posso essere di due tipi:
+L'applicativo è basato su dati che vengono forniti mediante chiamate a [OpenWeather](https://openweathermap.org/), tramite l’utilizzo di **API** gratuite. Grazie a queste ultime sarà possibile visionare e confrontare dati relativi alle temperature reali e percepite, di una specifica città fornita dall’utente. I dati restituiti posso essere di due tipi:
 - Attuali: i quali verranno salvati in un file di testo in formato JSON, andando così a formare lo storico;
 - Passati: riferiti a un periodo di tempo passato indicato dall'utente stesso, a seconda dell’opzione selezionata.
+{: style="text-align: justify"}
 
 ## **Installazione**
 
@@ -42,6 +43,7 @@ private final String apiKey = "********************************";
 ## **Funzionalità**
 
 Il programma è scritto interamente in linguaggio Java versione 11. Esso funziona mediante chiamate a delle API esterne. Per fare ciò è stata resa disponibile l'interfaccia `Service`, che contiene i metodi adibiti alle chiamate riguardanti il meteo passato e presente. Questa interfaccia viene utilizzata all'interno di `TempController`, il quale è la classe che gestisce le chiamate effettuate dall'utente, tramite l'utilizzo di rotte specifiche. Inoltre, grazie a questo controller, è possibile interfacciarsi alle statistiche, le quali utilizzano metodi presenti nell’interfaccia `StatsInterface`. Esse restituiscono i dati relativi ai valori massimi, minimi, di media e di varianza di temperature reali e percepite, prelevati dallo storico. E’ inoltre possibile applicare un filtro (orario, giornaliero o settimanale) per scindere le informazioni restituite.
+{: style="text-align: justify"}
 
 ## **Rotte**
 
@@ -70,11 +72,11 @@ Questa rotta permette di ottenere la temperatura corrente di una determinata cit
 ### **2-** `/compare`
 Questa rotta ha la funzione di confrontare lo storico sulle temperature effettive e percepite di una città in dato range temporale, definito con l'attributo `previousDay` che deve essere compreso tra 1 e 5.
 ```bash
-    Confronto Temperature - Ancona:
+    Confronto Temperature - **Ancona**:
 
-    La temperatura reale rispetto alla media di 1 giorno fa è diminuita di 2.047 gradi.
+    La temperatura reale rispetto alla media di 1 giorno fa è diminuita di **2.047** gradi.
 
-    La temperatura percepita rispetto alla media di 1 giorno fa è diminuita di 0.796 gradi.
+    La temperatura percepita rispetto alla media di 1 giorno fa è diminuita di **0.796** gradi.
 ```
 
 ### **3-** `/statistics`
