@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/blob/main/WeatherApp/src/main/resources/static/icon.png" alt="Logo" style="width:90px;height:90px; margin-bottom:-10px"/>
+  <img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/blob/main/WeatherApp/src/main/resources/static/icon.png" alt="Logo" style="width:90px;height:90px; margin-bottom:-10px;"/>
 </p>
 <br>
 
@@ -24,12 +24,12 @@ Il seguente programma consente di visionare i dati relativi alle temperature di 
 ## **Descrizione**
 
 L'applicativo è basato su dati che vengono forniti mediante chiamate a [OpenWeather](https://openweathermap.org/), tramite l’utilizzo di **API** gratuite. Grazie a queste ultime sarà possibile visionare e confrontare dati relativi alle temperature reali e percepite, di una specifica città fornita dall’utente. I dati restituiti posso essere di due tipi:
-- Attuali: i quali verranno salvati in un file di testo in formato JSON, andando così a formare lo storico;
-- Passati: riferiti a un periodo di tempo passato indicato dall'utente stesso, a seconda dell’opzione selezionata.
+- **Attuali**: i quali verranno salvati in un file di testo in formato JSON, andando così a formare lo storico;
+- **Passati**: riferiti a un periodo di tempo passato indicato dall'utente stesso, a seconda dell’opzione selezionata.
 
 ## **Installazione**
 
-progettoOOP_Fabbri_Pirani è installabile dal Prompt dei Comandi digitando:
+**WeatherApp TempReader** è installabile dal Prompt dei Comandi digitando:
 
 ```bash
 git clone https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani
@@ -41,19 +41,19 @@ private final String apiKey = "********************************";
 
 ## **Funzionalità**
 
-Il programma è scritto interamente in linguaggio Java versione 11. Esso funziona mediante chiamate a delle API esterne. Per fare ciò è stata resa disponibile l'interfaccia `Service`, che contiene i metodi adibiti alle chiamate riguardanti il meteo passato e presente. Questa interfaccia viene utilizzata all'interno di `TempController`, il quale è la classe che gestisce le chiamate effettuate dall'utente, tramite l'utilizzo di rotte specifiche. Inoltre, grazie a questo controller, è possibile interfacciarsi alle statistiche, le quali utilizzano metodi presenti nell’interfaccia `StatsInterface`. Esse restituiscono i dati relativi ai valori massimi, minimi, di media e di varianza di temperature reali e percepite, prelevati dallo storico. E’ inoltre possibile applicare un filtro (orario, giornaliero o settimanale) per scindere le informazioni restituite.
+Il programma è scritto interamente in linguaggio **Java** versione 11. Esso funziona mediante chiamate a delle **API** esterne. Per fare ciò è stata resa disponibile l'interfaccia `Service`, che contiene i metodi adibiti alle chiamate riguardanti il meteo passato e presente. Questa interfaccia viene utilizzata all'interno di `TempController`, il quale è la classe che gestisce le chiamate effettuate dall'utente, tramite l'utilizzo di rotte specifiche. Inoltre, grazie a questo controller, è possibile interfacciarsi alle statistiche, le quali utilizzano metodi presenti nell’interfaccia `StatsInterface`. Esse restituiscono i dati relativi ai valori massimi, minimi, di media e di varianza di temperature reali e percepite, prelevati dallo storico. E’ inoltre possibile applicare un filtro (orario, giornaliero o settimanale) per scindere le informazioni restituite.
 
 ## **Rotte**
 
 |**N**| **Tipo** | **Rotta**     | **Descrizione**|
 | -------- | -------- | ------ | ------------------------- |
-|**1**|`GET` | `/current` |Rotta di tipo GET per ottenere la temperatura corrente di una città, con il metodo saveEveryHour che ci permette di salvarle con cadenta oraria.|
-|**2**|`GET` | `/compare` |Rotta di tipo GET per confrontare le temperature correnti e percepite, in dato range temporale.|
-|**3**| `GET` | `/statistics`| Rotta di tipo GET per restituire il filtraggio delle statistiche in base alla periodicità: giorni, fascia oraria, settimanale.|
-|**4**|`GET` | `/error`| Rotta che restituisce una pagina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.|
+|**1**|`GET` | `/current` |Rotta di tipo **GET** per ottenere la temperatura corrente di una città, con il metodo saveEveryHour che ci permette di salvarle con cadenta oraria.|
+|**2**|`GET` | `/compare` |Rotta di tipo **GET** per confrontare le temperature correnti e percepite, in dato range temporale.|
+|**3**| `GET` | `/statistics`| Rotta di tipo **GET** per restituire il filtraggio delle statistiche in base alla periodicità: giorni, fascia oraria, settimanale.|
+|**4**|`GET` | `/error`| Rotta di tipo **GET** che restituisce una pagina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.|
 
 ### **1-** `/current`
-Questa rotta permette di ottenere la temperatura corrente di una determinata città, in particolare il metodo `saveEveryHour` ha la funzione di salvare queste temperature con cadenta oraria in un file di testo, che costituirà lo storico lo storico.
+Questa **rotta** permette di ottenere la temperatura corrente di una determinata città, in particolare il metodo `saveEveryHour` ha la funzione di salvare queste temperature con cadenta oraria in un file di testo, che costituirà lo storico lo storico.
 
 ```bash
     {
@@ -69,7 +69,7 @@ Questa rotta permette di ottenere la temperatura corrente di una determinata cit
 ```
 
 ### **2-** `/compare`
-Questa rotta ha la funzione di confrontare lo storico sulle temperature effettive e percepite di una città in dato range temporale, definito con l'attributo `previousDay` che deve essere compreso tra 1 e 5.
+Questa **rotta** ha la funzione di confrontare lo storico sulle temperature effettive e percepite di una città in dato range temporale, definito con l'attributo `previousDay` che deve essere compreso tra 1 e 5.
 ```bash
     Confronto Temperature - <strong>Ancona</strong>:
 
@@ -80,13 +80,13 @@ Questa rotta ha la funzione di confrontare lo storico sulle temperature effettiv
 
 ### **3-** `/statistics`
 
-Questa rotta ha il compito di restituire il filtraggio delle statistiche di una città dallo storico, in base alla periodicità (giorni, fascia oraria, settimanale), tutto questo attraverso l'attributo `filterBy` e l'attributo `time` con cui si specifica l'entita della retroazione.
+Questa **rotta** ha il compito di restituire il filtraggio delle statistiche di una città dallo storico, in base alla periodicità (giorni, fascia oraria, settimanale), tutto questo attraverso l'attributo `filterBy` e l'attributo `time` con cui si specifica l'entita della retroazione.
 
 ```bash
 ```
 
 ### **4-** `/error`
-Questa rotta permette di restituire una pgina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.
+Questa **rotta** permette di restituire una pgina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.
 ```bash
 ```
 
@@ -102,22 +102,22 @@ Questa rotta permette di restituire una pgina HTML personalizzata come messaggio
 |**4**|`InvalidPeriodException`| Classe per la gestione dell'eccezione di un inserimento del periodo preso in considerazione non valido. |
 
 ### **1-** `CityNotFoundException`
-Questa eccezione viene generata qualora l'inserimento di una città non è valida.
+Questa **eccezione** viene generata qualora l'inserimento di una città non è valida.
 ```bash
 ```
 
 ### **2-** `HistoryException`
-Questa eccezione viene eseguita qualora.
+Questa **eccezione** viene eseguita qualora.
 ```bash
 ```
 
 ### **3-** `HourException`
-Questa eccezione viene generata qualora un intervallo orario non è valido.
+Questa **eccezione** viene generata qualora un intervallo orario non è valido.
 ```bash
 ```
 
 ### **4-** `InvalidPeriodException`
-Questa eccezione viene eseguita qualora l'inserimento del periodo preso in considerazione non è valido.
+Questa **eccezione** viene eseguita qualora l'inserimento del periodo preso in considerazione non è valido.
 ```bash
 ```
 
@@ -131,28 +131,28 @@ Questa eccezione viene eseguita qualora l'inserimento del periodo preso in consi
 |**4**|`TestStatistics`| Classe per la gestione del test dei metodi della classe `Statistics`.|
 
 ### **1-** `TestController`
-Questa classe di test serve per verificare il corretto funzionamento dei metodi della classe `TempController`.
+Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `TempController`.
 ```bash
 ```
 
 ### **2-** `HistorTestCityyException`
-Questa classe di test serve per verificare il corretto funzionamento dei metodi della classe `City`.
+Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `City`.
 ```bash
 ```
 
 ### **3-** `TestService`
-Questa classe di test serve per verificare il corretto funzionamento dei metodi della classe `Service`.
+Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `Service`.
 ```bash
 ```
 
 ### **4-** `TestStatistics`
-Questa classe di test serve per verificare il corretto funzionamento dei metodi della classe `Statistics`.
+Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `Statistics`.
 ```bash
 ```
 
 ## **Documentazione**
 
-Di seguito forniremo la documentazione JavaDoc dell'applicativo
+Di seguito forniremo la **documentazione** `JavaDoc` dell'applicativo
 
 - [JavaDoc](https://linktodocumentation)
 
