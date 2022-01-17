@@ -54,6 +54,7 @@ private final String apiKey = "********************************";
 
 ### **1-** `/current`
 <p style="text-align: justify;">Questa rotta permette di ottenere la temperatura corrente di una determinata città, in particolare il metodo `saveEveryHour` ha la funzione di salvare queste temperature con cadenta oraria in un file di testo, che costituirà lo storico lo storico.</p>
+
 ```bash
     {
         "dateTime":1642357460,
@@ -70,7 +71,7 @@ private final String apiKey = "********************************";
 ### **2-** `/compare`
 <p style="text-align: justify;">Questa rotta ha la funzione di confrontare lo storico sulle temperature effettive e percepite di una città in dato range temporale, definito con l'attributo `previousDay` che deve essere compreso tra 1 e 5.</p>
 ```bash
-    Confronto Temperature - **Ancona**:
+    Confronto Temperature - <strong>Ancona</strong>:
 
     La temperatura reale rispetto alla media di 1 giorno fa è diminuita di **2.047** gradi.
 
