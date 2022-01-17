@@ -97,28 +97,47 @@ Questa **rotta** permette di restituire una pgina HTML personalizzata come messa
 |**N**|**Nome**     | **Descrizione**|
 | -------- |------- | ------------------------- |
 |**1**|`CityNotFoundException`| Classe per la gestione dell'eccezione di inserimento di una città non valida. |
-|**2**|`HistoryException`| Classe per la gestione dell'eccezione... |
+|**2**|`HistoryException`| Classe per la gestione dell'eccezione del caso in cui lo storico richiesto per le statistiche non esiste. |
 |**3**|`HourException`| Classe per la gestione dell'eccezione di un intervallo orario non valido.  |
 |**4**|`InvalidPeriodException`| Classe per la gestione dell'eccezione di un inserimento del periodo preso in considerazione non valido. |
 
 ### **1-** `CityNotFoundException`
 Questa **eccezione** viene generata qualora l'inserimento di una città non è valida.
 ```bash
+  {
+      "dateTime":1642434506,
+      "feelsLike":23.45,
+      "temp":23.68,
+      "cityName":"Ancon",
+      "timeZone":3600,
+      "lon":-77.11165474769231,
+      "cityId":6542126,
+      "lat":-11.69655375
+  }
 ```
 
 ### **2-** `HistoryException`
-Questa **eccezione** viene eseguita qualora.
+Questa **eccezione** viene eseguita qualora lo storico richiesto per le statistiche non esiste.
 ```bash
+Il filtro inserito non è corretto
+
+Le opzioni sono hour, day, week
 ```
 
 ### **3-** `HourException`
 Questa **eccezione** viene generata qualora un intervallo orario non è valido.
 ```bash
+Il filtro inserito non è corretto
+
+Le opzioni sono hour, day, week
 ```
 
 ### **4-** `InvalidPeriodException`
 Questa **eccezione** viene eseguita qualora l'inserimento del periodo preso in considerazione non è valido.
 ```bash
+Il filtro inserito non è corretto
+
+Le opzioni sono hour, day, week
 ```
 
 ## **Test**
