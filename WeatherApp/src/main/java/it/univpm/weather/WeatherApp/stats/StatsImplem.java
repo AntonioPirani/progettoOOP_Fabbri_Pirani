@@ -11,6 +11,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import it.univpm.weather.WeatherApp.exceptions.HistoryException;
+
 /**
  * Classe che implementa l'interfaccia StatsInterface, definendo i metodi necessari
  * al funzionamento del programma
@@ -20,6 +22,22 @@ import org.json.simple.parser.ParseException;
  *
  */
 public class StatsImplem implements StatsInterface {
+	
+	public JSONObject calculate(String cityName) throws HistoryException, ParseException {
+		
+		Statistics stats = getStats(cityName, true);
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		map.put("cityName", cityName);
+		map.put("temp", stats.toJson());
+		
+		stats = getStats(cityName, false);
+		map.put("feels_like", stats.toJson());
+		
+		JSONObject obj = new JSONObject(map);
+		return obj;
+		
+	}
 	
 	/**
 	 * Metodo che restituisce un oggetto di tipo Statistics con tutte le informazioni relative
@@ -33,13 +51,13 @@ public class StatsImplem implements StatsInterface {
 	 * @throws ParseException eccezione che indica che c'è stato un errore nel parsing dello storico
 	 * 
 	 */
-	public Statistics getStats(String cityName, boolean b) throws FileNotFoundException, ParseException {
+	public Statistics getStats(String cityName, boolean b) throws HistoryException, ParseException {
 		
 		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + cityName + ".txt";
 		
 		File file = new File(filePath);
 			
-		if(!file.exists()) throw new FileNotFoundException();	
+		if(!file.exists()) throw new HistoryException(cityName);	
 
 		JSONArray array;
 		Statistics stats;

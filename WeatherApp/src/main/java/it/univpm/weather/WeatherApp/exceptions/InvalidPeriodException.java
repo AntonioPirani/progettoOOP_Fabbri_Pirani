@@ -1,5 +1,9 @@
 package it.univpm.weather.WeatherApp.exceptions;
 
+import java.util.HashMap;
+
+import org.json.simple.JSONObject;
+
 /** La classe InvalidPeriodException gestice l'eccezzione quando il periodo non è valido.
  * 
  * @author Matteo Fabbri
@@ -34,6 +38,19 @@ public class InvalidPeriodException extends Exception
 	public String getMessage() 
 	{
 		return output;
+	}
+	
+	public JSONObject toJson() {
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("exception", "InvalidPeriodException");
+		map.put("mex", output);
+		
+		JSONObject obj = new JSONObject(map);
+		
+		return obj;
+		
 	}
 	
 }
