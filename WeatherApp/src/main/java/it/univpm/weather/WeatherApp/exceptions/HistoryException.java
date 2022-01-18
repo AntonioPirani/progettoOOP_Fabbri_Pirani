@@ -1,5 +1,9 @@
 package it.univpm.weather.WeatherApp.exceptions;
 
+import java.util.HashMap;
+
+import org.json.simple.JSONObject;
+
 /**Eccezione che gestisce il caso in cui lo storico richiesto per le statistiche non esiste
  * 
  * @author Antonio Pirani
@@ -9,7 +13,7 @@ public class HistoryException extends Exception {
 
 	private static final long serialVersionUID = 4L;
 	
-	String txt;
+	String txt;	//cityName
 
 	/**
 	 * 
@@ -29,4 +33,17 @@ public class HistoryException extends Exception {
 		return txt;
 	}
 
+	public JSONObject toJson() {
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("exception", "HistoryException");
+		map.put("mex", "Lo storico di " + txt + " non esiste");
+		
+		JSONObject obj = new JSONObject(map);
+		
+		return obj;
+		
+	}
+	
 }
