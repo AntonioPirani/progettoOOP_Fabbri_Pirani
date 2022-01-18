@@ -58,12 +58,16 @@ public class TempController {
 			//service.saveCurrentTemp(obj);
 			service.saveEveryHour(cityName);
 			
-			return new ResponseEntity<> (city.toJson().toString() + "<br><br>Creazione dello storico in corso", HttpStatus.OK);
+			return new ResponseEntity<> (city.toJson(), HttpStatus.OK);
 			
-		} catch (IOException | CityNotFoundException e) {
+		} catch (IOException e) {
 			
-			return new ResponseEntity<> ("<br><center><h4>Città <b>\"" + cityName + "\"</b> non trovata</h4></center>", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<> ("Errore di inserimento", HttpStatus.NOT_FOUND);
 		
+		} catch(CityNotFoundException e) {
+			
+			return new ResponseEntity<> (e.toJson(), HttpStatus.NOT_FOUND);
+			
 		}
     }
 	
@@ -83,23 +87,19 @@ public class TempController {
 	public ResponseEntity<Object> compare(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName, @RequestParam(value = "previousDay", defaultValue = "1") int prevDay) throws IOException, ParseException {
 		
 		if(prevDay < 1 || prevDay > 5) {
-			return new ResponseEntity<> ("<br><center><h4>Il numero di giorni precedenti da ricercare deve essere tra <b>1</b> e <b>5</b></h4></center>", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<> ("Il numero di giorni precedenti da ricercare deve essere tra 1 e 5", HttpStatus.BAD_REQUEST);
 		}
-		
-		String mex = "";
 		
 		try {
 			
-			mex = service.compareTemp(cityName, prevDay);
+			return new ResponseEntity<>(service.compareTemp(cityName, prevDay), HttpStatus.OK); //TODO
 			
 		} catch (CityNotFoundException e) {
 			
-			return new ResponseEntity<> ("<br><center><h4>Città \"<b>" + cityName + "\"</b> non trovata</h4></center>", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<> (e.toJson(), HttpStatus.NOT_FOUND);
 			
 		}
 		
-	    return new ResponseEntity<>(mex, HttpStatus.OK);
-	
 	}
 	
 	/**
@@ -138,16 +138,16 @@ public class TempController {
 				
 			} catch (FileNotFoundException e ) {
 				
-				return new ResponseEntity<> ("<br><center><h4>Lo storico di " + cityName + " non esiste</h4></center>", HttpStatus.NOT_FOUND);
+				return new ResponseEntity<> ("Lo storico di " + cityName + " non esiste", HttpStatus.NOT_FOUND);
 				
 			} catch (ParseException e) {
 				
-				return new ResponseEntity<> ("<br><center><h4>Errore nello storico di " + cityName + "</h4></center>", HttpStatus.NOT_FOUND);
+				return new ResponseEntity<> ("Errore nello storico di " + cityName, HttpStatus.NOT_FOUND);
 				
 			}
 			
 		    return new ResponseEntity<>("Statistiche di <b>" + cityName + "</b><br><br>Temperatura reale:<br>" + statsTemp.toJson().toString() + "<br><br>" + "Temperatura percepita:<br>" + statsFeels.toJson().toString(), HttpStatus.OK);
-		    
+		    //TODO
 		}
 		
 		else {
@@ -156,7 +156,7 @@ public class TempController {
 			
 			try {
 			
-				switch(filterBy) {
+				switch(filterBy) { //TODO
 				
 					case "hour": 
 						
@@ -175,7 +175,7 @@ public class TempController {
 	
 					default: 
 						
-						return new ResponseEntity<> ("<br><center><h4>Il filtro inserito non è corretto</h4><br>Le opzioni sono hour, day, week</center>", HttpStatus.BAD_REQUEST);
+						return new ResponseEntity<> ("Il filtro inserito non è corretto. Le opzioni sono hour, day, week", HttpStatus.BAD_REQUEST);
 				
 				}
 			

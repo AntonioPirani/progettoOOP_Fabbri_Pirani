@@ -4,6 +4,7 @@ import it.univpm.weather.WeatherApp.exceptions.*;
 import it.univpm.weather.WeatherApp.model.*;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -30,6 +31,6 @@ public interface Service {
 	
 	public void saveEveryHour(String cityName) throws IOException;
 	
-	public String compareTemp(String cityName, int prevDay) throws IOException, ParseException, CityNotFoundException; //oneCall
+	public JSONObject compareTemp(String cityName, int prevDay) throws IOException, ParseException, CityNotFoundException; //oneCall
 	
 }

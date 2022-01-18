@@ -69,7 +69,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 		} catch (IOException | CityNotFoundException e) {
 
 			e.printStackTrace();
-			throw new CityNotFoundException();
+			throw new CityNotFoundException("Città " + cityName + " non trovata", cityName);
 			
 		}
 
@@ -100,7 +100,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	   
 	    obj = (JSONObject) obj.get("current");
 	    
-	    city.setCurrentTemp(new Temperature ((long)obj.get("dt"), (double) obj.get("feels_like"), (double) obj.get("temp")));
+	    city.setCurrentTemp(new Temperature ((long)obj.get("dt"), doubleValue(obj.get("feels_like")), doubleValue(obj.get("temp")) ));
 	    
 		return city;
 	}
@@ -299,7 +299,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 * @return mex Stringa contenente la differenza di temperatura tra attuale e media
 	 * @throws CityNotFoundException eccezione per quando la città non viene trovata
 	 */
-	public String compareTemp(String cityName, int prevDay) throws IOException, ParseException, CityNotFoundException {
+	public JSONObject compareTemp(String cityName, int prevDay) throws IOException, ParseException, CityNotFoundException {
 
 		City current = null;
 		
@@ -308,7 +308,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			current = getTemperature(cityName); //corrente
 			
 		} catch(CityNotFoundException e) {
-			throw new CityNotFoundException();
+			throw new CityNotFoundException("Città " + cityName + " non trovata", cityName);
 		}
 	
 		long dt = previousDay(prevDay);
@@ -352,25 +352,34 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 			    .setScale(3, RoundingMode.HALF_UP)
 			    .doubleValue();
 		
-		String mex = "<br><h3><center><b>Confronto Temperature - " + cityName + ": </b></center></h3><br>";
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		map.put("cityName", cityName);
+		
+		HashMap<String,Object> aux = new HashMap<String,Object>();
 		
 		if(compT > 0.0) {
-			mex = mex.concat("<center>La temperatura reale rispetto alla media di " + prevDay + giorno + " fa è aumentata di <b>" + compT + "</b> gradi. <br><br>");
+			aux.put("result", "La temperatura reale rispetto alla media di " + prevDay + giorno + " fa è aumentata di " + compT + " gradi");
 		}
 		
 		else {
-			mex = mex.concat("<center>La temperatura reale rispetto alla media di " + prevDay + giorno + " fa è diminuita di <b>" + Math.abs(compT) + "</b> gradi.<br><br>");
+			aux.put("result", "La temperatura reale rispetto alla media di " + prevDay + giorno + " fa è diminuita di " + Math.abs(compT) + " gradi");
 		}
+		
+		map.put("temp", aux);
+		aux =  new HashMap<String,Object>();
 		
 		if(compF > 0.0) {
-			mex = mex.concat("La temperatura percepita rispetto alla media di " + prevDay + giorno + " fa è aumentata di <b>" + compF + "</b> gradi.</center>");
+			aux.put("result", "La temperatura percepita rispetto alla media di " + prevDay + giorno + " fa è aumentata di " +compF + " gradi");
 		}
 		
 		else {
-			mex = mex.concat("La temperatura percepita rispetto alla media di " + prevDay + giorno + " fa è diminuita di <b>" + Math.abs(compF) + "</b> gradi.</center>");
+			aux.put("result", "La temperatura percepita rispetto alla media di " + prevDay + giorno + " fa è diminuita di " + Math.abs(compF) + " gradi");
 		}
 
-		return mex;
+		map.put("feels_like", aux);
+		JSONObject obj = new JSONObject(map);
+		
+		return obj;
 		
 	}
 	
