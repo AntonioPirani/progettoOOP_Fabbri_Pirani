@@ -144,6 +144,7 @@ Questa **eccezione** viene eseguita qualora l'inserimento del periodo preso in c
 |`TestCity`| Classe per la gestione del test dei metodi della classe `City`.|
 |`TestService`| Classe per la gestione del test dei metodi della classe `Service`. |
 |`TestStatistics`| Classe per la gestione del test dei metodi della classe `Statistics`.|
+|`TestException`| Classe per la gestione del test della classe `CityNotFoundException` .|
 
 ### `TestController`
 Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `TempController`.
