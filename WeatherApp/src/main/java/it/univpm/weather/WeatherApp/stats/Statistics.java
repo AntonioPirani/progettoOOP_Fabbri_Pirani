@@ -16,6 +16,7 @@ import java.util.Iterator;
  */
 public class Statistics {
 	
+	private String cityName;
 	private double max = 0;
 	private double min = 0;
 	private double avg = 0;
@@ -47,14 +48,23 @@ public class Statistics {
 	 * @param avg Valore medio
 	 * @param var Varianza
 	 */
-	public Statistics(double max, double min, double avg, double var) {
+	public Statistics(double max, double min, double avg, double var, String cityName) {
 		super();
 		this.max = max;
 		this.min = min;
 		this.avg = avg;
 		this.var = var;
+		this.cityName = cityName;
 	}
 	
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
 	public double getMax() {
 		return max;
 	}
@@ -171,10 +181,12 @@ public class Statistics {
 	/**
 	 * Metodo toString
 	 */
+	@Override
 	public String toString() {
-		return "Statistics [max=" + max + ", min=" + min + ", avg=" + avg + ", var=" + var + "]";
+		return "Statistics [cityName=" + cityName + ", max=" + max + ", min=" + min + ", avg=" + avg + ", var=" + var
+				+ "]";
 	}
-	
+
 	/**
 	 * Metodo analogo a quello presente su ServiceImplem. Necessario alla correzione del tipo
 	 * restituito dal JSONObject

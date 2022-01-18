@@ -21,7 +21,7 @@ public class TestStatistics
 	@Before
 	public void setUp()
 	{
-		stats = new Statistics(4.54,-3.07,6.819,8.266);
+		stats = new Statistics(4.54,-3.07,6.819,8.266, "Ancona");
 	}
 	
 	/** Test del metodo toJSON.	
@@ -30,7 +30,7 @@ public class TestStatistics
 	public void testJSON()
 	{
 		String json="{\"min\":-3.07,\"avg\":6.819,\"max\":4.54,\"var\":8.266}";
-		assertEquals(stats.toJson().toString(),json);
+		assertEquals(stats.toJson().toString(),json);//TODO
 	}
 
 	@After

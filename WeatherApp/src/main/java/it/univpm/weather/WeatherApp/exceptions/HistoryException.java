@@ -38,7 +38,7 @@ public class HistoryException extends Exception {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		
 		map.put("exception", "HistoryException");
-		map.put("mex", "Lo storico di " + txt + " non esiste");
+		map.put("mex", txt);
 		
 		JSONObject obj = new JSONObject(map);
 		

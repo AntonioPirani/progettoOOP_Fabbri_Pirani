@@ -57,7 +57,7 @@ public class StatsImplem implements StatsInterface {
 		
 		File file = new File(filePath);
 			
-		if(!file.exists()) throw new HistoryException(cityName);	
+		if(!file.exists()) throw new HistoryException("Lo storico di " + cityName + " non esiste");	
 
 		JSONArray array;
 		Statistics stats;

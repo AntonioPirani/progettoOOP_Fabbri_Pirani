@@ -46,27 +46,42 @@ public class FilterByDay extends Filter {
 	 * @throws InvalidPeriodException se il periodo inserito non è valido
 	 * @throws HistoryException se lo storico non esiste
 	 */
-	public String calculate() throws InvalidPeriodException, HistoryException {
+public JSONObject calculate() throws InvalidPeriodException, HistoryException {
 		
 		stats = new Statistics(true);
 		JSONArray filter = null;
-			
-		if (time < 1) throw new InvalidPeriodException("Non è stato inserito un periodo di tempo valido");
 		
-		filter = filter();
-		if (filter == null || filter.size() == 0) throw new HistoryException(cityName);
+		if (time < 1) throw new InvalidPeriodException("Non è stato inserito un periodo di tempo valido");	
 		
+		try {
+			filter = filter();
+		} catch (FileNotFoundException e) {	
+			throw new HistoryException("Lo storico di " + cityName + " non esiste");	
+		}
+		
+		if (filter == null || filter.size() == 0) throw new HistoryException("Lo storico non ha riportato dati relativi al periodo inserito");
+	
 		stats.statsCalc(filter);
 		
-		String response = "Temperatura reale: " + toJson().toString();
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		map.put("cityName", cityName);
+		
+		map.put("temp", toJson());
 		
 		stats = new Statistics(false);
-		filter = filter();
+		
+		try {
+			filter = filter();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
 		stats.statsCalc(filter);
+		map.put("feels_like", toJson());
 		
-		response = response + "<br>Temperatura percepita: " + toJson().toString();
+		JSONObject obj = new JSONObject(map);
 		
-		return response;
+		return obj;
 	}
 
 	/**
@@ -75,23 +90,16 @@ public class FilterByDay extends Filter {
 	 * di appartenere al periodo di tempo esatto.
 	 * 
 	 * @return JSONArray array con tutti i dati necessari al calcolo dei valori
+	 * @throws FileNotFoundException 
 	 */
 	@SuppressWarnings("unchecked")
-	public JSONArray filter() {
+	public JSONArray filter() throws FileNotFoundException {
 		
 		String filePath = System.getProperty("user.dir") + System.getProperty("file.separator") + "files" + System.getProperty("file.separator") + cityName + ".txt";
 		File file = new File(filePath);
 		
-		try {
+		if(!file.exists()) throw new FileNotFoundException();
 			
-			if(!file.exists()) throw new FileNotFoundException();
-				
-		} catch (FileNotFoundException e) {
-
-			System.out.println("Lo storico di " + cityName + " non esiste");
-			return null;
-		}
-		
 		JSONParser parser = new JSONParser();
 		JSONArray array = new JSONArray();
 		

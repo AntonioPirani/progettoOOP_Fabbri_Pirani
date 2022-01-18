@@ -36,6 +36,7 @@ public class Filter {
 		
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		
+		//map.put("cityName", stats.getCityName());
 		map.put("max", stats.getMax());
 		map.put("min", stats.getMin());
 		map.put("avg", BigDecimal.valueOf(stats.getAvg())
