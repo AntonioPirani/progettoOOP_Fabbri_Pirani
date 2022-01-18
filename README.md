@@ -13,7 +13,7 @@ Il seguente programma consente di visionare i dati relativi alle temperature di 
 - **[Configurazione](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#configurazione)**
 - **[Funzionalità](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#funzionalit%C3%A0)**
 - **[Rotte](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#rotte)**
-    - **[Statistiche e Filtri](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#statistiche)**
+    - **[Statistiche e Filtri](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#statistiche-e-filtri)**
 - **[Eccezioni](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#eccezioni)**
 - **[Test](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#test)**
 - **[Documentazione](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#documentazione)**
@@ -71,7 +71,7 @@ Questa **rotta** permette di ottenere la temperatura corrente di una determinata
 ### **2-** `/compare`
 Questa **rotta** ha la funzione di confrontare lo storico sulle temperature effettive e percepite di una città in dato range temporale, definito con l'attributo `previousDay` che deve essere compreso tra 1 e 5.
 ```bash
-    Confronto Temperature - <strong>Ancona</strong>:
+    Confronto Temperature - Ancona:
 
     La temperatura reale rispetto alla media di 1 giorno fa è diminuita di **2.047** gradi.
 
@@ -86,7 +86,7 @@ Questa **rotta** ha il compito di restituire il filtraggio delle statistiche di 
 ```
 
 ### **4-** `/error`
-Questa **rotta** permette di restituire una pgina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.
+Questa **rotta** permette di restituire una pagina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.
 ```bash
 ```
 
@@ -138,32 +138,37 @@ Questa **eccezione** viene eseguita qualora l'inserimento del periodo preso in c
 
 ## **Test**
 
-|**N**|**Nome**     | **Descrizione**|
-| -------- |------- | ------------------------- |
-|**1**|`TestController`| Classe per la gestione del test dei metodi della classe `TempController`.|
-|**2**|`TestCity`| Classe per la gestione del test dei metodi della classe `City`.|
-|**3**|`TestService`| Classe per la gestione del test dei metodi della classe `Service`. |
-|**4**|`TestStatistics`| Classe per la gestione del test dei metodi della classe `Statistics`.|
+|**Nome**     | **Descrizione**|
+| ------- | ------------------------- |
+|`TestController`| Classe per la gestione del test dei metodi della classe `TempController`.|
+|`TestCity`| Classe per la gestione del test dei metodi della classe `City`.|
+|`TestService`| Classe per la gestione del test dei metodi della classe `Service`. |
+|`TestStatistics`| Classe per la gestione del test dei metodi della classe `Statistics`.|
 
-### **1-** `TestController`
+### `TestController`
 Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `TempController`.
+Questo è un esempio di test per il metodo `GetTemperature()`:
 ```bash
+@Autowired
+private MockMvc mockMvc;
+  
+    @Test
+    public void testGetTemperature() throws Exception
+    {
+      this.mockMvc.perform(get("/current")).andExpect(status().isOk());
+    }
 ```
 
-### **2-** `HistorTestCityyException`
+### `TestCityy`
 Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `City`.
 ```bash
+    @Test
+      public void testJSON()
+      {
+        assertEquals(city.toJson().toString(),json);
+      }
 ```
 
-### **3-** `TestService`
-Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `Service`.
-```bash
-```
-
-### **4-** `TestStatistics`
-Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `Statistics`.
-```bash
-```
 
 ## **Documentazione**
 
@@ -182,8 +187,8 @@ Il programma è stato realizzato tramite l'utilizzo di una `API KEY` gratuita. P
 
 ## **Authors**
 
-- [@Antonio Pirani ](https://github.com/AntonioPirani)
-- [@Matteo Fabbri](https://github.com/MatteoFabbri136)
+- [Antonio Pirani ](https://github.com/AntonioPirani)
+- [Matteo Fabbri](https://github.com/MatteoFabbri136)
 
 
 
