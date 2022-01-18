@@ -47,6 +47,7 @@ public class Statistics {
 	 * @param min Valore minimo
 	 * @param avg Valore medio
 	 * @param var Varianza
+	 * @param cityName Nome della città
 	 */
 	public Statistics(double max, double min, double avg, double var, String cityName) {
 		super();

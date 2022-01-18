@@ -41,12 +41,11 @@ public class FilterByDay extends Filter {
 	/**
 	 * Metodo usato per calcolare le statistiche alle quali viene applicato il filtro giornaliero.
 	 * 
-	 * @return Stringa mista contentente testo e JSON dei valori delle temperature reali e 
-	 * 		percepite calcolati
+	 * @return JSONObject dei valori delle temperature reali e percepite calcolati
 	 * @throws InvalidPeriodException se il periodo inserito non è valido
 	 * @throws HistoryException se lo storico non esiste
 	 */
-public JSONObject calculate() throws InvalidPeriodException, HistoryException {
+	public JSONObject calculate() throws InvalidPeriodException, HistoryException {
 		
 		stats = new Statistics(true);
 		JSONArray filter = null;
@@ -90,7 +89,7 @@ public JSONObject calculate() throws InvalidPeriodException, HistoryException {
 	 * di appartenere al periodo di tempo esatto.
 	 * 
 	 * @return JSONArray array con tutti i dati necessari al calcolo dei valori
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException se lo storico non esiste
 	 */
 	@SuppressWarnings("unchecked")
 	public JSONArray filter() throws FileNotFoundException {

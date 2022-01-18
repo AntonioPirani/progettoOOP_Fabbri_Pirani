@@ -33,6 +33,12 @@ public class HistoryException extends Exception {
 		return txt;
 	}
 
+	/**
+	 * Metodo che permette di restituire le caratteristiche della eccezione in formato JSON, 
+	 * ossia il nome della eccezione e il messaggio
+	 * 
+	 * @return JSONObject con le informazioni sopraccitate
+	 */
 	public JSONObject toJson() {
 		
 		HashMap<String,Object> map = new HashMap<String,Object>();
