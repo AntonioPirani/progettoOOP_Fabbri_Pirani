@@ -180,6 +180,8 @@ public class TempController {
 				return new ResponseEntity<> (e.toJson(), HttpStatus.BAD_REQUEST);
 			} catch(HistoryException e) {
 				return new ResponseEntity<> (e.toJson(), HttpStatus.NOT_FOUND);
+			} catch(NullPointerException e) {
+				return new ResponseEntity<> (genericException("NullPointerException", "Non è stato inserito un periodo di tempo"), HttpStatus.NOT_FOUND);
 			}
 			
 		}
