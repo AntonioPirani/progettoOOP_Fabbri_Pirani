@@ -19,7 +19,7 @@ public class ErrorHandlerController implements ErrorController{
 	@RequestMapping("/error")
 	@ResponseBody
 	public String getErrorPath() {
-		String content="<html>\r\n"
+		String content="<<html>\r\n"
 				+ "	<style>\r\n"
 				+ "		table, th, td {\r\n"
 				+ "		border:1px solid black;\r\n"
@@ -29,12 +29,13 @@ public class ErrorHandlerController implements ErrorController{
 				+ "		margin: 15px auto auto auto;\r\n"
 				+ "		color:#292929;\r\n"
 				+ "		}\r\n"
-				+ "		div{\r\n"
-				+ "		text-align:justify;\r\n"
+				+ "		tr\r\n"
+				+ "		{\r\n"
 				+ "		margin: 7px 7px 7px 7px;\r\n"
 				+ "		}\r\n"
 				+ "	</style>\r\n"
 				+ "	<head>\r\n"
+				+ "		<title>Error Page</title>\r\n"
 				+ "		<title>Error Page</title>\r\n"
 				+ "		<link href=\"icon.png\">\r\n"
 				+ "	</head>\r\n"
@@ -56,7 +57,7 @@ public class ErrorHandlerController implements ErrorController{
 				+ "			<tr>\r\n"
 				+ "				<td style=\"font-size:20px\">/current</td>\r\n"
 				+ "				<td style=\"font-size:20px\">http://localhost:8080/current?cityName=Ancona</td>\r\n"
-				+ "				<td style=\"font-size:20px\"><div>Rotta di tipo GET per ottenere la temperatura corrente di una città, con la possibilità di salvare i dati con cadenza oraria.</div></td>\r\n"
+				+ "				<td style=\"font-size:20px\"><div>Rotta di tipo GET per ottenere la temperatura corrente di una citt&agrave, con la possibilit&agrave di salvare i dati con cadenza oraria.</div></td>\r\n"
 				+ "			</tr>\r\n"
 				+ "			<tr>\r\n"
 				+ "				<td style=\"font-size:20px\">/compare</td>\r\n"
@@ -67,23 +68,22 @@ public class ErrorHandlerController implements ErrorController{
 				+ "				<td style=\"font-size:20px\">/statistics</td>\r\n"
 				+ "				\r\n"
 				+ "				<td style=\"font-size:20px\">\r\n"
-				+ "					<ol style=\"text-align:justify;\">\r\n"
+				+ "					<ol style=\"text-align:justify;margin-top:12px;\">"
 				+ "						<li> http://localhost:8080/statistics?cityName=Ancona</li>\r\n"
 				+ "						<li> http://localhost:8080/statistics?cityName=Ancona&filterBy=\"hour\"&time=1</li>\r\n"
 				+ "						<li>http://localhost:8080/statistics?cityName=Ancona&filterBy=\"day\"&time=1</li>\r\n"
 				+ "						<li>http://localhost:8080/statistics?cityName=Ancona&filterBy=\"week\"&time=1</li>\r\n"
-				+ "					</ul>\r\n"
-				+ "				</ol>\r\n"
+				+ "					</ol>\r\n"
 				+ "				</td>\r\n"
-				+ "				<td style=\"font-size:20px\"> <div>Rotta di tipo GET per restituire il filtraggio delle statistiche in base alla periodicità: fascia oraria, giornaliera e settimanale. Inoltre, se il filtro non viene specificato, viene analizzato tutto lo storico.</div></td>\r\n"
+				+ "				<td style=\"font-size:20px\"> <div>Rotta di tipo GET per restituire il filtraggio delle statistiche in base alla periodicit&agrave: fascia oraria, giornaliera e settimanale. Inoltre, se il filtro non viene specificato, viene analizzato tutto lo storico.</div></td>\r\n"
 				+ "			</tr>\r\n"
 				+ "		</table>\r\n"
 				+ "		<center><img src=\"icon.png\" style=\"width:88px;height:88px; margin-top:20px;\"></center>\r\n"
 				+ "		<footer style=\"margin-top:0px\">\r\n"
-				+ "			<p style=\"text-align:center;\"><i>Created by Antonio Pirani & Matteo Fabbri. © 2021/22</i></p>\r\n"
+				+ "			<p style=\"text-align:center;\"><i>Created by Antonio Pirani & Matteo Fabbri. &copy 2021/22</i></p>\r\n"
 				+ "		</footer>\r\n"
 				+ "	</body>\r\n"
 				+ "</html>";
-		return content;
+		return content;		
 	}
 }
