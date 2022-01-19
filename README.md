@@ -1,7 +1,6 @@
 <p align="center">
   <img src="https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/blob/main/WeatherApp/src/main/resources/static/icon.png" alt="Logo" style="width:90px;height:90px; margin-bottom:-10px;"/>
 </p>
-<br>
 
 # <p align=center> **WeatherApp TempReader** </p>
 
@@ -220,10 +219,13 @@ Questa **eccezione** viene eseguita qualora l'inserimento del periodo preso in c
 |`TestCity`| Classe per la gestione del test dei metodi della classe `City`.|
 |`TestService`| Classe per la gestione del test dei metodi della classe `Service`. |
 |`TestStatistics`| Classe per la gestione del test dei metodi della classe `Statistics`.|
+|`TestException`| Classe per la gestione del test delle eccezioni personalizzate.|
+
+Di seguito sono riportati due esempi di test che racchiudono le funzionalità espresse nella tabella precedente. 
 
 ### `TestController`
 Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `TempController`.
-Questo è un esempio di test per il metodo `GetTemperature()`:
+A differenza delle altre classi di test, in questa è stato implementato un emulatore `mockMvc`:
 ```bash
 @Autowired
 private MockMvc mockMvc;
@@ -236,7 +238,7 @@ private MockMvc mockMvc;
 ```
 
 ### `TestCity`
-Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `City`.
+Questa classe di **test** serve per verificare il corretto funzionamento della classe `City`.
 ```bash
     @Test
       public void testJSON()
