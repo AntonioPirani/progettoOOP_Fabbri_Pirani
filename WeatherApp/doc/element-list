@@ -1,0 +1,13 @@
+it.univpm.weather.WeatherApp
+it.univpm.weather.WeatherApp.controller
+it.univpm.weather.WeatherApp.errors
+it.univpm.weather.WeatherApp.exceptions
+it.univpm.weather.WeatherApp.filters
+it.univpm.weather.WeatherApp.model
+it.univpm.weather.WeatherApp.service
+it.univpm.weather.WeatherApp.stats
+it.univpm.weather.WeatherApp.testController
+it.univpm.weather.WeatherApp.testException
+it.univpm.weather.WeatherApp.testModel
+it.univpm.weather.WeatherApp.testService
+it.univpm.weather.WeatherApp.testStats
