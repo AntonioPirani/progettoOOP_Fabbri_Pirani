@@ -94,7 +94,7 @@ public class TempController {
 		
 		try {
 			
-			return new ResponseEntity<>(service.compareTemp(cityName, prevDay), HttpStatus.OK); //TODO
+			return new ResponseEntity<>(service.compareTemp(cityName, prevDay), HttpStatus.OK); 
 			
 		} catch (CityNotFoundException e) {
 			
@@ -152,7 +152,7 @@ public class TempController {
 			
 			try {
 			
-				switch(filterBy) { //TODO
+				switch(filterBy) { 
 				
 					case "hour": 
 						
