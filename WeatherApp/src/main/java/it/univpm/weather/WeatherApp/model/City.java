@@ -143,7 +143,7 @@ import org.json.simple.JSONObject;
 		this.currentTemp = currentTemp;
 	}
 
-	/** Metodo get che restituisce i un ArrayList di oggetti di tipo Temperature.
+	/** Metodo get che restituisce un ArrayList di oggetti di tipo Temperature.
 	 * 
 	 * @return temp
 	 */
@@ -151,25 +151,15 @@ import org.json.simple.JSONObject;
 		return temp;
 	}
 
-	/** Metodo set che imposta i un ArrayList di oggetti di tipo Temperature.
+	/** Metodo set che imposta un ArrayList di oggetti di tipo Temperature.
 	 * 
 	 * @param temp
 	 */
 	public void setTemp(ArrayList<Temperature> temp) {
 		this.temp = temp;
 	}
-
-	/** Override del metodo toString.
-	 * 
-	 *@return Stringa di ritorno.
-	 */
-	@Override
-	public String toString() {
-		return "City [cityName=" + cityName + ", cityId=" + cityId + ", coords=" + coords + ", currentTemp="
-				+ currentTemp + ", temp=" + temp + ", timeZone=" + timeZone + "]";
-	}
 	
-	/** Metodo che restituisce un oggetto di tipo JSONObject che contiene.
+	/** Metodo che restituisce un oggetto di tipo JSONObject contente i dati realivi a cityName, cityId, timeZone, currentTemp e coords .
 	 * 
 	 * @return obj
 	 */

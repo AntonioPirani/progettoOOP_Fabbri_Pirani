@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 
-/** La classe InvalidPeriodException gestice l'eccezzione quando il periodo non è valido.
+/** InvalidPeriodException è una eccezione personalizzata per la gestione dell'inserimento del periodo per non valido.
  * 
  * @author Matteo Fabbri
  */
@@ -58,5 +58,4 @@ public class InvalidPeriodException extends Exception
 		return obj;
 		
 	}
-	
 }
