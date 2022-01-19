@@ -38,6 +38,10 @@ E' necessario settare la propria `API KEY` fornita da OpenWeather all'interno di
 ```bash
 private final String apiKey = "********************************";
 ```
+Per utilizzare il programma è necessario utilizzare un semplice browser oppure applicativi appositi, come ad esempio **Postman** inserendo:
+```bash
+http://localhost:8080
+```
 
 ## **Funzionalità**
 
@@ -157,44 +161,55 @@ Di seguito si specifica l'output delle statistiche con e senza filtro, in format
 
 |**N**|**Nome**     | **Descrizione**|
 | -------- |------- | ------------------------- |
-|**1**|`CityNotFoundException`| Classe per la gestione dell'eccezione di inserimento di una città non valida. |
-|**2**|`HistoryException`| Classe per la gestione dell'eccezione del caso in cui lo storico richiesto per le statistiche non esiste. |
-|**3**|`HourException`| Classe per la gestione dell'eccezione di un intervallo orario non valido.  |
-|**4**|`InvalidPeriodException`| Classe per la gestione dell'eccezione di un inserimento del periodo preso in considerazione non valido. |
+|**1**|`CityNotFoundException`| Eccezione personalizzata per la gestione dell'inserimento di una città non valida.|
+|**2**|`HistoryException`| Eccezione personalizzata per la gestione della mancanza dello storico della città rischiesa. |
+|**3**|`HourException`| Eccezione personalizzata per la gestione di una prematura richiesta di salvataggio dello storico.|
+|**4**|`InvalidPeriodException`| Eccezione personalizzata per la gestione dell'inserimento del periodo per non valido.|
 
 ### **1-** `CityNotFoundException`
-Questa **eccezione** viene generata qualora l'inserimento di una città non è valida.
+Questa **eccezione** viene generata qualora venisse inserita una città non valida.
 ```bash
-  {
-      "dateTime":1642434506,
-      "feelsLike":23.45,
-      "temp":23.68,
-      "cityName":"Ancon",
-      "timeZone":3600,
-      "lon":-77.11165474769231,
-      "cityId":6542126,
-      "lat":-11.69655375
-  }
+{
+    "exception": "CityNotFoundException",
+    "cityName": "Anconi"
+}
 ```
 
 ### **2-** `HistoryException`
-Questa **eccezione** viene eseguita qualora lo storico richiesto per le statistiche non esistesse.
+Questa **eccezione** viene lanciata qualora lo storico richiesto per le statistiche non esistesse.
 ```bash
-  Storico di Ancona vuoto
+  {
+    "exception": "HistoryException",
+    "mex": "Lo storico di Macerata non esiste"
+}
 ```
 
 ### **3-** `HourException`
-Questa **eccezione** viene generata qualora un intervallo orario non è valido.
-```bash
-  Il filtro inserito non è corretto
-
-  Le opzioni sono hour, day, week
-```
+Questa **eccezione** non viene restituita come le altre, ma viene celata all'interno del programma. Si possono distingue 3 casistiche:
+ 
+  - I dati vengono salvati correttamente, il file è già esistente
+    ```bash
+    Dati salvati in: WeatherApp\files\Ancona.txt
+    Salvataggio riuscito
+    ```
+  - I dati vengono salvati, il file viene creato
+    ```bash
+    Impossibile aprire il file - se non esiste verrà creato
+    Dati salvati in: C:\Users\anton\git\progettoOOP_Fabbri_Pirani\WeatherApp\files\Ancona.txt
+    ```
+  - I dati non vengono salvati
+    ```bash
+    Differenza di orario inferiore ad 1 ora
+    it.univpm.weather.WeatherApp.exceptions.HourException
+    ```
 
 ### **4-** `InvalidPeriodException`
-Questa **eccezione** viene eseguita qualora l'inserimento del periodo preso in considerazione non è valido.
+Questa **eccezione** viene eseguita qualora l'inserimento del periodo preso in considerazione non fosse valido.
 ```bash
-  Non è stato inserito un periodo di tempo valido
+{
+    "exception": "InvalidPeriodException",
+    "mex": "Non è stato inserito un periodo di tempo valido"
+}
 ```
 
 ## **Test**
@@ -246,7 +261,7 @@ Il programma è stato realizzato tramite l'utilizzo di una `API KEY` gratuita. P
 - il numero limitato di chiamate orarie disponibili;
 - lo storico relativo a una città di massimo 5 giorni antecedenti alla chiamata.
 
-Come è possibile notare, vi è una differenza tra il JSON restituito dalla chiamata /current e quello salvato sullo storico. In quest'ultimo infatti si è deciso di non salvare le informazioni non utili, tra cui l'id della città e la timezone, al fine di salvare spazio.
+Come è possibile notare, vi è una differenza tra il JSON restituito dalla chiamata `/current` e quello salvato sullo storico. In quest'ultimo infatti si è deciso di non salvare le informazioni non utili, tra cui l'id della città e la timezone, al fine di salvare spazio.
 
 ## **Authors**
 
