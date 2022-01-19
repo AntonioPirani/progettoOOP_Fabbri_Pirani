@@ -1,7 +1,6 @@
 package it.univpm.weather.WeatherApp.stats;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
