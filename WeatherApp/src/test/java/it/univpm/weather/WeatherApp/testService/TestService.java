@@ -36,7 +36,7 @@ public class TestService
 	{
 		temp = new Temperature(1641494587,6.78,5.39);
 		coord = new Coordinates(43.617,13.5171);
-		city = new City("Ancona", 3183087, 3600, coord, temp, null);
+		city = new City("Rimini", 3183087, 3600, coord, temp, null);
 	}
 	
 	/** Test del metodo testGetTemperature.	 
@@ -57,7 +57,7 @@ public class TestService
 	@Test
 	public void testTimeMachine() throws IOException
 	{
-		assertNotNull(service.timeMachine("Ancona", 1642534367));
+		assertNotNull(service.timeMachine("Ancona", 1642534367)); //1642941424 23 gennaio
 	}
 	
 	/** Test del metodo testGetCityCoords.	 
@@ -80,7 +80,7 @@ public class TestService
 	@Test
 	public void testSaveCurrentTemp() throws IOException, HourException
 	{
-		assertNotNull(service.saveCurrentTemp(city));	
+		assertNotNull(service.saveCurrentTemp(city));	//per evitare HourException cambiare nome alla city
 	}
 	
 	/** Test del metodo testCompareTemp.	 
