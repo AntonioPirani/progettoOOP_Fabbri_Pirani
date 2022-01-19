@@ -53,8 +53,8 @@ Il programma è scritto interamente in linguaggio **Java** versione 11. Esso fun
 |**4**|`GET` | `/error`| Rotta di tipo **GET** che restituisce una pagina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.|
 
 ### **1-** `/current`
-Questa **rotta** permette di ottenere la temperatura corrente di una determinata città, in particolare il metodo `saveEveryHour` ha la funzione di salvare queste temperature con cadenza oraria in un file di testo, che costituirà lo storico lo storico.
-
+Questa **rotta** permette di ottenere la temperatura reale e percepita corrente di una determinata città. Questi dati verranno utilizzati per la creazione di uno storico su base oraria. Nel caso in cui non fosse passata almeno 1 ora dall'ultima chiamata i dati non verranno salvati. Per realizzare tutto ciò è necessario effettuare una chiamata indiretta alla **API** di geolocalizzazione delle coordinate della città. La città di default è:
+  - `cityName` = Ancona.
 ```bash
     {
         "dateTime":1642357460,
@@ -69,7 +69,9 @@ Questa **rotta** permette di ottenere la temperatura corrente di una determinata
 ```
 
 ### **2-** `/compare`
-Questa **rotta** ha la funzione di confrontare lo storico sulle temperature effettive e percepite di una città in dato range temporale, definito con l'attributo `previousDay` che deve essere compreso tra 1 e 5.
+Questa **rotta** ha la funzione di confrontare le temperature effettive e percepite attuali di una città con quelle relative ad un dato range temporale passato. Questo periodo di tempo è riferito al numero di giorni antecedenti alla chiamata effettuata, inseriti dall'utente nel parametro `previousDay` che deve essere compreso tra 1 e 5. I valori di default sono:
+  - `cityName` = Ancona;
+  - `previousDay` = 1;
 ```bash
 {
     "temp": {
