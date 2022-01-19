@@ -27,7 +27,7 @@ public class ErrorHandlerController implements ErrorController{
 		
 		map.put("error","Il comando inserito non è stato riconosciuto");
 		map.put("errorPage","https://htmlpreview.github.io/?https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/blob/main/WeatherApp/src/main/resources/static/errorPage.html");
-		map.put("reeadMe", "https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani");
+		map.put("readMe", "https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani");
 		
 		JSONObject output = new JSONObject(map);
 		
