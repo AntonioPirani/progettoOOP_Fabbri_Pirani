@@ -103,6 +103,52 @@ Questa **rotta** permette di restituire una pagina HTML personalizzata come mess
 
 ### **Statistiche e Filtri**
 
+Di seguito si specifica l'output delle statistiche con e senza filtro, in formato JSON:
+
+  Senza filtro `localhost:8080/statistics?cityName=Ancona`
+  
+      ```bash
+      {
+        {
+          "temp": {
+              "min": 4.03,
+              "avg": 6.628,
+              "max": 5.95,
+              "var": 6.958
+            },
+          "cityName": "Ancona",
+          "feels_like": {
+              "min": 5.12,
+              "avg": 7.076,
+              "max": 5.95,
+              "var": 4.885
+            }
+          }
+        }
+      ```
+  Con filtro `localhost:8080/statistics?cityName=Ancona&filterBy=day&time=1`
+       
+       ```bash
+    "temp": {
+        "filter": "day",
+        "timeAgo": 1,
+        "min": 4.03,
+        "avg": 6.413,
+        "max": 5.95,
+        "var": 2.989
+    },
+    "cityName": "Ancona",
+    "feels_like": {
+        "filter": "day",
+        "timeAgo": 1,
+        "min": 5.12,
+        "avg": 6.808,
+        "max": 5.95,
+        "var": 2.487
+    }
+      ```
+   
+
 ## **Eccezioni**
 
 |**N**|**Nome**     | **Descrizione**|
