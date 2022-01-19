@@ -19,11 +19,12 @@ import it.univpm.weather.WeatherApp.service.*;
 
 /** La classe TestService testa i metodi della classe Service.
  * 
+ * @author Antonio Pirani
  * @author Matteo Fabbri
  */
 public class TestService 
 {
-	//@Autowired
+	
 	private ServiceImplem service = new ServiceImplem();
 	private Temperature temp ;
 	private City city;
@@ -39,7 +40,7 @@ public class TestService
 		city = new City("Rimini", 3183087, 3600, coord, temp, null);
 	}
 	
-	/** Test del metodo testGetTemperature.	 
+	/** Test del metodo getTemperature.	 
 	 * 
 	 * @throws IOException
 	 * @throws CityNotFoundException 
@@ -50,7 +51,7 @@ public class TestService
 		assertNotNull(service.getTemperature("Ancona"));		
 	}
 
-	/** Test del metodo testsettimeMachine.	 
+	/** Test del metodo timeMachine.	 
 	 * 
 	 * @throws IOException
 	 */
@@ -60,7 +61,7 @@ public class TestService
 		assertNotNull(service.timeMachine("Ancona", 1642534367)); //1642941424 23 gennaio
 	}
 	
-	/** Test del metodo testGetCityCoords.	 
+	/** Test del metodo getCityCoords.	 
 	 * 
 	 * @throws JsonParseException
 	 * @throws IOException
@@ -72,7 +73,7 @@ public class TestService
 		assertNotNull(service.getCityCoords("Ancona"));	
 	}
 	
-	/** Test del metodo testSaveCurrentTemp.	 
+	/** Test del metodo saveCurrentTemp.	 
 	 * 
 	 * @throws IOException
 	 * @throws HourException
@@ -83,7 +84,7 @@ public class TestService
 		assertNotNull(service.saveCurrentTemp(city));	//per evitare HourException cambiare nome alla city
 	}
 	
-	/** Test del metodo testCompareTemp.	 
+	/** Test del metodo compareTemp.	 
 	 * 
 	 * @throws IOException
 	 * @throws ParseException
@@ -95,6 +96,11 @@ public class TestService
 		assertNotNull(service.compareTemp("Ancona",1));		
 	}
 	
+	/**
+	 * Rilascio della risorsa
+	 * 
+	 * @throws Exception
+	 */
 	@AfterEach
 	public void tearDown() throws Exception {
 	}

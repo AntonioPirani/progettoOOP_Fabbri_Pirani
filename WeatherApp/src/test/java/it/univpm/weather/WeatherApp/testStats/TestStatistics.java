@@ -8,7 +8,7 @@ import it.univpm.weather.WeatherApp.stats.Statistics;
 
 /** Classe per testare i metodi della classe Statistics.
  * 
- * @author Matteo
+ * @author Matteo Fabbri
  */
 
 public class TestStatistics 
@@ -33,6 +33,11 @@ public class TestStatistics
 		assertEquals(stats.toJson().toString(),json);//TODO
 	}
 
+	/**
+	 * Rilascio della risorsa
+	 * 
+	 * @throws Exception
+	 */
 	@After
 	public void tearDown() throws Exception {
 	}

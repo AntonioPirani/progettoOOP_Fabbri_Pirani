@@ -19,7 +19,7 @@ public class TestCity
 	private Coordinates coord;
 	private String json;
 	
-	/** Setup dei parametri utilizzati nei vari metodi dell classe TestCity.
+	/** Setup dei parametri utilizzati nella classe City.
 	 * 
 	 */
 	@Before
@@ -32,7 +32,7 @@ public class TestCity
 		
 	}
 	
-    /** Test del metodo testJSON.	 * 
+    /** Test del metodo testJSON. 
 	 */
 	@Test
 	public void testJSON()
@@ -40,6 +40,11 @@ public class TestCity
 		assertEquals(city.toJson().toString(),json);
 	}
 	
+	/**
+	 * Rilascio della risorsa
+	 * 
+	 * @throws Exception
+	 */
 	@After
 	public void tearDown() throws Exception {
 	}

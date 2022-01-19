@@ -32,7 +32,6 @@ public class TempController {
 	
 	@Autowired
 	Service service;
-	//https://stackoverflow.com/questions/21282919/spring-3-request-processing-failed-nested-exception-is-java-lang-nullpointerexc/21329173
 	
 	/**
 	 * Rotta di tipo GET per ottenere le temperatura reali e percepite attuali di una città. 
@@ -51,12 +50,7 @@ public class TempController {
 		try {
 			
 			City city = service.getTemperature(cityName);
-			
-//			if(city.getCoords().getLat() == 0 && city.getCoords().getLon() == 0) {
-//				return new ResponseEntity<> ("<br><center><h4>Città <b>\"" + cityName + "\"</b> non trovata</h4></center>", HttpStatus.NOT_FOUND);
-//			}
-			
-			//service.saveCurrentTemp(obj);
+		
 			service.saveEveryHour(cityName);
 			
 			return new ResponseEntity<> (city.toJson(), HttpStatus.OK);
@@ -205,41 +199,5 @@ public class TempController {
 		
 		return obj;
 	}
-	
-//	@GetMapping("/")
-//	ResponseEntity<String> hello() {
-//	    return new ResponseEntity<>("WeatherApp per la Temperatura - by Matteo Fabbri e Antonio Pirani", HttpStatus.OK);
-//	}
-	
-	//non necessario - solo per prova
-//	@GetMapping(value="/coords")
-//    public ResponseEntity<Object> getCoordinates(@RequestParam(value = "cityName", defaultValue = "Ancona") String cityName) {
-//		
-//		try {
-//			
-//			Coordinates coords = service.getCityCoords(cityName);
-//			
-//			if(coords.getLat() == 0.0 && coords.getLon() == 0.0) {
-//				return new ResponseEntity<> ("Città non trovata", HttpStatus.NOT_FOUND);
-//			}
-//			
-//			HashMap<String,Object> map = new HashMap<String,Object>();
-//			
-//			map.put("name", cityName);		
-//			
-//			map.put("lat", coords.getLat());
-//			map.put("lon", coords.getLon());
-//
-//			JSONObject obj = new JSONObject(map);
-//			
-//			return new ResponseEntity<> (obj.toString(), HttpStatus.OK);
-//			
-//		} catch (IOException | CityNotFoundException e) {
-//			
-//			e.printStackTrace();
-//			return new ResponseEntity<> ("E' occorso un errore", HttpStatus.INTERNAL_SERVER_ERROR);
-//
-//		}
-//    }
 	
 }

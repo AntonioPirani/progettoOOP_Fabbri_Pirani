@@ -19,6 +19,7 @@ import it.univpm.weather.WeatherApp.exceptions.HourException;
 
 /** La classe TestController testa i metodi della classe TempController.
  * 
+ * @author Antonio Pirani
  * @author Matteo Fabbri
  */
 
@@ -30,21 +31,28 @@ public class TestController
 	@Autowired
 	private MockMvc mockMvc;
 
+	/**
+	 * SetUp del test - autoconfigurato grazie all'annotazione AutoConfigureMockMvc
+	 * 
+	 * @throws Exception
+	 */
 	@Before
 	public void setUp() throws Exception {
 	}
 
-    /** Test del metodo testGetTemperature.
+    /**
+     * Test della chiamata /current.
      * 
      * @throws Exception
      */
 	@Test
-	public void testGetTemperature() throws Exception
+	public void testCurrent() throws Exception
 	{
 		this.mockMvc.perform(get("/current")).andExpect(status().isOk());
 	}
 	
-    /** Test del metodo testCompare.
+    /**
+     * Test della chiamata /compare.
 	 * 
 	 * @throws IOException
 	 * @throws ParseException
@@ -52,22 +60,19 @@ public class TestController
 	@Test
 	public void testCompare() throws Exception
 	{
-		this.mockMvc.perform(get("/current")).andExpect(status().isOk());
+		this.mockMvc.perform(get("/compare")).andExpect(status().isOk());
 	}
 	
 	
-    /** Test del metodo testStatistics.
+    /**
+     * Test della chiamata /statistics.
 	 * 
 	 * @throws HourException
 	 */
 	@Test
 	public void testStatistics() throws Exception 
 	{
-		this.mockMvc.perform(get("/current")).andExpect(status().isOk());
+		this.mockMvc.perform(get("/statistics")).andExpect(status().isOk());
 	}
-
-//	@AfterEach
-//	public void tearDown() throws Exception {
-//	}
 	
 }

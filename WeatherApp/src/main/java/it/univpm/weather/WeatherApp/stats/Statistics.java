@@ -182,7 +182,6 @@ public class Statistics {
 	/**
 	 * Metodo toString
 	 */
-	@Override
 	public String toString() {
 		return "Statistics [cityName=" + cityName + ", max=" + max + ", min=" + min + ", avg=" + avg + ", var=" + var
 				+ "]";
