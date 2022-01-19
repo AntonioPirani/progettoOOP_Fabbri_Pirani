@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+	<style>
+		table, th, td{
+		border:1px solid black;
+		border-collapse: collapse;
+		border-radius: 83px;
+		text-align:center;
+		margin: 15px auto auto auto;
+		color:#292929;
+		}
+
+	</style>
+	<head>
+		<title>Error Page</title>
+		<title>Error Page</title>
+		<link href="icon.png">
+	</head>
+	<body style="background: -webkit-gradient(linear, left top, left bottom, from(#d9f9ff ), to(#fff)) fixed;">
+		<center><div style="border:2px solid grey; width:53%;  border-radius: 50px; margin-top:8px; background-color:#fffb96 ;">
+		<h2 style="text-align:center; color: #DE6806 ;">PROGETTO PROGRAMMAZIONE OGGETTI</h2>
+		<h3 style="text-align:center;color:#DE6806 ;margin-top:1px;"><i>based on OpenWeather</i></h3></div></center>
+		<table style="width:95%">
+			<tr>
+				<th width = 7% style="font-size:25px">Nome</th>
+				<th width = 55% style="font-size:25px">Esempio</th>
+				<th width = 50% style="font-size:25px">Descrizione</th>
+			</tr>
+			<tr>
+				<td style="font-size:20px">/</td>
+				<td style="font-size:20px">http://localhost:8080/</td>
+				<td style="font-size:20px"><div>Rotta di default/errore.</div></td>
+			</tr>
+			<tr>
+				<td style="font-size:20px">/current</td>
+				<td style="font-size:20px">http://localhost:8080/current?cityName=Ancona</td>
+				<td style="font-size:20px"><div>Rotta di tipo GET per ottenere la temperatura corrente di una città, con la possibilità di salvare i dati con cadenza oraria.</div></td>
+			</tr>
+			<tr>
+				<td style="font-size:20px">/compare</td>
+				<td style="font-size:20px">http://localhost:8080/compare?cityName=Ancona&previousDay=1</td>
+				<td style="font-size:20px"><div>Rotta di tipo GET per confrontare le temperature correnti e percepite, in dato range tamporale in giorni.</div></td>
+			</tr>
+			<tr>
+				<td style="font-size:20px">/statistics</td>
+				<td style="font-size:20px">
+					<ol style="text-align:justify;margin-top:15px;">
+						<li> http://localhost:8080/statistics?cityName=Ancona</li>
+						<li> http://localhost:8080/statistics?cityName=Ancona&filterBy="hour"&time=1</li>
+						<li>http://localhost:8080/statistics?cityName=Ancona&filterBy="day"&time=1</li>
+						<li>http://localhost:8080/statistics?cityName=Ancona&filterBy="week"&time=1</li>
+					</ol>
+				</td>
+				<td style="font-size:20px"> <div>Rotta di tipo GET per restituire il filtraggio delle statistiche in base alla periodicità: fascia oraria, giornaliera e settimanale. Inoltre, se il filtro non viene specificato, viene analizzato tutto lo storico.</div></td>
+			</tr>
+		</table>
+		<center><img src="icon.png" style="width:88px;height:88px; margin-top:20px;"></center>
+		<footer style="margin-top:0px">
+			<p style="text-align:center;"><i>Created by Antonio Pirani & Matteo Fabbri. © 2021/22</i></p>
+		</footer>
+	</body>
+</html>

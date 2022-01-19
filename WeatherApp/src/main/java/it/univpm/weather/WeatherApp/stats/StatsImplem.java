@@ -23,6 +23,15 @@ import it.univpm.weather.WeatherApp.exceptions.HistoryException;
  */
 public class StatsImplem implements StatsInterface {
 	
+	/**
+	 * Metodo utilizzato per calcolare le statistiche delle temperature reali e percepite di una
+	 * determinata città
+	 * 
+	 * @param cityName Nome della città desiderata
+	 * @return JSONObject con tutte le statistiche calcolate, con aggiunta della cityName
+	 * @throws HistoryException eccezione per mancanza dello storico
+	 * @throws ParseException eccezione per errori di parsing dello storico
+	 */
 	public JSONObject calculate(String cityName) throws HistoryException, ParseException {
 		
 		Statistics stats = getStats(cityName, true);
@@ -57,7 +66,7 @@ public class StatsImplem implements StatsInterface {
 		
 		File file = new File(filePath);
 			
-		if(!file.exists()) throw new HistoryException(cityName);	
+		if(!file.exists()) throw new HistoryException("Lo storico di " + cityName + " non esiste");	
 
 		JSONArray array;
 		Statistics stats;

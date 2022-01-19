@@ -57,7 +57,7 @@ public class TestService
 	@Test
 	public void testTimeMachine() throws IOException
 	{
-		assertNotNull(service.timeMachine("Ancona", 1641923101));
+		assertNotNull(service.timeMachine("Ancona", 1642534367));
 	}
 	
 	/** Test del metodo testGetCityCoords.	 

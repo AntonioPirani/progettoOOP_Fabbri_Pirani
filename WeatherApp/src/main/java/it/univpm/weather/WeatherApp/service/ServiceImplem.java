@@ -296,7 +296,7 @@ public class ServiceImplem implements it.univpm.weather.WeatherApp.service.Servi
 	 * 
 	 * @param cityName nome della città di cui si vogliono confrontare le temperature
 	 * @param prevDay periodo di tempo corrispondente al numero di giorni precedenti all'attuale
-	 * @return mex Stringa contenente la differenza di temperatura tra attuale e media
+	 * @return JSONObject contenente le informazioni confrontate
 	 * @throws CityNotFoundException eccezione per quando la città non viene trovata
 	 */
 	public JSONObject compareTemp(String cityName, int prevDay) throws IOException, ParseException, CityNotFoundException {
