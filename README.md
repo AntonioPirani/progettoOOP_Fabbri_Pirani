@@ -9,7 +9,6 @@ Il seguente programma consente di visionare i dati relativi alle temperature di 
 ## **Indice**
 - **[Descrizione](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#descrizione)**
 - **[Installazione](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#installazione)**
-- **[Configurazione](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#configurazione)**
 - **[Funzionalità](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#funzionalit%C3%A0)**
 - **[Rotte](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#rotte)**
     - **[Statistiche e Filtri](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#statistiche-e-filtri)**
