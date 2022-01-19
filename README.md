@@ -17,6 +17,7 @@ Il seguente programma consente di visionare i dati relativi alle temperature di 
 - **[Test](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#test)**
 - **[Documentazione](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#documentazione)**
 - **[Struttura del progetto](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#struttura-progetto)**
+- **[Strumenti Utilizzati](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#struttura-progetto)** 
 - **[Note](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#note)**
 - **[Autori](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#authors)**
 
@@ -95,7 +96,7 @@ Questa **rotta** ha il compito di restituire le statistiche di una città prelev
   - `time` >= 1 (non richiesto)
 
 ### **4-** `/error`
-Questa **rotta** permette di restituire una pagina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.
+Questa **rotta** permette di restituire un JSON contenente i messaggi di errore per quando la rotta specificata non è consentita.
 ```bash
 {
   "readMe":"https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani",
@@ -250,11 +251,137 @@ Questa classe di **test** serve per verificare il corretto funzionamento della c
 
 ## **Documentazione**
 
-Di seguito forniremo la **documentazione** `JavaDoc` dell'applicativo
+Di seguito viene fornita la **documentazione** `JavaDoc` dell'applicativo
 
-- [JavaDoc](https://linktodocumentation)
+- [JavaDoc](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/tree/main/WeatherApp/doc)
 
-## **Struttura progetto**
+E' possibile segnalare la presenza di eventuali bug o problemi al seguente [link](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/issues):
+
+
+## **Struttura del progetto**
+```bash
+C:.
+│   .gitignore
+│   .project
+│   README.md
+│
+└───WeatherApp
+    │   .classpath
+    │   .gitignore
+    │   .project
+    │   HELP.md
+    │   mvnw
+    │   mvnw.cmd
+    │   pom.xml
+    │
+    ├───.mvn
+    │   └───wrapper
+    │            
+    ├───.settings
+    │                    
+    ├───doc
+    │
+    ├───files
+    │       Ancona.txt
+    │       Milano.txt
+    │       Rimini.txt
+    │       Roma.txt
+    │
+    ├───src
+    │   ├───main
+    │   │   ├───java
+    │   │   │   └───it
+    │   │   │       └───univpm
+    │   │   │           └───weather
+    │   │   │               └───WeatherApp
+    │   │   │                   │   package-info.java
+    │   │   │                   │   WeatherAppApplication.java
+    │   │   │                   │
+    │   │   │                   ├───controller
+    │   │   │                   │       package-info.java
+    │   │   │                   │       TempController.java
+    │   │   │                   │
+    │   │   │                   ├───errors
+    │   │   │                   │       ErrorHandlerController.java
+    │   │   │                   │       package-info.java
+    │   │   │                   │
+    │   │   │                   ├───exceptions
+    │   │   │                   │       CityNotFoundException.java
+    │   │   │                   │       HistoryException.java
+    │   │   │                   │       HourException.java
+    │   │   │                   │       InvalidPeriodException.java
+    │   │   │                   │       package-info.java
+    │   │   │                   │
+    │   │   │                   ├───filters
+    │   │   │                   │       Filter.java
+    │   │   │                   │       FilterByDay.java
+    │   │   │                   │       FilterByHour.java
+    │   │   │                   │       FilterByWeek.java
+    │   │   │                   │       package-info.java
+    │   │   │                   │
+    │   │   │                   ├───model
+    │   │   │                   │       City.java
+    │   │   │                   │       Coordinates.java
+    │   │   │                   │       package-info.java
+    │   │   │                   │       Temperature.java
+    │   │   │                   │
+    │   │   │                   ├───service
+    │   │   │                   │       package-info.java
+    │   │   │                   │       Service.java
+    │   │   │                   │       ServiceImplem.java
+    │   │   │                   │
+    │   │   │                   └───stats
+    │   │   │                           package-info.java
+    │   │   │                           Statistics.java
+    │   │   │                           StatsImplem.java
+    │   │   │                           StatsInterface.java
+    │   │   │
+    │   │   └───resources
+    │   │       │   application.properties
+    │   │       │
+    │   │       ├───static
+    │   │       │       errorPage.html
+    │   │       │       icon.png
+    │   │       │
+    │   │       └───templates
+    │   └───test
+    │       └───java
+    │           └───it
+    │               └───univpm
+    │                   └───weather
+    │                       └───WeatherApp
+    │                           │   WeatherAppApplicationTests.java
+    │                           │
+    │                           ├───testController
+    │                           │       package-info.java
+    │                           │       TestController.java
+    │                           │
+    │                           ├───testException
+    │                           │       package-info.java
+    │                           │       TestException.java
+    │                           │
+    │                           ├───testModel
+    │                           │       package-info.java
+    │                           │       TestCity.java
+    │                           │
+    │                           ├───testService
+    │                           │       package-info.java
+    │                           │       TestService.java
+    │                           │
+    │                           └───testStats
+    │                                   package-info.java
+    │                                   TestStatistics.java
+    │
+    └───target
+```
+## **Strumenti Utilizzati**
+
+  - [GitHub](https://github.com/)
+  - [Postman](https://www.postman.com/)
+  - [Eclipse](https://www.eclipse.org/)
+  - [OpenWeather](https://openweathermap.org/)
+  - [SpringBoot](https://spring.io/projects/spring-boot)
+  - [StackOverflow](https://stackoverflow.com/)
 
 ## **Note**
 
