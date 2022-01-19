@@ -16,8 +16,8 @@ Il seguente programma consente di visionare i dati relativi alle temperature di 
 - **[Eccezioni](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#eccezioni)**
 - **[Test](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#test)**
 - **[Documentazione](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#documentazione)**
-- **[Struttura del progetto](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#struttura-progetto)**
-- **[Strumenti Utilizzati](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#struttura-progetto)** 
+- **[Struttura del progetto](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#struttura-del-progetto)**
+- **[Strumenti Utilizzati](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#strumenti-utilizzati)** 
 - **[Note](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#note)**
 - **[Autori](https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani#authors)**
 
@@ -38,7 +38,7 @@ E' necessario settare la propria `API KEY` fornita da OpenWeather all'interno di
 ```bash
 private final String apiKey = "********************************";
 ```
-Per utilizzare il programma è necessario utilizzare un semplice browser oppure applicativi appositi, come ad esempio **Postman** inserendo:
+Per usufruire del programma è possibile utilizzare un semplice browser oppure applicativi specifici, come ad esempio **Postman**, inserendo:
 ```bash
 http://localhost:8080
 ```
@@ -232,7 +232,7 @@ A differenza delle altre classi di test, in questa è stato implementato un emul
 private MockMvc mockMvc;
   
     @Test
-    public void testGetTemperature() throws Exception
+    public void testCurrent() throws Exception
     {
       this.mockMvc.perform(get("/current")).andExpect(status().isOk());
     }
@@ -396,7 +396,3 @@ Come è possibile notare, vi è una differenza tra il JSON restituito dalla chia
 
 - [Antonio Pirani ](https://github.com/AntonioPirani)
 - [Matteo Fabbri](https://github.com/MatteoFabbri136)
-
-
-
-
