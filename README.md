@@ -107,48 +107,52 @@ Di seguito si specifica l'output delle statistiche con e senza filtro, in format
 
   Senza filtro `localhost:8080/statistics?cityName=Ancona`
   
-      ```bash
-      {
-        {
-          "temp": {
-              "min": 4.03,
-              "avg": 6.628,
-              "max": 5.95,
-              "var": 6.958
-            },
-          "cityName": "Ancona",
-          "feels_like": {
-              "min": 5.12,
-              "avg": 7.076,
-              "max": 5.95,
-              "var": 4.885
-            }
-          }
-        }
-      ```
-  Con filtro `localhost:8080/statistics?cityName=Ancona&filterBy=day&time=1`
-       
-       ```bash
-    "temp": {
-        "filter": "day",
-        "timeAgo": 1,
-        "min": 4.03,
-        "avg": 6.413,
-        "max": 5.95,
-        "var": 2.989
-    },
-    "cityName": "Ancona",
-    "feels_like": {
-        "filter": "day",
-        "timeAgo": 1,
-        "min": 5.12,
-        "avg": 6.808,
-        "max": 5.95,
-        "var": 2.487
+  ```bash
+{
+    {
+      "temp": {
+          "min": 4.03,
+          "avg": 6.628,
+          "max": 5.95,
+          "var": 6.958
+      },
+      "cityName": "Ancona",
+      "feels_like": {
+          "min": 5.12,
+          "avg": 7.076,
+          "max": 5.95,
+          "var": 4.885
+      }
     }
-      ```
-   
-
+}
+```
+  
+  Con filtro `localhost:8080/statistics?cityName=Ancona&filterBy=day&time=1`
+  
+   ```bash
+  {
+     {
+      "temp": {
+          "filter": "day",
+          "timeAgo": 1,
+          "min": 4.03,
+          "avg": 6.413,
+          "max": 5.95,
+          "var": 2.989
+      },
+      "cityName": "Ancona",
+      "feels_like": {
+          "filter": "day",
+          "timeAgo": 1,
+          "min": 5.12,
+          "avg": 6.808,
+          "max": 5.95,
+          "var": 2.487
+       }
+     }
+  }
+```
+  
 ## **Eccezioni**
 
 |**N**|**Nome**     | **Descrizione**|
@@ -174,7 +178,7 @@ Questa **eccezione** viene generata qualora l'inserimento di una città non è v
 ```
 
 ### **2-** `HistoryException`
-Questa **eccezione** viene eseguita qualora lo storico richiesto per le statistiche non esiste.
+Questa **eccezione** viene eseguita qualora lo storico richiesto per le statistiche non esistesse.
 ```bash
   Storico di Ancona vuoto
 ```
@@ -216,7 +220,7 @@ private MockMvc mockMvc;
     }
 ```
 
-### `TestCityy`
+### `TestCity`
 Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `City`.
 ```bash
     @Test
@@ -241,6 +245,8 @@ Il programma è stato realizzato tramite l'utilizzo di una `API KEY` gratuita. P
 - la durata limitata della chiave;
 - il numero limitato di chiamate orarie disponibili;
 - lo storico relativo a una città di massimo 5 giorni antecedenti alla chiamata.
+
+Come è possibile notare, vi è una differenza tra il JSON restituito dalla chiamata /current e quello salvato sullo storico. In quest'ultimo infatti si è deciso di non salvare le informazioni non utili, tra cui l'id della città e la timezone, al fine di salvare spazio.
 
 ## **Authors**
 
