@@ -53,7 +53,7 @@ Il programma è scritto interamente in linguaggio **Java** versione 11. Esso fun
 |**4**|`GET` | `/error`| Rotta di tipo **GET** che restituisce una pagina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.|
 
 ### **1-** `/current`
-Questa **rotta** permette di ottenere la temperatura corrente di una determinata città, in particolare il metodo `saveEveryHour` ha la funzione di salvare queste temperature con cadenta oraria in un file di testo, che costituirà lo storico lo storico.
+Questa **rotta** permette di ottenere la temperatura corrente di una determinata città, in particolare il metodo `saveEveryHour` ha la funzione di salvare queste temperature con cadenza oraria in un file di testo, che costituirà lo storico lo storico.
 
 ```bash
     {
@@ -71,11 +71,15 @@ Questa **rotta** permette di ottenere la temperatura corrente di una determinata
 ### **2-** `/compare`
 Questa **rotta** ha la funzione di confrontare lo storico sulle temperature effettive e percepite di una città in dato range temporale, definito con l'attributo `previousDay` che deve essere compreso tra 1 e 5.
 ```bash
-    Confronto Temperature - Ancona:
-
-    La temperatura reale rispetto alla media di 1 giorno fa è diminuita di **2.047** gradi.
-
-    La temperatura percepita rispetto alla media di 1 giorno fa è diminuita di **0.796** gradi.
+{
+    "temp": {
+        "result": "La temperatura reale rispetto alla media di 1 giorno fa è diminuita di 0.46 gradi"
+    },
+    "cityName": "Ancona",
+    "feels_like": {
+        "result": "La temperatura percepita rispetto alla media di 1 giorno fa è aumentata di 0.57 gradi"
+    }
+}
 ```
 
 ### **3-** `/statistics`
@@ -88,6 +92,11 @@ Questa **rotta** ha il compito di restituire il filtraggio delle statistiche di 
 ### **4-** `/error`
 Questa **rotta** permette di restituire una pagina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.
 ```bash
+{
+  "readMe":"https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani",
+  "error":"Il comando inserito non è stato riconosciuto",
+  "errorPage":"https://htmlpreview.github.io/?https://github.com/AntonioPirani/progettoOOP_Fabbri_Pirani/blob/main/WeatherApp/src/main/resources/static/errorPage.html"
+}
 ```
 
 ## **Statistiche e Filtri**
@@ -144,7 +153,6 @@ Questa **eccezione** viene eseguita qualora l'inserimento del periodo preso in c
 |`TestCity`| Classe per la gestione del test dei metodi della classe `City`.|
 |`TestService`| Classe per la gestione del test dei metodi della classe `Service`. |
 |`TestStatistics`| Classe per la gestione del test dei metodi della classe `Statistics`.|
-|`TestException`| Classe per la gestione del test della classe `CityNotFoundException` .|
 
 ### `TestController`
 Questa classe di **test** serve per verificare il corretto funzionamento dei metodi della classe `TempController`.
