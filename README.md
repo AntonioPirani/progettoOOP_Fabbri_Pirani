@@ -47,10 +47,10 @@ Il programma è scritto interamente in linguaggio **Java** versione 11. Esso fun
 
 |**N**| **Tipo** | **Rotta**     | **Descrizione**|
 | -------- | -------- | ------ | ------------------------- |
-|**1**|`GET` | `/current` |Rotta di tipo **GET** per ottenere la temperatura corrente di una città, con il metodo saveEveryHour che ci permette di salvarle con cadenta oraria.|
-|**2**|`GET` | `/compare` |Rotta di tipo **GET** per confrontare le temperature correnti e percepite, in dato range temporale.|
-|**3**| `GET` | `/statistics`| Rotta di tipo **GET** per restituire il filtraggio delle statistiche in base alla periodicità: giorni, fascia oraria, settimanale.|
-|**4**|`GET` | `/error`| Rotta di tipo **GET** che restituisce una pagina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.|
+|**1**|`GET` | `/current` |Rotta di tipo **GET** per ottenere la temperatura reale e percepita di una città, e salvare le informazione in uno storico con cadenza oraria.|
+|**2**|`GET` | `/compare` |Rotta di tipo **GET** per confrontare le temperature reali e percepite, in un dato range temporale espresso in giorni.|
+|**3**| `GET` | `/statistics`| Rotta di tipo **GET** per restituire le statistiche delle temperature di una città, alle quali si potrà eventualmente applicare un filtro.|
+|**4**|`GET` | `/error`| Rotta di tipo **GET** che restituisce un JSON contenente i messaggi di errore per quando la rotta specificata non è consentita.|
 
 ### **1-** `/current`
 Questa **rotta** permette di ottenere la temperatura reale e percepita corrente di una determinata città. Questi dati verranno utilizzati per la creazione di uno storico su base oraria. Nel caso in cui non fosse passata almeno 1 ora dall'ultima chiamata i dati non verranno salvati. Per realizzare tutto ciò è necessario effettuare una chiamata indiretta alla **API** di geolocalizzazione delle coordinate della città. La città di default è:
@@ -69,7 +69,7 @@ Questa **rotta** permette di ottenere la temperatura reale e percepita corrente 
 ```
 
 ### **2-** `/compare`
-Questa **rotta** ha la funzione di confrontare le temperature effettive e percepite attuali di una città con quelle relative ad un dato range temporale passato. Questo periodo di tempo è riferito al numero di giorni antecedenti alla chiamata effettuata, inseriti dall'utente nel parametro `previousDay` che deve essere compreso tra 1 e 5. I valori di default sono:
+Questa **rotta** ha la funzione di confrontare le temperature effettive e percepite attuali di una città con quelle relative ad un dato range temporale passato. Questo periodo di tempo è riferito al numero di giorni antecedenti alla chiamata effettuata, inseriti dall'utente nel parametro `previousDay` che deve essere compreso tra 1 e 5. I parametri di default sono:
   - `cityName` = Ancona;
   - `previousDay` = 1;
 ```bash
@@ -86,10 +86,10 @@ Questa **rotta** ha la funzione di confrontare le temperature effettive e percep
 
 ### **3-** `/statistics`
 
-Questa **rotta** ha il compito di restituire il filtraggio delle statistiche di una città dallo storico, in base alla periodicità (giorni, fascia oraria, settimanale), tutto questo attraverso l'attributo `filterBy` e l'attributo `time` con cui si specifica l'entita della retroazione.
-
-```bash
-```
+Questa **rotta** ha il compito di restituire le statistiche di una città prelevate dallo storico creato con la chiamata `/current`. Tali statistiche restituiscono i valori massimi, minimi, di media e di varianza delle temperature reali e percepite. E' possibille applicare dei filtri di tipo orario, giornaliero e settimanale, con la istanza di tempo specificata dall'utente. Se non viene applicato nessun filtro, lo storico verrà analizzato per intero. I parametri:
+  - `cityName` = Ancona (di default)
+  - `filterBy` = hour, day e week (non richiesto)
+  - `time` >= 1 (non richiesto)
 
 ### **4-** `/error`
 Questa **rotta** permette di restituire una pagina HTML personalizzata come messaggio di errore, quando la rotta specificata non è consentita.
@@ -101,7 +101,7 @@ Questa **rotta** permette di restituire una pagina HTML personalizzata come mess
 }
 ```
 
-## **Statistiche e Filtri**
+### **Statistiche e Filtri**
 
 ## **Eccezioni**
 
