@@ -59,14 +59,4 @@ public class Coordinates
 	public void setLon(double lon) {
 		this.lon = lon;
 	}
-
-	/** Override del metodo toString per restituire le coordiante.
-	 * 
-	 *@return Stringa che rappresenta le coordinate.
-	 */
-	@Override
-	public String toString() {
-		return "Coordinates [lat=" + lat + ", lon=" + lon + "]";
-	}
-	
 }

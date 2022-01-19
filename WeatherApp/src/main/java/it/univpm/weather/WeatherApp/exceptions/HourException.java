@@ -1,6 +1,6 @@
 package it.univpm.weather.WeatherApp.exceptions;
 
-/** La classe HourException gestice l'eccezzione quando l'intervallo orario non è valido.
+/** HourException è una eccezione personalizzata per la gestione di una prematura richiesta di salvataggio dello storico.
  * 
  * @author Matteo Fabbri
  */

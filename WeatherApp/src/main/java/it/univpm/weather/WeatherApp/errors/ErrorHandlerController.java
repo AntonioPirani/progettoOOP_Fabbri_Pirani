@@ -17,7 +17,7 @@ public class ErrorHandlerController implements ErrorController{
 	
 	/** Metodo che restituisce il parametro content.
 	 * 
-	 * @return content Stringa contenente il corpo HTML della pagina personalizzata di errore.
+	 * @return content JSON contenente il messaggio di errore generico e i link alla pagina personalizzata di errore (in HTML) e alla documentazione del progetto.
 	 */
 	@RequestMapping("/error")
 	@ResponseBody

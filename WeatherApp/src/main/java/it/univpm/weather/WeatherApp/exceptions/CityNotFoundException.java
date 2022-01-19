@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 
-/** La classe CityNotFoundExceotion gestice l'eccezione quando una città non è valida.
+/** CityNotFoundExceotion è una eccezione personalizzata per la gestione dell'inserimento di una città non valida.
  * 
  * @author Matteo Fabbri
  */
@@ -62,5 +62,4 @@ public class CityNotFoundException extends Exception
 		return obj;
 		
 	}
-	
 }

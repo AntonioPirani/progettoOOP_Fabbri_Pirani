@@ -138,17 +138,5 @@ public class Temperature
 	public void setMinTemp(double minTemp) 
 	{
 		this.minTemp = minTemp;
-	}
-
-	/** Override del metodo toString.
-	 * 
-	 *@return Stringa di ritorno.
-	 */
-	@Override
-	public String toString() {
-		return "Temperature [dateTime=" + dateTime + ", feelsLike=" + feelsLike + ", currentTemp=" + temp
-				+ ", maxTemp=" + maxTemp + ", minTemp=" + minTemp + "]";
-	}
-
-	
+	}	
 }
